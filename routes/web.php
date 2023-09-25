@@ -244,6 +244,8 @@ Route::middleware(['XSS'])->group(function () {
         Route::get('get_client_debt_total/{id}', 'ClientController@get_client_debt_total');
         Route::get('get_client_debt_return_total/{id}', 'ClientController@get_client_debt_return_total');
 
+        Route::post('import_client_process', 'ClientController@import_client_process');
+
         Route::post('clients_pay_due', 'ClientController@clients_pay_due');
         Route::post('clients_pay_return_due', 'ClientController@clients_pay_return_due');
 

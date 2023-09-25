@@ -27,7 +27,6 @@
                             </span>
                         </div>
 
-                      
                         <div class="form-group col-md-4">
                             <label for="Phone">{{ __('translate.Phone') }}</label>
                             <input type="text" v-model="client.phone" class="form-control" id="Phone"
@@ -45,7 +44,7 @@
                                 @{{ errors.city[0] }}
                             </span>
                         </div>
-         
+
                         <div class="form-group col-md-4">
                             <label for="email">{{ __('translate.Email') }}</label>
                             <input type="text" v-model="client.email" class="form-control" id="email"
@@ -64,14 +63,59 @@
                             </span>
                         </div>
 
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-4">
+                            <label for="postalCode">{{ __('translate.postalCode') }} <span
+                                    class="field_required">*</span></label>
+                            <input type="text" v-model="client.postal_code" class="form-control"
+                                name="postalCode" id="postalCode" placeholder="{{ __('translate.PostalCode') }}">
+                            <span class="error" v-if="errors && errors.postalCode">
+                                @{{ errors.postalCode[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-12">
                             <label for="address">{{ __('translate.Address') }}</label>
                             <textarea v-model="client.address" class="form-control" name="address"
                                 id="address"
                                 placeholder="{{ __('translate.Address') }}"></textarea>
                         </div>
                     </div>
+                    <div class="separator-breadcrumb border-top mt-4"></div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="officeName">{{ __('translate.officeName') }}</label>
+                            <input type="text" v-model="client.office_name" class="form-control"
+                                name="officeName" id="officeName" placeholder="{{ __('translate.officeName') }}">
+                            <span class="error" v-if="errors && errors.officeName">
+                                @{{ errors.officeName[0] }}
+                            </span>
+                        </div>
 
+                        <div class="form-group col-md-4">
+                            <label for="officePhone">{{ __('translate.officePhone') }}</label>
+                            <input type="text" v-model="client.office_phone" class="form-control"
+                                name="officePhone" id="officePhone" placeholder="{{ __('translate.officePhone') }}">
+                            <span class="error" v-if="errors && errors.officePhone">
+                                @{{ errors.officePhone[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="officePostalCode">{{ __('translate.officePostalCode') }}</label>
+                            <input type="text" v-model="client.office_postal_code" class="form-control"
+                                name="officePostalCode" id="officePostalCode" placeholder="{{ __('translate.officePostalCode') }}">
+                            <span class="error" v-if="errors && errors.officePostalCode">
+                                @{{ errors.officePostalCode[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="officeAddress">{{ __('translate.officeAddress') }}</label>
+                            <textarea v-model="client.office_address" class="form-control" name="officeAddress"
+                                id="officeAddress"
+                                placeholder="{{ __('translate.officeAddress') }}"></textarea>
+                        </div>
+                    </div>
                     <div class="row mt-3">
 
                         <div class="col-md-6">
@@ -96,7 +140,7 @@
 
 <script>
     Vue.component('v-select', VueSelect.VueSelect)
-     
+
     var app = new Vue({
         el: '#section_edit_client',
         data: {
@@ -107,7 +151,7 @@
             data: new FormData(),
             old_photo:@json($client->photo),
         },
-       
+
         methods: {
 
             // Selected_Status(value) {
@@ -121,7 +165,7 @@
                 let file = e.target.files[0];
                 this.client.photo = file;
             },
-        
+
             //----------------------- Update_Client ---------------------------\\
             Update_Client() {
                 var self = this;
@@ -132,6 +176,11 @@
                 self.data.append("city", self.client.city);
                 self.data.append("phone", self.client.phone);
                 self.data.append("address", self.client.address);
+                self.data.append("postalCode", self.client.postal_code);
+                self.data.append("officeName", self.client.office_name);
+                self.data.append("officeAddress", self.client.office_address);
+                self.data.append("officePostalCode", self.client.office_postal_code);
+                self.data.append("officePhone", self.client.office_phone);
                 if(self.old_photo != self.client.photo){
                  self.data.append("photo", self.client.photo);
                 }
@@ -141,7 +190,7 @@
                     .post("/people/clients/" + this.client.id, self.data)
                     .then(response => {
                         self.SubmitProcessing = false;
-                        window.location.href = '/people/clients'; 
+                        window.location.href = '/people/clients';
                         toastr.success('{{ __('translate.Updated_in_successfully') }}');
                         self.errors = {};
                     })
@@ -153,7 +202,7 @@
                         toastr.error('{{ __('translate.There_was_something_wronge') }}');
                     });
             },
-           
+
         },
         //-----------------------------Autoload function-------------------
         created() {

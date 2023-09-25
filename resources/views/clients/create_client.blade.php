@@ -36,7 +36,6 @@
                             </span>
                         </div>
 
-
                         <div class="form-group col-md-4">
                             <label for="city">{{ __('translate.City') }}</label>
                             <input type="text" v-model="client.city" class="form-control" id="city"
@@ -64,11 +63,57 @@
                             </span>
                         </div>
 
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-4">
+                            <label for="postalCode">{{ __('translate.postalCode') }} <span
+                                    class="field_required">*</span></label>
+                            <input type="text" v-model="client.postal_code" class="form-control"
+                                name="postalCode" id="postalCode" placeholder="{{ __('translate.PostalCode') }}">
+                            <span class="error" v-if="errors && errors.postalCode">
+                                @{{ errors.postalCode[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-12">
                             <label for="address">{{ __('translate.Address') }}</label>
                             <textarea v-model="client.address" class="form-control" name="address"
                                 id="address"
                                 placeholder="{{ __('translate.Address') }}"></textarea>
+                        </div>
+                    </div>
+                    <div class="separator-breadcrumb border-top mt-4"></div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="officeName">{{ __('translate.officeName') }}</label>
+                            <input type="text" v-model="client.office_name" class="form-control"
+                                name="officeName" id="officeName" placeholder="{{ __('translate.officeName') }}">
+                            <span class="error" v-if="errors && errors.officeName">
+                                @{{ errors.officeName[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="officePhone">{{ __('translate.officePhone') }}</label>
+                            <input type="text" v-model="client.office_phone" class="form-control"
+                                name="officePhone" id="officePhone" placeholder="{{ __('translate.officePhone') }}">
+                            <span class="error" v-if="errors && errors.officePhone">
+                                @{{ errors.officePhone[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="officePostalCode">{{ __('translate.officePostalCode') }}</label>
+                            <input type="text" v-model="client.office_postal_code" class="form-control"
+                                name="officePostalCode" id="officePostalCode" placeholder="{{ __('translate.officePostalCode') }}">
+                            <span class="error" v-if="errors && errors.officePostalCode">
+                                @{{ errors.officePostalCode[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="officeAddress">{{ __('translate.officeAddress') }}</label>
+                            <textarea v-model="client.office_address" class="form-control" name="officeAddress"
+                                id="officeAddress"
+                                placeholder="{{ __('translate.officeAddress') }}"></textarea>
                         </div>
                     </div>
 
@@ -113,9 +158,14 @@
                 city: "",
                 phone: "",
                 address: "",
-            }, 
+                postalCode: "",
+                officeName: "",
+                officeAddress: "",
+                officePhone: "",
+                officePostalCode: "",
+            },
         },
-       
+
         methods: {
 
 
@@ -131,7 +181,7 @@
                 this.client.photo = file;
             },
 
-        
+
              //------------------------ Create_Client ---------------------------\\
              Create_Client() {
                 var self = this;
@@ -143,12 +193,17 @@
                 self.data.append("phone", self.client.phone);
                 self.data.append("address", self.client.address);
                 self.data.append("photo", self.client.photo);
-                
+                self.data.append("postalCode", self.client.postal_code);
+                self.data.append("officeName", self.client.office_name);
+                self.data.append("officeAddress", self.client.office_address);
+                self.data.append("officePostalCode", self.client.office_postal_code);
+                self.data.append("officePhone", self.client.office_phone);
+
                 axios
                     .post("/people/clients", self.data)
                     .then(response => {
                         self.SubmitProcessing = false;
-                        window.location.href = '/people/clients'; 
+                        window.location.href = '/people/clients';
                         toastr.success('{{ __('translate.Created_in_successfully') }}');
                         self.errors = {};
                 })
@@ -161,7 +216,7 @@
                 });
             },
 
-        
+
         },
         //-----------------------------Autoload function-------------------
         created() {

@@ -12,7 +12,7 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
-       // Insert some stuff
+        // Insert some stuff
         DB::table('settings')->insert(
             array(
                 'id' => 1,
@@ -21,18 +21,18 @@ class SettingSeeder extends Seeder
                 'client_id' => Null,
                 'invoice_footer' => Null,
                 'warehouse_id' => Null,
-                'CompanyName' => 'Posly',
+                'CompanyName' => 'Simseka',
                 'CompanyPhone' => '6315996770',
                 'CompanyAdress' => '3618 Abia Martin Drive',
-                'footer' => 'Posly - POS with Inventory Management',
-                'developed_by' => 'Posly',
-                'app_name' => 'Posly',
+                'footer' => 'Simseka - POS Sistem Informasi Seragam Kerjaku',
+                'developed_by' => 'Inovasis Media',
+                'app_name' => 'Simseka',
                 'logo' => 'logo-default.svg',
                 'default_sms_gateway' => 'twilio',
                 'default_language' => 'en',
                 'symbol_placement' => 'before',
             )
-            
+
         );
     }
 }

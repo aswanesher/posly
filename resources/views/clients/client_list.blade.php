@@ -24,6 +24,9 @@
                         <a class="btn btn-outline-primary btn-md m-1" href="{{route('clients.create')}}"><i
                                 class="i-Add me-2 font-weight-bold"></i>
                             {{ __('translate.Create') }}</a>
+                        <a class="import_client btn btn-outline-primary btn-md m-1"><i
+                                class="i-Upload me-2 font-weight-bold"></i>
+                            {{ __('translate.ImportExcel') }}</a>
                     @endcan
                 </div>
                 <div class="table-responsive">
@@ -62,19 +65,19 @@
                     <div class="modal-body">
                         <form @submit.prevent="Submit_Payment()">
                             <div class="row">
-    
+
                                 <!-- Date -->
                                 <div class="col-md-6">
                                     <validation-provider name="date" rules="required" v-slot="validationContext">
                                     <div class="form-group">
                                         <label for="picker3">{{ __('translate.Date') }}</label>
-                                        
-                                        <input type="text" 
-                                        :state="getValidationState(validationContext)" 
-                                        aria-describedby="date-feedback" 
-                                        class="form-control" 
-                                        placeholder="{{ __('translate.Select_Date') }}"  
-                                        id="datetimepicker" 
+
+                                        <input type="text"
+                                        :state="getValidationState(validationContext)"
+                                        aria-describedby="date-feedback"
+                                        class="form-control"
+                                        placeholder="{{ __('translate.Select_Date') }}"
+                                        id="datetimepicker"
                                         v-model="payment.date">
                                         <span class="error">@{{  validationContext.errors[0] }}</span>
                                     </div>
@@ -96,17 +99,17 @@
                                         <span class="badge badge-danger">reste à payer : {{$currency}} @{{ sell_due }}</span>
                                     </validation-provider>
                                 </div>
-    
+
                                 <div class="form-group col-md-6">
                                     <validation-provider name="Payment choice" rules="required"
                                         v-slot="{ valid, errors }">
                                         <label> {{ __('translate.Payment_choice') }}<span
                                                 class="field_required">*</span></label>
-                                        <v-select @input="Selected_Payment_Method" 
+                                        <v-select @input="Selected_Payment_Method"
                                              placeholder="{{ __('translate.Choose_Payment_Choice') }}"
                                             :class="{'is-invalid': !!errors.length}"
                                             :state="errors[0] ? false : (valid ? true : null)"
-                                            v-model="payment.payment_method_id" :reduce="(option) => option.value" 
+                                            v-model="payment.payment_method_id" :reduce="(option) => option.value"
                                             :options="payment_methods.map(payment_methods => ({label: payment_methods.title, value: payment_methods.id}))">
 
                                         </v-select>
@@ -114,18 +117,18 @@
                                     </validation-provider>
                                 </div>
 
-                                
+
                                 <div class="form-group col-md-6">
                                     <label> {{ __('translate.Account') }} </label>
-                                    <v-select 
+                                    <v-select
                                             placeholder="{{ __('translate.Choose_Account') }}"
-                                        v-model="payment.account_id" :reduce="(option) => option.value" 
+                                        v-model="payment.account_id" :reduce="(option) => option.value"
                                         :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))">
 
                                     </v-select>
                                 </div>
 
-    
+
                                 <div class="form-group col-md-12">
                                     <label for="note">{{ __('translate.Please_provide_any_details') }}
                                     </label>
@@ -133,25 +136,25 @@
                                         id="note"
                                         placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
                                 </div>
-    
+
                                 <div class="col-lg-6">
                                     <button type="submit" class="btn btn-primary" :disabled="paymentProcessing">
                                         <span v-if="paymentProcessing" class="spinner-border spinner-border-sm"
                                             role="status" aria-hidden="true"></span> <i class="i-Yes me-2 font-weight-bold"></i>
                                         {{ __('translate.Submit') }}
                                     </button>
-    
+
                                 </div>
-    
+
                             </div>
-    
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </validation-observer>
-    
+
     <!-- Modal add return payment -->
     <validation-observer ref="add_payment_return">
         <div class="modal fade" id="add_payment_return" tabindex="-1" role="dialog" aria-labelledby="add_payment_return"
@@ -165,20 +168,20 @@
                     <div class="modal-body">
                         <form @submit.prevent="Submit_Payment_sell_return_due()">
                             <div class="row">
-    
+
 
                                  <!-- Date -->
                                 <div class="col-md-6">
                                     <validation-provider name="date" rules="required" v-slot="validationContext">
                                     <div class="form-group">
                                         <label for="picker3">{{ __('translate.Date') }}</label>
-                                        
-                                        <input type="text" 
-                                        :state="getValidationState(validationContext)" 
-                                        aria-describedby="date-feedback" 
-                                        class="form-control" 
-                                        placeholder="{{ __('translate.Select_Date') }}"  
-                                        id="datetimepicker" 
+
+                                        <input type="text"
+                                        :state="getValidationState(validationContext)"
+                                        aria-describedby="date-feedback"
+                                        class="form-control"
+                                        placeholder="{{ __('translate.Select_Date') }}"
+                                        id="datetimepicker"
                                         v-model="payment_return.date">
                                         <span class="error">@{{  validationContext.errors[0] }}</span>
                                     </div>
@@ -206,11 +209,11 @@
                                         v-slot="{ valid, errors }">
                                         <label> {{ __('translate.Payment_choice') }}<span
                                                 class="field_required">*</span></label>
-                                        <v-select @input="Selected_return_Payment_Method" 
+                                        <v-select @input="Selected_return_Payment_Method"
                                              placeholder="{{ __('translate.Choose_Payment_Choice') }}"
                                             :class="{'is-invalid': !!errors.length}"
                                             :state="errors[0] ? false : (valid ? true : null)"
-                                            v-model="payment_return.payment_method_id" :reduce="(option) => option.value" 
+                                            v-model="payment_return.payment_method_id" :reduce="(option) => option.value"
                                             :options="payment_methods.map(payment_methods => ({label: payment_methods.title, value: payment_methods.id}))">
 
                                         </v-select>
@@ -218,18 +221,18 @@
                                     </validation-provider>
                                 </div>
 
-                                
+
                                 <div class="form-group col-md-6">
                                     <label> {{ __('translate.Account') }} </label>
-                                    <v-select 
+                                    <v-select
                                             placeholder="{{ __('translate.Choose_Account') }}"
-                                        v-model="payment_return.account_id" :reduce="(option) => option.value" 
+                                        v-model="payment_return.account_id" :reduce="(option) => option.value"
                                         :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))">
 
                                     </v-select>
                                 </div>
 
-    
+
                                 <div class="form-group col-md-12">
                                     <label for="note">{{ __('translate.Please_provide_any_details') }}
                                     </label>
@@ -237,18 +240,78 @@
                                         id="note"
                                         placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
                                 </div>
-    
+
                                 <div class="col-lg-6">
                                     <button type="submit" class="btn btn-primary" :disabled="payment_return_Processing">
                                         <span v-if="payment_return_Processing" class="spinner-border spinner-border-sm"
                                             role="status" aria-hidden="true"></span> <i class="i-Yes me-2 font-weight-bold"></i>
                                         {{ __('translate.Submit') }}
                                     </button>
-    
+
                                 </div>
-    
+
                             </div>
-    
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </validation-observer>
+
+    <!-- Modal add return payment -->
+    <validation-observer ref="import_user_modal">
+        <div class="modal fade" id="import_user_modal" tabindex="-1" role="dialog" aria-labelledby="import_user_modal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ __('translate.import_client_modal') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="Import_Client_Excel()">
+                            <div class="row">
+                                <!-- Date -->
+                                <div class="col-12">
+                                    <div class="alert alert-warning" role="alert">
+                                        Silahkan unduh template file Excel <a href="{{ asset('customer_template_simseka.xlsx') }}"
+                                            class="alert-link">disini</a> untuk melakukan proses impor data sedekah.
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <ul v-if="errors.length">
+                                        <li v-for="error in errors" :key="error.field">@{{ error.message }}</li>
+                                    </ul>
+                                </div>
+                                <span class="error" v-if="errors && errors.email">
+                                    @{{ errors.email[0] }}
+                                </span>
+                                <div class="col-md-12">
+                                    <validation-provider name="clients" rules="required" v-slot="validationContext">
+                                    <div class="form-group">
+
+                                        <label for="excel">{{ __('translate.ExcelFile') }}</label>
+                                        <input name="excel" @change="changeFile" type="file" class="form-control"
+                                            id="excel">
+                                        <span class="error" v-if="errors && errors.clients">
+                                            @{{ errors.clients[0] }}
+                                        </span>
+                                    </div>
+                                    </validation-provider>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-primary" :disabled="import_client_Processing">
+                                        <span v-if="import_client_Processing" class="spinner-border spinner-border-sm"
+                                            role="status" aria-hidden="true"></span> <i class="i-Yes me-2 font-weight-bold"></i>
+                                        {{ __('translate.Submit') }}
+                                    </button>
+
+                                </div>
+
+                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -256,7 +319,7 @@
         </div>
     </validation-observer>
 </div>
-     
+
 
 @endsection
 
@@ -282,7 +345,7 @@
             client_datatable();
         });
 
-     
+
 
        //Get Data
        function client_datatable(){
@@ -321,9 +384,9 @@
                     {data: 'sell_due'},
                     {data: 'return_due'},
                     {data: 'status'},
-                
+
                 ],
-            
+
                 lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 dom: "<'row'<'col-sm-12 col-md-7'lB><'col-sm-12 col-md-5 p-0'f>>rtip",
                 oLanguage: {
@@ -332,7 +395,7 @@
                     sInfoEmpty: "{{ __('datatable.sInfoEmpty') }}",
                     sInfoFiltered: "{{ __('datatable.sInfoFiltered') }}",
                     sInfoThousands: "{{ __('datatable.sInfoThousands') }}",
-                    sLengthMenu: "_MENU_", 
+                    sLengthMenu: "_MENU_",
                     sLoadingRecords: "{{ __('datatable.sLoadingRecords') }}",
                     sProcessing: "{{ __('datatable.sProcessing') }}",
                     sSearch: "",
@@ -390,7 +453,7 @@
             });
         }
 
-     
+
         // event reload Datatatble
         $(document).bind('event_client', function (e) {
             $('#client_list_table').DataTable().destroy();
@@ -421,6 +484,14 @@
             $('#client_list_table').DataTable().destroy();
             client_datatable();
             NProgress.done();
+        });
+
+        $(document).on('click', '.import_client', function (e) {
+            NProgress.start();
+            setTimeout(() => {
+                NProgress.done();
+                $('#import_user_modal').modal('show');
+            }, 1000);
         });
 
          // add_payment_return
@@ -468,11 +539,14 @@
             SubmitProcessing:false,
             paymentProcessing: false,
             payment_return_Processing: false,
+            import_client_Processing: false,
             errors:[],
             selectedIds:[],
             payment_methods:[],
             accounts:[],
-            clients: {}, 
+            clients: {
+                excel: "",
+            },
             payment: {
                 date: moment().format('YYYY-MM-DD HH:mm'),
                 client_id: "",
@@ -493,10 +567,10 @@
             return_due:0,
 
         },
-       
+
         methods: {
 
-            
+
             Selected_Payment_Method(value) {
                 if (value === null) {
                     this.payment.payment_method_id = "";
@@ -508,7 +582,6 @@
                     this.payment_return.payment_method_id = "";
                 }
             },
-
 
              //---Validate State Fields
             getValidationState({ dirty, validated, valid = null }) {
@@ -524,7 +597,7 @@
                     } else if (this.payment.montant > this.sell_due) {
                         toastr.warning('The amount paid is greater than the remainder to be paid');
                         this.payment.montant = 0;
-                    } 
+                    }
                 },
 
                  //------ Validate Form Submit_Payment
@@ -538,8 +611,8 @@
                             this.payment.montant = 0;
                         }else{
                             this.Create_Payment();
-                        } 
-                        
+                        }
+
                     });
                 },
 
@@ -587,7 +660,7 @@
 
 
 
-             
+
             //----------------------------------------- get_client_debt_total  -------------------------------\\
             get_client_debt_total(id) {
                 axios
@@ -598,7 +671,7 @@
                     this.payment.montant = parseFloat(response.data.sell_due);
                     this.payment_methods   = response.data.payment_methods;
                     this.accounts          = response.data.accounts;
-                       
+
                     })
                     .catch(() => {
                     setTimeout(() => NProgress.done(), 500);
@@ -613,7 +686,7 @@
                     if (!success) {
                         toastr.error('{{ __('translate.Please_fill_the_form_correctly') }}');
                     } else if (this.payment_return.montant > this.return_due) {
-                    
+
                     toastr.error('The amount to be paid is greater than the total debt');
                     this.payment_return.montant = 0;
                     }
@@ -633,7 +706,7 @@
                 } else if (this.payment_return.montant > this.return_due) {
                     toastr.error('The amount to be paid is greater than the total debt');
                     this.payment_return.montant = 0;
-                } 
+                }
             },
 
             //-------------------------------- reset_Form_payment-------------------------------\\
@@ -649,7 +722,7 @@
                 this.return_due = 0;
             },
 
-              
+
             //----------------------------------------- get_client_debt_return_total  -------------------------------\\
             get_client_debt_return_total(id) {
                 axios
@@ -666,7 +739,38 @@
                     });
             },
 
+            changeFile(e){
+                let file = e.target.files[0];
+                this.clients.excel = file;
+            },
 
+            //------------- Import Client Data ----------------\\
+            Import_Client_Excel() {
+                this.import_client_Processing = true;
+                let formData = new FormData();
+                formData.append('clients', this.clients.excel);
+                axios
+                    .post("/import_clients",
+                        formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }
+                    )
+                    .then(response => {
+                        toastr.success('{{ __('translate.Created_in_successfully') }}');
+                        this.import_client_Processing = false;
+                        $('#import_user_modal').modal('hide');
+                        $('#client_list_table').DataTable().ajax.reload();
+                    })
+                    .catch(error => {
+                        if (error.response.status == 422) {
+                            this.errors = error.response.data.errors;
+                        }
+                        NProgress.done();
+                        this.import_client_Processing = false;
+                    });
+            },
 
             //---------------------------------------- Submit_Pay_return_due-------------------------------\\
             Submit_Pay_return_due() {
@@ -686,14 +790,16 @@
                         this.payment_return_Processing = false;
                     })
                     .catch(error => {
+                        console.log("apanya");
                         if (error.response.status == 422) {
                             this.errors = error.response.data.errors;
+                            toastr.error('{{ __('translate.There_was_something_wronge') }}');
                         }
                         NProgress.done();
                     this.payment_return_Processing = false;
                     });
             },
-                
+
              //--------------------------------- Remove Client ---------------------------\\
             Remove_Client(id) {
                 swal({
@@ -720,8 +826,8 @@
                             });
                     });
                 },
-          
-           
+
+
         },
         //-----------------------------Autoload function-------------------
         created() {

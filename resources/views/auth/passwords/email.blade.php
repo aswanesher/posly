@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel=icon href={{ asset('images/logo.svg') }}>
 
-    <title>Posly - Ultimate Inventory Management System with POS</title>
+    <title>Simseka - POS Sistem Informasi Seragam Kerjaku</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/styles/css/themes/lite-purple.min.css')}}">
 </head>
@@ -34,7 +34,7 @@
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
                                 </div>
-    
+
                                 <button type="submit" class="btn btn-primary mt-3">{{ __('translate.Send_Password_Reset_Link') }}</button>
 
                             </form>

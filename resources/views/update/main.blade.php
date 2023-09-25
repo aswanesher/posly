@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Posly | Update Database</title>
+    <title>Simseka | Update Database</title>
     <link rel=icon href={{ asset('/images/logo.svg') }}>
     <link rel="stylesheet" href="{{asset('/assets_setup/css/bootstrap.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">

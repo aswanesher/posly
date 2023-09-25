@@ -10,7 +10,7 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Posly - POS with Inventory Management</title>
+        <title>Simseka - POS Sistem Informasi Seragam Kerjaku</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
         @yield('before-css')
         {{-- theme css --}}
@@ -23,20 +23,20 @@
         <link rel="stylesheet" href="{{asset('assets/styles/vendor/toastr.css')}}">
         <link rel="stylesheet" href="{{asset('assets/styles/vendor/vue-select.css')}}">
         <link rel="stylesheet" href="{{asset('assets/styles/vendor/sweetalert2.min.css')}}">
-        <link rel="stylesheet" href="{{asset('assets/styles/vendor/nprogress.css')}}"> 
-        
+        <link rel="stylesheet" href="{{asset('assets/styles/vendor/nprogress.css')}}">
+
         {{-- axios js --}}
         <script src="{{ asset('assets/js/axios.js') }}"></script>
         {{-- vue select js --}}
         <script src="{{ asset('assets/js/vue-select.js') }}"></script>
         <script defer src="{{ asset('assets/js/compact-layout.js') }}"></script>
-        
+
         {{-- Alpine Js --}}
         <script defer src="{{ asset('js/plugin-core/alpine-collapse.js') }}"></script>
         <script defer src="{{ asset('js/plugin-core/alpine.js') }}"></script>
         <script src="{{ asset('js/plugin-script/alpine-data.js') }}"></script>
         <script src="{{ asset('js/plugin-script/alpine-store.js') }}"></script>
-        
+
         {{-- page specific css --}}
         @yield('page-css')
     </head>
@@ -77,7 +77,7 @@
         <script src="{{asset('assets/js/nprogress.js')}}"></script>
 
         <script src="{{ asset('assets/js/tooltip.script.js') }}"></script>
-        
+
         <script type="text/javascript" src="<?php echo asset('assets/js/pdfmake_arabic.min.js') ?>"></script>
         <script type="text/javascript" src="<?php echo asset('assets/js/vfs_fonts_arabic.js') ?>"></script>
         @yield('bottom-js')
