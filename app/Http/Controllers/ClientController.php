@@ -708,9 +708,7 @@ class ClientController extends Controller
 
             $import = new ClientImportNew();
             $import->queue($request->file('clients')->store('temp'));
-            // dd($import->failures());
             if ($import->failures()->isNotEmpty()) {
-                // return back()->withFailures($import->failures());
                 return response()->json(['message' => 'error occured', 'errors' => $import->failures()], 422);
             }
 

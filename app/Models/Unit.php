@@ -16,7 +16,5 @@ class Unit extends Model
         'base_unit' => 'integer',
         'operator_value' => 'float',
         'is_active' => 'integer',
-
     ];
-
 }

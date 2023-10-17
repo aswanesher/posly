@@ -35,7 +35,6 @@
                 <th>{{ __('translate.Name') }}</th>
                 <th>{{ __('translate.Code') }}</th>
                 <th>{{ __('translate.Category') }}</th>
-                <th>{{ __('translate.Brand') }}</th>
                 <th>{{ __('translate.Product_Cost') }}</th>
                 <th>{{ __('translate.Product_Price') }}</th>
                 <th>{{ __('translate.Current_Stock') }}</th>
@@ -61,25 +60,25 @@
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-  
+
           <form method="POST" id="filter_products">
             @csrf
             <div class="row">
-  
+
               <div class="form-group col-md-6">
                 <label for="code">{{ __('translate.Code_Product') }}
                 </label>
                 <input type="text" class="form-control" name="code" id="code"
                   placeholder="{{ __('translate.Code_Product') }}">
               </div>
-  
+
               <div class="form-group col-md-6">
                 <label for="name">{{ __('translate.Product_Name') }}
                 </label>
                 <input type="text" class="form-control" name="name" id="product_name"
                   placeholder="{{ __('translate.Product_Name') }}">
               </div>
-  
+
               <div class="form-group col-md-6">
                 <label for="category_id">{{ __('translate.Category') }}
                 </label>
@@ -90,7 +89,7 @@
                   @endforeach
                 </select>
               </div>
-  
+
               <div class="form-group col-md-6">
                 <label for="brand_id">{{ __('translate.Brand') }}
                 </label>
@@ -101,11 +100,11 @@
                   @endforeach
                 </select>
               </div>
-  
+
             </div>
-  
+
             <div class="row mt-3">
-  
+
               <div class="col-md-6">
                 <button type="submit" class="btn btn-primary">
                   <i class="i-Filter-2 me-2 font-weight-bold"></i> {{ __('translate.Filter') }}
@@ -115,12 +114,12 @@
                 </button>
               </div>
             </div>
-  
-  
+
+
           </form>
-  
+
         </div>
-  
+
       </div>
     </div>
   </div>
@@ -155,7 +154,7 @@
                       'searchable': false,
                   },
                   {
-                      'targets': [1,2,5,6,7,8,9,10],
+                      'targets': [1,2,5,6,7,8,9],
                       "orderable": false,
                   },
                 ],
@@ -180,14 +179,13 @@
                     {data: 'name'},
                     {data: 'code'},
                     {data: 'category'},
-                    {data: 'brand'},
                     {data: 'cost'},
                     {data: 'price'},
                     {data: 'quantity'},
                     {data: 'action'},
-                
+
                 ],
-            
+
                 lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 dom: "<'row'<'col-sm-12 col-md-7'lB><'col-sm-12 col-md-5 p-0'f>>rtip",
                 oLanguage: {
@@ -196,7 +194,7 @@
                     sInfoEmpty: "{{ __('datatable.sInfoEmpty') }}",
                     sInfoFiltered: "{{ __('datatable.sInfoFiltered') }}",
                     sInfoThousands: "{{ __('datatable.sInfoThousands') }}",
-                    sLengthMenu: "_MENU_", 
+                    sLengthMenu: "_MENU_",
                     sLoadingRecords: "{{ __('datatable.sLoadingRecords') }}",
                     sProcessing: "{{ __('datatable.sProcessing') }}",
                     sSearch: "",
@@ -251,7 +249,7 @@
                           },
                         ]
                     }]
-                   
+
             });
         }
 
@@ -278,12 +276,12 @@
             let category_id = $('#category_id').val();
             let brand_id = $('#brand_id').val();
             var code = $('#code').val();
-      
+
             $('#product_table').DataTable().destroy();
             product_datatable(name, category_id, brand_id, code);
 
             $('#filter_products_modal').modal('hide');
-           
+
         });
 
         // event reload Datatatble
@@ -308,9 +306,9 @@
             editmode: false,
             SubmitProcessing:false,
             errors:[],
-            products: [], 
+            products: [],
         },
-       
+
         methods: {
 
 
@@ -343,7 +341,7 @@
                     });
                 },
 
-         
+
 
         },
         //-----------------------------Autoload function-------------------

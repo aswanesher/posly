@@ -1,0 +1,19 @@
+
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+O
+resources/lang/en/translate.php,c/0/c071644433463b34ff8d58518a7d96ba4e8f55bd
+b
+2resources/views/products/attributesValue.blade.php,3/0/302933229983221ccf975b64ccf8c569cdbaa5eb
+X
+(resources/views/products/units.blade.php,4/c/4c6386f94bdf624a34c71170460fd8bef847ed6f
+>
+routes/web.php,6/b/6b9a783d9b43fee50fd28f56dbd1856d2608f305
+X
+(app/Http/Controllers/UnitsController.php,1/5/15deeed9deae678d50eea7630d58fa4889d2e8af
+c
+3app/Http/Controllers/VariantAttributeController.php,4/6/463950405fee2563e627abd5d61788d71e67d064
+T
+$app/Models/VariantAttributeValue.php,9/7/972da05cbde3aeccd5a708411f7e60c900a44764
+h
+8app/Http/Controllers/VariantAttributeValueController.php,d/b/db0f5b11c49f34a4d2fd65bbc1f21f9171d18f41

@@ -131,6 +131,24 @@ Route::middleware(['XSS'])->group(function () {
             Route::get('Get_Units_SubBase', 'UnitsController@Get_Units_SubBase');
             Route::get('Get_sales_units', 'UnitsController@Get_sales_units');
 
+            //------------------------------- variant attribute --------------------------\\
+            Route::resource('variant/attributes', 'VariantAttributeController');
+
+            //------------------------------- variant attribute values --------------------------\\
+            Route::get('variant/values/{id}', 'VariantAttributeValueController@index')->name('attributes.value.index');
+            Route::get('variant/values/datatables/{id}', 'VariantAttributeValueController@dataTables')
+                ->name('attributes.value.dataTables');
+            Route::post('/variant/values/{id}/store', 'VariantAttributeValueController@store')
+                ->name('attributes.value.store');
+            Route::get('variant/values/{attributeId}/{id}/edit', 'VariantAttributeValueController@edit')
+                ->name('attributes.value.edit');
+            Route::put('variant/values/{attributeId}/{id}', 'VariantAttributeValueController@update')
+                ->name('attributes.value.update');
+            Route::delete('variant/values/{attributeId}/delete/{id}', 'VariantAttributeValueController@destroy')
+                ->name('attributes.value.destroy');
+            Route::get('variant/values/{attributeId}/show', 'VariantAttributeValueController@show')
+                ->name('attributes.value.show');
+
             //------------------------------- warehouses--------------------------\\
             Route::resource('warehouses', 'WarehousesController');
         });

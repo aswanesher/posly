@@ -130,6 +130,14 @@ return [
     'Suppliers' => 'Suppliers',
     'Print_Labels' => 'Print Labels',
 
+    'Enter_Attribute_Name' => 'Enter Attribute Name',
+    'Enter_Attribute_Code' => 'Enter Attribute Code',
+    'Enter_Attribute_Value_Code' => 'Enter Value Code',
+    'Enter_Attribute_Value_Name' => 'Enter Value Name',
+    'AttributeName' => 'Attribute Name',
+    'AttributeValueName' => 'Attribute Value Name',
+    'AttributeValueCode' => 'Attribute Value Code',
+
 
     'Adjustments' => 'Adjustments',
     'Create' => 'Create',
@@ -206,6 +214,7 @@ return [
     'Price' => 'Price',
     'Unit' => 'Unit',
     'Units' => 'Units',
+    'Attributes' => 'Variation Attributes',
     'ShortName' => 'ShortName',
     'Base_Unit' => 'Base Unit',
     'Operator' => 'Operator',
@@ -1874,6 +1883,9 @@ return [
     'Pos_Receipt_Settings' => 'Pos Receipt Settings',
     'Account' => 'Account',
     'Choose_Account' => 'Choose Account',
+
+    'Variant_attributes' => 'Product Variation',
+    'Variant_values' => 'Variation options',
 
     'Add_new' => 'Add new',
     'Good_Morning' => 'Good Morning',

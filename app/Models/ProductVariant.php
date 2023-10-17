@@ -9,7 +9,7 @@ class ProductVariant extends Model
     protected $table = 'product_variants';
 
     protected $fillable = [
-        'product_id','code', 'name', 'cost','price'
+        'product_id', 'code', 'name', 'cost', 'price', 'attribute_variant_id'
     ];
 
     protected $casts = [
@@ -18,4 +18,8 @@ class ProductVariant extends Model
         'price' => 'double',
     ];
 
+    public function productAttribute()
+    {
+        return $this->belongsTo(VariantAttribute::class, 'id', 'variant_attribute_id');
+    }
 }
