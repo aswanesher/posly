@@ -1263,6 +1263,7 @@ return [
     'Purchase_return_due' => 'Purchase return due',
     'Sell_return_due' => 'Sell return due',
     'product_report' => 'Product report',
+    'import_products_modal' => 'Import products data',
 
 
     // HRM Module
@@ -1717,7 +1718,7 @@ return [
     'Are_you_sure' => 'Are you sure ?',
     'You_wont_be_able_to_revert_this' => 'You wont be able to revert this !',
     'Deleted_in_successfully' => 'Deleted in successfully',
-    'There_was_something_wronge' => 'There was something wronge',
+    'There_was_something_wronge' => 'There was something wrong',
     'Created_in_successfully' => 'Created in successfully',
     'Updated_in_successfully' => 'Updated in successfully',
     'Yes_delete_it'  => 'Yes, delete it',

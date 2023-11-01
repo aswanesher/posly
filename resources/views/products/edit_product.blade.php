@@ -12,7 +12,6 @@
 
 <div class="row" id="section_edit_product">
     <div class="col-lg-12 mb-3">
-
         <!--begin::form-->
         <form @submit.prevent="Update_Product()">
             <div class="card">
@@ -22,11 +21,9 @@
                         <div class="form-group col-md-4">
                             <label for="name">{{ __('translate.Product_Name') }} <span
                                     class="field_required">*</span></label>
-                            <input type="text" class="form-control" id="name"
-                                placeholder="{{ __('translate.Enter_Name_Product') }}" v-model="product.name">
-                            <span class="error" v-if="errors && errors.name">
-                                @{{ errors.name[0] }}
-                            </span>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="{{ __('translate.Enter_Name_Product') }}" value="{{ $product['name'] }}">
+                            <span class="name-error-notif text-danger" id="name-error"></span>
                         </div>
 
                         <div class="form-group col-md-4">
@@ -35,36 +32,40 @@
 
                             <div class="input-group">
                                 <div class="input-group mb-3">
-                                    <input v-model.number="product.code" type="text" class="form-control"
-                                        placeholder="generate the barcode" aria-label="generate the barcode"
-                                        aria-describedby="basic-addon2">
+                                    <input type="text" class="form-control" placeholder="generate the barcode"
+                                        id="barcode" aria-label="generate the barcode" aria-describedby="basic-addon2"
+                                        value="{{ $product['code'] }}">
                                     <span class="input-group-text cursor-pointer" id="basic-addon2"
                                         @click="generateNumber()"><i class="i-Bar-Code"></i></span>
                                 </div>
                             </div>
-                            <span class="error" v-if="errors && errors.code">
-                                @{{ errors.code[0] }}
-                            </span>
+                            <span class="barcode-error-notif text-danger" id="barcode-error"></span>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>{{ __('translate.Category') }} <span class="field_required">*</span></label>
-                            <v-select placeholder="{{ __('translate.Choose_Category') }}" v-model="product.category_id"
-                                :reduce="(option) => option.value"
-                                :options="categories.map(categories => ({ label: categories.name, value: categories.id }))">
-                            </v-select>
-
-                            <span class="error" v-if="errors && errors.category_id">
-                                @{{ errors.category_id[0] }}
-                            </span>
+                            <select class="form-control @error('category') is-invalid @enderror" name="category"
+                                required autocomplete="category" id="category">
+                                @foreach ($categories as $catData)
+                                    <option value="{{ $catData->id }}"
+                                        {{ $catData->id === $product['category_id'] ? 'selected' : '' }}>
+                                        {{ $catData->name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="category-error-notif text-danger" id="category-error"></span>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>{{ __('translate.Brand') }} </label>
-                            <v-select placeholder="{{ __('translate.Choose_Brand') }}" v-model="product.brand_id"
-                                :reduce="(option) => option.value"
-                                :options="brands.map(brands => ({ label: brands.name, value: brands.id }))">
-                            </v-select>
+                            <select class="form-control @error('brand') is-invalid @enderror" name="brand" required
+                                autocomplete="brand" id="brand">
+                                @foreach ($brands as $brand)
+                                    <option value="{{ $brand->id }}"
+                                        {{ $brand->id === $product['brand_id'] ? 'selected' : '' }}>
+                                        {{ $brand->name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="brand-error-notif text-danger" id="brand-error"></span>
                         </div>
 
 
@@ -73,40 +74,39 @@
                             <label for="stock_alert">{{ __('translate.Order_Tax') }} </label>
 
                             <div class="input-group mb-3">
-                                <input v-model.number="product.TaxNet" type="text" class="form-control"
-                                    aria-describedby="basic-addon3">
+                                <input name="tax_order" type="text" class="form-control"
+                                    aria-describedby="basic-addon3" id="tax_order" value="{{ $product['TaxNet'] }}">
                                 <span class="input-group-text cursor-pointer" id="basic-addon3">%</span>
+                                <span class="tax_order-error-notif text-danger" id="tax_order-error"></span>
                             </div>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label>{{ __('translate.Tax_Method') }} <span class="field_required">*</span></label>
-                            <v-select placeholder="{{ __('translate.Choose_Method') }}" v-model="product.tax_method"
-                                :reduce="(option) => option.value"
-                                :options="[
-                                    { label: 'Exclusive', value: '1' },
-                                    { label: 'Inclusive', value: '2' }
-                                ]">
-                            </v-select>
-
-                            <span class="error" v-if="errors && errors.tax_method">
-                                @{{ errors.tax_method[0] }}
-                            </span>
+                            <select class="form-control @error('category') is-invalid @enderror" name="tax_method"
+                                required autocomplete="tax_method" id="tax_method">
+                                <option value="{{ $product['tax_method'] }}"
+                                    {{ $product['tax_method'] === 1 ? 'selected' : '' }}>
+                                    Exclusive</option>
+                                <option value="{{ $product['tax_method'] }}"
+                                    {{ $product['tax_method'] === 2 ? 'selected' : '' }}>
+                                    Inclusive</option>
+                            </select>
+                            <span class="tax_method-error-notif text-danger" id="tax_method-error"></span>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="image">{{ __('translate.Image') }} </label>
-                            <input name="image" @change="onFileSelected" type="file" class="form-control"
-                                id="image">
-                            <span class="error" v-if="errors && errors.image">
-                                @{{ errors.image[0] }}
-                            </span>
+                            <input name="image" type="file" class="form-control" id="image">
+                            <span class="image-error-notif text-danger" id="image-error"></span>
                         </div>
 
                         <div class="form-group col-md-12 mb-4">
                             <label for="note">{{ __('translate.Please_provide_any_details') }} </label>
-                            <textarea type="text" v-model="product.note" class="form-control" name="note" id="note"
-                                placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
+                            <textarea type="text" class="form-control" name="note" id="note"
+                                placeholder="{{ __('translate.Please_provide_any_details') }}">
+                            {!! trim($product['note']) !!}</textarea>
+                            <span class="note-error-notif text-danger" id="note-error"></span>
                         </div>
                     </div>
                 </div>
@@ -121,170 +121,207 @@
                                     class="field_required">*</span></label>
                             <input type="text" class="form-control" id="type" placeholder="Standard Product"
                                 value="Standard Product" disabled>
-
-                            <span class="error" v-if="errors && errors.type">
-                                @{{ errors.type[0] }}
-                            </span>
+                            <span class="note-error-notif text-danger" id="note-error"></span>
                         </div>
 
-                        <div class="form-group col-md-4 mb-3" v-if="product.type == 'is_variant'">
-                            <label for="type">{{ __('translate.Product_Type') }} <span
-                                    class="field_required">*</span></label>
-                            <input type="text" class="form-control" id="type" placeholder="Variable Product"
-                                value="Variable Product" disabled>
+                        @if ($product['type'] == 'is_variant')
+                            <div class="form-group col-md-4 mb-3">
+                                <label for="type">{{ __('translate.Product_Type') }} <span
+                                        class="field_required">*</span></label>
+                                <input type="text" class="form-control" id="type"
+                                    placeholder="Variable Product" value="Variable Product" disabled>
+                                <span class="note-error-notif text-danger" id="note-error"></span>
+                            </div>
+                        @else
+                            <div class="form-group col-md-4 mb-3">
+                                <label for="type">{{ __('translate.Product_Type') }} <span
+                                        class="field_required">*</span></label>
+                                <input type="text" class="form-control" id="type"
+                                    placeholder="Service Product" value="Service Product" disabled>
+                            </div>
+                        @endif
 
-                            <span class="error" v-if="errors && errors.type">
-                                @{{ errors.type[0] }}
-                            </span>
-                        </div>
+                        @if ($product['type'] == 'is_single' || $product['type'] == 'is_variant')
+                            <div class="form-group col-md-4">
+                                <label for="cost">{{ __('translate.Product_Cost') }} <span
+                                        class="field_required">*</span></label>
+                                <input type="text" class="form-control" id="cost" name="cost"
+                                    placeholder="{{ __('translate.Enter_Product_Cost') }}"
+                                    value="{{ $product['cost'] }}">
+                                <span class="cost-error-notif text-danger" id="cost-error"></span>
+                            </div>
+                        @endif
 
-                        <div class="form-group col-md-4 mb-3" v-if="product.type == 'is_service'">
-                            <label for="type">{{ __('translate.Product_Type') }} <span
-                                    class="field_required">*</span></label>
-                            <input type="text" class="form-control" id="type" placeholder="Service Product"
-                                value="Service Product" disabled>
+                        @if ($product['type'] == 'is_service' || $product['type'] == 'is_variant' || $product['type'] == 'is_single')
+                            <div class="form-group col-md-4">
+                                <label for="price">{{ __('translate.Product_Price') }} <span
+                                        class="field_required">*</span></label>
+                                <input type="text" class="form-control" id="price" name="price"
+                                    placeholder="{{ __('translate.Enter_Product_Price') }}"
+                                    value="{{ $product['price'] }}">
+                                <span class="price-error-notif text-danger" id="price-error"></span>
+                            </div>
+                        @endif
 
-                            <span class="error" v-if="errors && errors.type">
-                                @{{ errors.type[0] }}
-                            </span>
-                        </div>
+                        @if ($product['type'] != 'is_service')
+                            <div class="form-group col-md-4">
+                                <label>{{ __('translate.Unit_Product') }} <span
+                                        class="field_required">*</span></label>
+                                <select class="form-control @error('category') is-invalid @enderror" name="unit_id"
+                                    required autocomplete="unit_id" id="unit_id">
+                                    @foreach ($units as $unit)
+                                        <option value="{{ $unit->id }}"
+                                            {{ $unit->id === $product['unit_id'] ? 'selected' : '' }}>
+                                            {{ $unit->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="unit_id-error-notif text-danger" id="unit_id-error"></span>
+                            </div>
 
-                        <div class="form-group col-md-4"
-                            v-if="product.type == 'is_single' || product.type == 'is_variant'">
-                            <label for="cost">{{ __('translate.Product_Cost') }} <span
-                                    class="field_required">*</span></label>
-                            <input type="text" class="form-control" id="cost"
-                                placeholder="{{ __('translate.Enter_Product_Cost') }}" v-model="product.cost">
 
-                            <span class="error" v-if="errors && errors.cost">
-                                @{{ errors.cost[0] }}
-                            </span>
-                        </div>
+                            <div class="form-group col-md-4">
+                                <label>{{ __('translate.Unit_Sale') }} <span class="field_required">*</span></label>
+                                <select class="form-control @error('unit_sale_id') is-invalid @enderror"
+                                    name="unit_sale_id" required autocomplete="unit_sale_id" id="unit_sale_id">
+                                    @foreach ($units_sub as $unit_sub)
+                                        <option value="{{ $unit_sub->id }}"
+                                            {{ $unit_sub->id === $product['unit_sale_id'] ? 'selected' : '' }}>
+                                            {{ $unit_sub->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="unit_sale_id-error-notif text-danger" id="unit_sale_id-error"></span>
+                            </div>
 
-                        <div class="form-group col-md-4"
-                            v-if="product.type == 'is_single' || product.type == 'is_service' || product.type == 'is_variant'">
-                            <label for="price">{{ __('translate.Product_Price') }} <span
-                                    class="field_required">*</span></label>
-                            <input type="text" class="form-control" id="price"
-                                placeholder="{{ __('translate.Enter_Product_Price') }}" v-model="product.price">
+                            <div class="form-group col-md-4">
+                                <label>{{ __('translate.Unit_Purchase') }} <span
+                                        class="field_required">*</span></label>
+                                <select class="form-control @error('unit_purchase_id') is-invalid @enderror"
+                                    name="unit_purchase_id" required autocomplete="unit_purchase_id"
+                                    id="unit_purchase_id">
+                                    @foreach ($units_sub as $unit_sub)
+                                        <option value="{{ $unit_sub->id }}"
+                                            {{ $unit_sub->id === $product['unit_purchase_id'] ? 'selected' : '' }}>
+                                            {{ $unit_sub->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="unit_sale_id-error-notif text-danger" id="unit_sale_id-error"></span>
+                            </div>
 
-                            <span class="error" v-if="errors && errors.price">
-                                @{{ errors.price[0] }}
-                            </span>
-                        </div>
+                            <div class="form-group col-md-4">
+                                <label for="qty_min">{{ __('translate.Minimum_sale_quantity') }} </label>
+                                <input type="text" class="form-control" id="qty_min" name="qty_min"
+                                    placeholder="{{ __('translate.Enter_Minimum_sale_quantity') }}"
+                                    value="{{ $product['qty_min'] }}">
+                            </div>
 
-                        <div class="form-group col-md-4" v-if="product.type != 'is_service'">
-                            <label>{{ __('translate.Unit_Product') }} <span class="field_required">*</span></label>
-                            <v-select @input="Selected_Unit" placeholder="{{ __('translate.Choose_Unit_Product') }}"
-                                v-model="product.unit_id" :reduce="label => label.value"
-                                :options="units.map(units => ({ label: units.name, value: units.id }))">
-                            </v-select>
-
-                            <span class="error" v-if="errors && errors.unit_id">
-                                @{{ errors.unit_id[0] }}
-                            </span>
-                        </div>
-
-                        <div class="form-group col-md-4" v-if="product.type != 'is_service'">
-                            <label>{{ __('translate.Unit_Sale') }} <span class="field_required">*</span></label>
-                            <v-select placeholder="{{ __('translate.Choose_Unit_Sale') }}"
-                                v-model="product.unit_sale_id" :reduce="label => label.value"
-                                :options="units_sub.map(units_sub => ({ label: units_sub.name, value: units_sub.id }))">
-                            </v-select>
-
-                            <span class="error" v-if="errors && errors.unit_sale_id">
-                                @{{ errors.unit_sale_id[0] }}
-                            </span>
-                        </div>
-
-                        <div class="form-group col-md-4" v-if="product.type != 'is_service'">
-                            <label>{{ __('translate.Unit_Purchase') }} <span class="field_required">*</span></label>
-                            <v-select placeholder="{{ __('translate.Choose_Unit_Purchase') }}"
-                                v-model="product.unit_purchase_id" :reduce="label => label.value"
-                                :options="units_sub.map(units_sub => ({ label: units_sub.name, value: units_sub.id }))">
-                            </v-select>
-
-                            <span class="error" v-if="errors && errors.unit_purchase_id">
-                                @{{ errors.unit_purchase_id[0] }}
-                            </span>
-                        </div>
-
-                        <div class="form-group col-md-4" v-if="product.type != 'is_service'">
-                            <label for="qty_min">{{ __('translate.Minimum_sale_quantity') }} </label>
-                            <input type="text" class="form-control" id="qty_min"
-                                placeholder="{{ __('translate.Enter_Minimum_sale_quantity') }}"
-                                v-model="product.qty_min">
-                        </div>
-
-                        <div class="form-group col-md-4" v-if="product.type != 'is_service'">
-                            <label for="stock_alert">{{ __('translate.Stock_Alert') }} </label>
-                            <input type="text" class="form-control" id="stock_alert"
-                                placeholder="{{ __('translate.Enter_Stock_alert') }}" v-model="product.stock_alert">
-                        </div>
+                            <div class="form-group col-md-4">
+                                <label for="stock_alert">{{ __('translate.Stock_Alert') }} </label>
+                                <input type="text" class="form-control" id="stock_alert" name="stock_alert"
+                                    placeholder="{{ __('translate.Enter_Stock_alert') }}"
+                                    value="{{ $product['stock_alert'] }}">
+                            </div>
+                        @endif
 
                         <div class="col-md-12 mb-3 mt-3" v-if="product.type == 'is_variant'">
                             <div class="d-flex float-end">
-                                <a @click="add_variant(tag)" class=" ms-3 btn btn-md btn-primary float-end">
+                                <a id="add_new_variant" class=" ms-3 btn btn-md btn-primary float-end">
                                     {{ __('translate.Add') }} variant
                                 </a>
                             </div>
                         </div>
 
                         <div class="col-md-12 mb-2 " v-if="product.type == 'is_variant'">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-sm">
-                                    <thead class="bg-gray-300">
-                                        <tr>
-                                            <th scope="col">{{ __('translate.Variant_attributes') }}</th>
-                                            <th scope="col">{{ __('translate.Variant_values') }}</th>
-                                            <th scope="col">{{ __('translate.Product_Cost') }}</th>
-                                            <th scope="col">{{ __('translate.Product_Price') }}</th>
-                                            <th scope="col">{{ __('translate.Action') }}</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                            <table class="table table-hover table-sm" id="variantTable">
+                                <thead class="bg-gray-300">
+                                    <tr>
+                                        <th scope="col">{{ __('translate.Variant_attributes') }}</th>
+                                        <th scope="col">{{ __('translate.Variant_values') }}</th>
+                                        <th scope="col">{{ __('translate.Product_Cost') }}</th>
+                                        <th scope="col">{{ __('translate.Product_Price') }}</th>
+                                        <th scope="col">{{ __('translate.Action') }}</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if ($product['ProductVariant'] == null)
                                         <tr v-if="variants.length <=0">
                                             <td colspan="3">{{ __('translate.No_data_Available') }}</td>
                                         </tr>
-                                        <tr v-for="variant in variants">
+                                    @else
+                                        @php
+                                            $i = 0;
+                                        @endphp
+                                        @foreach ($product['ProductVariant'] as $variant)
+                                            <tr>
+                                                <td>
+                                                    <select class="form-select" name="variants" required
+                                                        id="attributes_{{ $i + 1 }}">
+                                                        <option></option>
+                                                        @foreach ($attributes as $attribute)
+                                                            <option value="{{ $attribute->id }}"
+                                                                {{ $attribute->id === $variant['variantId'] ? 'selected' : '' }}>
+                                                                {{ $attribute->variant_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-select" name="variant_values" required
+                                                        id="attribute_value_{{ $i + 1 }}">
+                                                        <option></option>
+                                                        @foreach ($attributeValues as $attributeValue)
+                                                            <option value="{{ $attributeValue->id }}"
+                                                                {{ $attributeValue->id === $variant['variantAttributeId'] ? 'selected' : '' }}>
+                                                                {{ $attributeValue->variant_attribute_value_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input required class="form-control"
+                                                        value="{{ $variant['cost'] }}" name="variant_cost">
+                                                </td>
+                                                <td>
+                                                    <input required class="form-control" name="variant_price"
+                                                        value="{{ $variant['price'] }}">
+                                                </td>
+                                                <td>
+                                                    <a @click="delete_variant(variant.var_id)" class="btn btn-danger"
+                                                        title="Delete">
+                                                        <i class="i-Close-Window"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @php
+                                                $i++;
+                                            @endphp
+                                        @endforeach
+                                        <tr>
                                             <td>
-                                                <v-select @input="Selected_Variant" placeholder="Choose Variation"
-                                                    v-model="variant.variantId" :reduce="label => label.value"
-                                                    :options="attributes.map(
-                                                        attributes => ({
-                                                            label: attributes.variant_code,
-                                                            value: attributes.id
-                                                        })
-                                                    )">
-                                                </v-select>
-
-                                                <span class="error" v-if="errors && errors.unit_id">
-                                                    @{{ errors.variantId[0] }}
-                                                </span>
+                                                <select class="form-select" name="variants" required id="attributes">
+                                                    <option></option>
+                                                    @foreach ($attributes as $attribute)
+                                                        <option value="{{ $attribute->id }}">
+                                                            {{ $attribute->variant_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </td>
                                             <td>
-                                                <v-select @input="Selected_Sub_Variant"
-                                                    placeholder="Choose Attribute Value"
-                                                    v-model="variant.variantAttributeId"
-                                                    :value="variant.variantAttributeId"
-                                                    :options="attributes_sub.map(
-                                                        attributes_sub => ({
-                                                            label: attributes_sub.variant_attribute_value_name,
-                                                            value: attributes_sub.id
-                                                        })
-                                                    )">
-                                                </v-select>
-
-                                                <span class="error" v-if="errors && errors.unit_purchase_id">
-                                                    @{{ errors.variantAttributeId[0] }}
-                                                </span>
+                                                <select class="form-select" name="variant_values" required
+                                                    id="attribute_value">
+                                                    <option></option>
+                                                    @foreach ($attributeValues as $attributeValue)
+                                                        <option value="{{ $attributeValue->id }}">
+                                                            {{ $attributeValue->variant_attribute_value_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </td>
                                             <td>
-                                                <input required class="form-control" v-model="variant.cost">
+                                                <input required class="form-control" name="variant_cost">
                                             </td>
                                             <td>
-                                                <input required class="form-control" v-model="variant.price">
+                                                <input required class="form-control" name="variant_price">
                                             </td>
                                             <td>
                                                 <a @click="delete_variant(variant.var_id)" class="btn btn-danger"
@@ -293,15 +330,16 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card mt-5">
+            <div class="card
+                                                    mt-5">
                 <div class="card-body">
 
                     <!-- Product_Has_Imei_Serial_number -->
@@ -339,8 +377,43 @@
 <script src="{{ asset('assets/js/nprogress.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-tagsinput.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/vuejs-datepicker/vuejs-datepicker.min.js') }}"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.1.1/dist/select2-bootstrap-5-theme.min.css" />
+<script>
+    $("select").select2({
+        theme: "classic",
+        width: 'resolve',
+        allowClear: false,
+    });
 
-<script type="text/javascript">
+    let attributes = @json($product['ProductVariant']);
+    attributes.forEach((index, data) => {
+        // console.log('attributes_' + index.id);
+        $("#attributes_" + index.id).select2({
+            theme: "classic",
+            width: '100%',
+            placeholder: "Select a variant",
+        });
+
+        $("#attribute_value_" + index.id).select2({
+            theme: "classic",
+            width: '100%',
+            placeholder: "Select a variant value",
+        });
+    });
+
+    // add new row
+    $("#add_new_variant").on('click', function() {
+        var table = $('#variantTable'),
+            lastRow = table.find('tbody tr:last'),
+            rowClone = lastRow.clone();
+
+        table.find('tbody').append(rowClone);
+    });
+</script>
+{{-- <script type="text/javascript">
     $(function() {
         "use strict";
 
@@ -356,7 +429,7 @@
 
 <script>
     Vue.component('v-select', VueSelect.VueSelect)
-
+    Vue.config.devtools = true;
     var app = new Vue({
         el: '#section_edit_product',
         components: {
@@ -385,9 +458,25 @@
             },
         },
 
+        // beforeMount() {
+        //     var variants = this.variants;
+        //     variants.forEach(item => {
+        //         console.log(item.variantId);
+        //         // this.Selected_Sub_Variant(item.variantId);
+        //     });
+        // },
+
         methods: {
             hello_world() {
                 console.log("Hello world again!");
+            },
+
+            checkDisabled(variantId) {
+                if (variantId === null || variantId === '' || variantId === 'undefined') {
+                    return status = false;
+                } else {
+                    return status = true;
+                }
             },
 
             //------ Generate code
@@ -442,6 +531,13 @@
 
             },
 
+            add_new_variant() {
+                var var_id = this.variants.length;
+                var new_row = this.variants.length + 1;
+                new_row.disabled = false;
+                this.variants.splice(var_id + 1, 0, new_row);
+                this.tag = "";
+            },
 
             //-----------------------------------Delete variant------------------------------\\
             delete_variant(var_id) {
@@ -479,30 +575,15 @@
 
             // Event Select Variant
             Selected_Variant(value) {
-                this.variant_value = [];
-                this.attributes_sub = [];
-                this.variant.variantAttributeId = "";
+                console.log(value);
+                // this.variant_value = [];
+                // this.attributes_sub = [];
+                // this.variant.variantAttributeId = "";
                 this.Get_Variant_Value(value);
-                this.Selected_Sub_Variant(value);
-            },
-
-            // Event Select Sub Variant
-            Selected_Sub_Variant(value) {
-                this.Get_Selected_Variant_Value(value);
             },
 
             // Get variant value
             Get_Variant_Value(value) {
-                axios.get("/products/variant/values/" + value.value + "/show")
-                    .then(
-                        ({
-                            data
-                        }) => (this.attributes_sub = data)
-                    );
-            },
-
-            // Get variant value
-            Get_Selected_Variant_Value(value) {
                 axios.get("/products/variant/values/" + value + "/show")
                     .then(
                         ({
@@ -584,5 +665,5 @@
         created() {}
 
     })
-</script>
+</script> --}}
 @endsection

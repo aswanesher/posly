@@ -25,6 +25,7 @@ use App\utils\helpers;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Log;
 
 class ProductsController extends Controller
 {
@@ -785,6 +786,8 @@ class ProductsController extends Controller
             $attributes = VariantAttribute::where('deleted_at', null)->get();
             $attributeValues = VariantAttributeValue::where('deleted_at', null)->get();
 
+            Log::info($attributes);
+
             return view('products.edit_product', [
                 'product' => $data,
                 'categories' => $categories,
@@ -1510,11 +1513,12 @@ class ProductsController extends Controller
             ini_set('max_execution_time', 0);
 
             $request->validate([
-                'products' => 'required|mimes:xls,xlsx',
+                'file' => 'required|mimes:xls,xlsx',
             ]);
 
-            $product_array = Excel::toArray(new ProductImport, $request->file('products'));
-
+            $product_array = Excel::toArray(new ProductImport, $request->file('file'));
+            dump($product_array);
+            dd("done");
             $warehouses = Warehouse::where('deleted_at', null)->pluck('id')->toArray();
 
             $products = [];
@@ -1661,6 +1665,7 @@ class ProductsController extends Controller
             }
 
             return redirect()->back()->with('success', 'Products Imported successfully!');
+            //return response()->json(['success' => true, 'message' => 'Products Imported succesfully'], 200);
         }
         return abort('403', __('You are not authorized'));
     }
