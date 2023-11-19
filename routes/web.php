@@ -112,6 +112,7 @@ Route::middleware(['XSS'])->group(function () {
         //------------------------------- products--------------------------\\
         Route::prefix('products')->group(function () {
             Route::resource('products', 'ProductsController');
+            Route::post('products/{id}/duplicate', 'ProductsController@duplicate')->name('products.duplicate');
             Route::post('products/import', 'ProductsController@import_products')->name('products.import.process');
             Route::post('get_product_datatable', 'ProductsController@get_product_datatable')->name('products_datatable');
             Route::get('show_product_data/{id}/{variant_id}', 'ProductsController@show_product_data');

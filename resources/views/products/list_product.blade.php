@@ -188,6 +188,36 @@
 <script src="{{ asset('assets/js/nprogress.js') }}"></script>
 
 <script type="text/javascript">
+    function duplicateProduct(id = '')
+    {
+        console.log(id);
+        swal({
+            title: '{{ __('translate.Duplicate_data') }}',
+            text: '{{ __('translate.Data_will_be_duplicated') }}',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '{{ __('translate.Yes_duplicate_it') }}',
+            cancelButtonText: '{{ __('translate.No_cancel') }}',
+            confirmButtonClass: 'btn btn-primary me-5',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(function() {
+            axios
+                .post("/products/products/" + id +"/duplicate")
+                .then(() => {
+                    toastr.success('{{ __('translate.Duplicated_in_successfully') }}');
+                    $('#product_table').DataTable().ajax.reload();
+                })
+                .catch(errors => {
+                    if(errors.response.status = 422) {
+                        toastr.error(errors.response.data.msg);
+                    }
+                });
+        });
+    }
+
     $(function() {
         "use strict";
         $(document).ready(function() {

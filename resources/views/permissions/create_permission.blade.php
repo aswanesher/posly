@@ -101,7 +101,7 @@
                                   value="group_permission"><span>{{ __('translate.Roles') }}</span><span class="checkmark"></span>
                               </label>
                             </div>
-  
+
                           </div>
                         </td>
                       </tr>
@@ -193,6 +193,44 @@
 
                         </div>
                       </td>
+                    </tr>
+
+                    <tr>
+                        <th>{{ __('translate.Product_Attributes') }}</th>
+                        <td>
+                            <div class="pt-3">
+
+
+                                <div class="form-check form-check-inline w-100">
+                                    <label class="checkbox checkbox-primary" for="product_attribute_view">
+                                        <input type="checkbox" name="permissions[]" id="product_attribute_view"
+                                               value="product_attribute_view"><span>{{ __('translate.View Product Attribute') }}</span><span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-check-inline w-100">
+                                    <label class="checkbox checkbox-primary" for="product_attribute_add">
+                                        <input type="checkbox" name="permissions[]" id="product_attribute_add"
+                                               value="product_attribute_add"><span>{{ __('translate.Add Product Attribute') }}</span><span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-check-inline w-100">
+                                    <label class="checkbox checkbox-primary" for="product_attribute_edit">
+                                        <input type="checkbox" name="permissions[]" id="product_attribute_edit"
+                                               value="product_attribute_edit"><span>{{ __('translate.Edit Product Attribute') }}</span><span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-check-inline w-100">
+                                    <label class="checkbox checkbox-primary" for="product_attribute_delete">
+                                        <input type="checkbox" name="permissions[]" id="product_attribute_delete"
+                                               value="product_attribute_delete"><span>{{ __('translate.Delete Product Attribute') }}</span><span class="checkmark"></span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </td>
                     </tr>
 
                     <tr>
@@ -300,7 +338,7 @@
                               <input type="radio" name="radio_option[sales_view]" value="sales_view_all">
                               <span>{{ __('translate.View all Sales') }}</span><span class="checkmark"></span>
                           </label>
-    
+
                           <label class="radio radio-primary">
                               <input type="radio" name="radio_option[sales_view]" value="sales_view_own">
                               <span>{{ __('translate.View own Sales') }}</span><span class="checkmark"></span>
@@ -347,12 +385,12 @@
                               <input type="radio" name="radio_option[purchases_view]" value="purchases_view_all">
                               <span>{{ __('translate.View all Purchases') }}</span><span class="checkmark"></span>
                           </label>
-      
+
                           <label class="radio radio-primary">
                               <input type="radio" name="radio_option[purchases_view]" value="purchases_view_own">
                               <span>{{ __('translate.View own Purchases') }}</span><span class="checkmark"></span>
                           </label>
-                
+
                           <div class="form-check form-check-inline w-100">
                             <label class="checkbox checkbox-primary" for="purchases_add">
                               <input type="checkbox" name="permissions[]" id="purchases_add"
@@ -392,7 +430,7 @@
                                 <input type="radio" name="radio_option[quotations_view]" value="quotations_view_all">
                                 <span>{{ __('translate.View all Quotations') }}</span><span class="checkmark"></span>
                             </label>
-        
+
                             <label class="radio radio-primary">
                                 <input type="radio" name="radio_option[quotations_view]" value="quotations_view_own">
                                 <span>{{ __('translate.View own Quotations') }}</span><span class="checkmark"></span>
@@ -435,7 +473,7 @@
                               <input type="radio" name="radio_option[sale_returns_view]" value="sale_returns_view_all">
                               <span>{{ __('translate.View all Sell Return') }}</span><span class="checkmark"></span>
                           </label>
-      
+
                           <label class="radio radio-primary">
                               <input type="radio" name="radio_option[sale_returns_view]" value="sale_returns_view_own">
                               <span>{{ __('translate.View own Sell Return') }}</span><span class="checkmark"></span>
@@ -473,12 +511,12 @@
                                 <input type="radio" name="radio_option[purchase_returns_view]" value="purchase_returns_view_all">
                                 <span>{{ __('translate.View all Purchase Return') }}</span><span class="checkmark"></span>
                             </label>
-        
+
                             <label class="radio radio-primary">
                                 <input type="radio" name="radio_option[purchase_returns_view]" value="purchase_returns_view_own">
                                 <span>{{ __('translate.View own Purchase Return') }}</span><span class="checkmark"></span>
                             </label>
-                        
+
                           <div class="form-check form-check-inline w-100">
                             <label class="checkbox checkbox-primary" for="purchase_returns_add">
                               <input type="checkbox" name="permissions[]" id="purchase_returns_add"
@@ -648,7 +686,7 @@
                                 <input type="radio" name="radio_option[client_view]" value="client_view_all">
                                 <span>{{ __('translate.View all Clients') }}</span><span class="checkmark"></span>
                             </label>
-        
+
                             <label class="radio radio-primary">
                                 <input type="radio" name="radio_option[client_view]" value="client_view_own">
                                 <span>{{ __('translate.View own Clients') }}</span><span class="checkmark"></span>
@@ -677,7 +715,7 @@
                                   value="client_details"><span>{{ __('translate.Client Details') }}</span><span class="checkmark"></span>
                               </label>
                             </div>
-                         
+
                           <div class="form-check form-check-inline w-100">
                               <label class="checkbox checkbox-primary" for="pay_sale_due">
                                 <input type="checkbox" name="permissions[]" id="pay_sale_due"
@@ -703,7 +741,7 @@
                                 <input type="radio" name="radio_option[suppliers_view]" value="suppliers_view_all">
                                 <span>{{ __('translate.View all Suppliers') }}</span><span class="checkmark"></span>
                             </label>
-        
+
                             <label class="radio radio-primary">
                                 <input type="radio" name="radio_option[suppliers_view]" value="suppliers_view_own">
                                 <span>{{ __('translate.View own Suppliers') }}</span><span class="checkmark"></span>
@@ -733,7 +771,7 @@
                                   value="supplier_details"><span>{{ __('translate.Supplier Details') }}</span><span class="checkmark"></span>
                               </label>
                             </div>
-                         
+
                           <div class="form-check form-check-inline w-100">
                               <label class="checkbox checkbox-primary" for="pay_purchase_due">
                                 <input type="checkbox" name="permissions[]" id="pay_purchase_due"

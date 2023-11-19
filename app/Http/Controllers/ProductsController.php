@@ -59,7 +59,9 @@ class ProductsController extends Controller
                 $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
             } else {
                 $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
-                $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
+                $warehouses = Warehouse::where('deleted_at', '=', null)
+                    ->whereIn('id', $warehouses_id)
+                    ->get(['id', 'name']);
             }
 
             return view('products.list_product', compact('categories', 'brands', 'warehouses'));
@@ -234,6 +236,7 @@ class ProductsController extends Controller
 
                 if ($user_auth->can('products_edit')) {
                     $item['action'] .= '<a class="dropdown-item" href="/products/products/' . $product->id . '/edit" id="' . $product->id . '"><i class="nav-icon i-Edit text-success font-weight-bold m3-2"></i> ' . trans('translate.edit_product') . '</a>';
+                    $item['action'] .= '<a class="dropdown-item" onClick="duplicateProduct('.$product->id.')"   id="' . $product->id . '"><i class="nav-icon i-Duplicate-Window text-success font-weight-bold m3-2"></i> ' . trans('translate.duplicate_product') . '</a>';
                 }
                 if ($user_auth->can('products_delete')) {
                     $item['action'] .= '  <a class="delete dropdown-item cursor-pointer" id="' . $product->id . '"><i class="nav-icon i-Close-Window text-danger font-weight-bold mr-3"></i> ' . trans('translate.delete_product') . '</a>';
@@ -1239,6 +1242,102 @@ class ProductsController extends Controller
         }
         return abort('403', __('You are not authorized'));
     }
+
+    public function duplicate($id)
+    {
+        $user_auth = auth()->user();
+        if ($user_auth->can('products_add')) {
+            DB::beginTransaction();
+            try {
+                if(empty($id))
+                    return response()->json([
+                        'status' => 422,
+                        'msg' => 'Product data not found',
+                    ], 422);
+
+                $Product = Product::where('deleted_at', '=', null)->findOrFail($id);
+                $productCopy = new Product;
+                $productCopy->type = $Product->type;
+                $productCopy->code = mt_rand(00000000,99999999);
+                $productCopy->name = $Product->name." Copy";
+                $productCopy->Type_barcode = $Product->Type_barcode;
+                $productCopy->category_id = $Product->category_id;
+                $productCopy->brand_id = $Product->brand_id;
+                $productCopy->TaxNet = $Product->TaxNet;
+                $productCopy->tax_method = $Product->tax_method;
+                $productCopy->note = $Product->note;
+                $productCopy->price = $Product->price;
+                $productCopy->cost = $Product->cost;
+                $productCopy->unit_id = $Product->unit_id;
+                $productCopy->unit_sale_id = $Product->unit_sale_id;
+                $productCopy->unit_purchase_id = $Product->unit_purchase_id;
+                $productCopy->stock_alert = $Product->stock_alert;
+                $productCopy->qty_min = $Product->qty_min;
+                $productCopy->is_variant = $Product->is_variant;
+                $productCopy->is_imei = $Product->is_imei;
+                $productCopy->is_promo = $Product->is_promo;
+                $productCopy->image = $Product->image;
+                if ($productCopy->type == 'is_single' || $productCopy->type == 'is_variant') {
+                    $manage_stock = 1;
+                } else {
+                    $manage_stock = 0;
+                }
+                $productCopy->save();
+
+                if($productCopy->type == 'is_variant') {
+                    $productVariant = ProductVariant::where('product_id', $Product->id)->get();
+                    $varCode = 1;
+                    foreach ($productVariant as $variant) {
+                        $Product_variants_data[] = [
+                            'product_id' => $productCopy->id,
+                            'variant_code' => $productCopy->code . '-' . $varCode++,
+                            'attribute_id' => $variant->attribute_id,
+                            'attribute_value_id' => $variant->attribute_value_id,
+                            'name'  => $variant->name,
+                            'cost'  => $variant->cost,
+                            'price' => $variant->price,
+                            'code'  => $productCopy->code,
+                        ];
+                    }
+                    ProductVariant::insert($Product_variants_data);
+                }
+
+                $warehouses = Warehouse::where('deleted_at', null)->pluck('id')->toArray();
+                if ($warehouses) {
+                    $Product_variants = ProductVariant::where('product_id', $productCopy->id)
+                        ->where('deleted_at', null)
+                        ->get();
+                    foreach ($warehouses as $warehouse) {
+                        if ($productCopy->is_variant == true) {
+                            foreach ($Product_variants as $product_variant) {
+                                $product_warehouse[] = [
+                                    'product_id' => $productCopy->id,
+                                    'warehouse_id' => $warehouse,
+                                    'product_variant_id' => $product_variant->id,
+                                    'manage_stock' => $manage_stock,
+                                ];
+                            }
+                        } else {
+                            $product_warehouse[] = [
+                                'product_id' => $productCopy->id,
+                                'warehouse_id' => $warehouse,
+                                'manage_stock' => $manage_stock,
+                            ];
+                        }
+                    }
+                    product_warehouse::insert($product_warehouse);
+                }
+
+                DB::commit();
+                return response()->json(['success' => true]);
+            } catch (ValidationException $e) {
+                DB::rollback();
+                return response()->json(['success' => false]);
+            }
+        }
+        return abort('403', __('You are not authorized'));
+    }
+
 
     /**
      * Remove the specified resource from storage.

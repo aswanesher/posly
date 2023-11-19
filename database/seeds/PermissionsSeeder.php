@@ -665,6 +665,26 @@ class PermissionsSeeder extends Seeder
                     'name'  => 'attendance_view_own',
                     'guard_name'  => 'web',
                 ],
+                [
+                    'id'    => 210,
+                    'name'  => 'product_attribute_view',
+                    'guard_name'  => 'web',
+                ],
+                [
+                    'id'    => 211,
+                    'name'  => 'product_attribute_add',
+                    'guard_name'  => 'web',
+                ],
+                [
+                    'id'    => 212,
+                    'name'  => 'product_attribute_edit',
+                    'guard_name'  => 'web',
+                ],
+                [
+                    'id'    => 213,
+                    'name'  => 'product_attribute_delete',
+                    'guard_name'  => 'web',
+                ],
 
 
             )

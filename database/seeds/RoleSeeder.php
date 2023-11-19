@@ -21,7 +21,12 @@ class RoleSeeder extends Seeder
                     'description' => 'Super Admin',
                     'guard_name' => 'web',
                 ],
-               
+                [
+                    'id'    => 2,
+                    'name'  => 'Admin',
+                    'description' => 'Admin',
+                    'guard_name' => 'web',
+                ],
             )
         );
     }

@@ -19,9 +19,9 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             array(
                 'id' => 1,
-                'username' => 'William Castillo',
-                'email' => 'admin@example.com',
-                'password' => '$2y$10$IFj6SwqC0Sxrsiv4YkCt.OJv1UV4mZrWuyLoRG7qt47mseP9mJ58u',
+                'username' => 'sysadmin',
+                'email' => 'sysadmin@simseka.test',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
                 'avatar' => 'no_avatar.png',
                 'role_users_id' => 1,
                 'is_all_warehouses' => 1,
@@ -30,5 +30,20 @@ class UserSeeder extends Seeder
         );
         $user = User::findOrFail(1);
         $user->assignRole(1);
+
+        DB::table('users')->insert(
+            array(
+                'id' => 2,
+                'username' => 'admin',
+                'email' => 'admin@simseka.test',
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                'avatar' => 'no_avatar.png',
+                'role_users_id' => 2,
+                'is_all_warehouses' => 1,
+                'status' => 1,
+            )
+        );
+        $user = User::findOrFail(2);
+        $user->assignRole(2);
     }
 }

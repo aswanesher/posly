@@ -5,23 +5,23 @@
 ?>
 
 <!-- start sidebar -->
-<div 
-    x-data="{ isCompact: false }" 
-    :class="isCompact ? 'compact' : ''" 
+<div
+    x-data="{ isCompact: false }"
+    :class="isCompact ? 'compact' : ''"
     class="sidebar-content bg-gray-900 card rounded-0"
 >
     <div class="sidebar-header mb-5 d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
             <img class="app-logo me-2" width="100" src="{{asset('images/'.$setting->logo)}}" alt="">
         </div>
-        <button 
+        <button
             @click="isCompact = !isCompact"
-            class="compact-button btn border border-gray-600 d-none d-lg-flex align-items-center p-1 width_24" 
+            class="compact-button btn border border-gray-600 d-none d-lg-flex align-items-center p-1 width_24"
         >
             @include('components.icons.collapse', ['class'=>'width_16'])
         </button>
-        <button 
-            class="close-sidebar btn border border-gray-600 d-flex d-lg-none align-items-center p-1 width_24" 
+        <button
+            class="close-sidebar btn border border-gray-600 d-flex d-lg-none align-items-center p-1 width_24"
         >
             @include('components.icons.collapse', ['class'=>'width_16'])
         </button>
@@ -36,18 +36,18 @@
                     @include('components.icons.dashboard', ['class'=>'width_16'])
                     <span class="item-name">{{ __('translate.dashboard') }}</span>
                 </a>
-            </li>            
+            </li>
 
             {{-- User Management --}}
             @if (auth()->user()->can('user_view') || auth()->user()->can('group_permission'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('user-management')"
                         :class="selected == 'user-management' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.UserManagement'), 
+                            'title'=>__('translate.UserManagement'),
                             'icon'=>'components.icons.user'
                         ])
                     </div>
@@ -60,7 +60,7 @@
                             @can('user_view')
                                 <li class="">
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/user-management/users', 
+                                        'href'=>'/user-management/users',
                                         'title'=> __('translate.Users')
                                     ])
                                 </li>
@@ -68,7 +68,7 @@
                             @can('group_permission')
                                 <li class="">
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/user-management/permissions', 
+                                        'href'=>'/user-management/permissions',
                                         'title'=> __('translate.Roles')
                                     ])
                                 </li>
@@ -81,13 +81,13 @@
             {{-- People --}}
             @if (auth()->user()->can('client_view_all') || auth()->user()->can('client_view_own') || auth()->user()->can('suppliers_view_all') || auth()->user()->can('suppliers_view_own'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('people')"
                         :class="selected == 'people' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.People'), 
+                            'title'=>__('translate.People'),
                             'icon'=>'components.icons.customers'
                         ])
                     </div>
@@ -100,7 +100,7 @@
                             @if (auth()->user()->can('client_view_all') || auth()->user()->can('client_view_own'))
                                 <li class="">
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/people/clients', 
+                                        'href'=>'/people/clients',
                                         'title'=> __('translate.Customers')
                                     ])
                                 </li>
@@ -108,7 +108,7 @@
                             @if (auth()->user()->can('suppliers_view_all') || auth()->user()->can('suppliers_view_own'))
                                 <li class="">
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/people/suppliers', 
+                                        'href'=>'/people/suppliers',
                                         'title'=> __('translate.Suppliers')
                                     ])
                                 </li>
@@ -122,13 +122,13 @@
             @if (auth()->user()->can('products_add') || auth()->user()->can('products_view')|| auth()->user()->can('category')
             || auth()->user()->can('brand') || auth()->user()->can('unit') || auth()->user()->can('warehouse') || auth()->user()->can('print_labels'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('products')"
                         :class="selected == 'products' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.Products'), 
+                            'title'=>__('translate.Products'),
                             'icon'=>'components.icons.product'
                         ])
                     </div>
@@ -142,7 +142,7 @@
                             @can('products_view')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/products/products', 
+                                        'href'=>'/products/products',
                                         'title'=> __('translate.productsList')
                                     ])
                                 </li>
@@ -150,7 +150,7 @@
                             @can('products_add')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/products/products/create', 
+                                        'href'=>'/products/products/create',
                                         'title'=> __('translate.AddProduct')
                                     ])
                                 </li>
@@ -158,7 +158,7 @@
                             @can('print_labels')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/products/print_labels', 
+                                        'href'=>'/products/print_labels',
                                         'title'=> __('translate.Print_Labels')
                                     ])
                                 </li>
@@ -166,15 +166,23 @@
                             @can('category')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/products/categories', 
+                                        'href'=>'/products/categories',
                                         'title'=> __('translate.Categories')
+                                    ])
+                                </li>
+                            @endcan
+                            @can('product_attribute_view')
+                                <li>
+                                    @include('components.sidebar.child-navitem', [
+                                        'href'=>'/products/variant/attributes',
+                                        'title'=> __('translate.Attributes')
                                     ])
                                 </li>
                             @endcan
                             @can('unit')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/products/units', 
+                                        'href'=>'/products/units',
                                         'title'=> __('translate.Units')
                                     ])
                                 </li>
@@ -182,7 +190,7 @@
                             @can('brand')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/products/brands', 
+                                        'href'=>'/products/brands',
                                         'title'=> __('translate.Brand')
                                     ])
                                 </li>
@@ -190,7 +198,7 @@
                             @can('warehouse')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/products/warehouses', 
+                                        'href'=>'/products/warehouses',
                                         'title'=> __('translate.Warehouses')
                                     ])
                                 </li>
@@ -203,13 +211,13 @@
             {{-- Stock Adjustment --}}
             @if (auth()->user()->can('adjustment_view_all') || auth()->user()->can('adjustment_view_own') || auth()->user()->can('adjustment_add'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('adjustment')"
                         :class="selected == 'adjustment' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.StockAdjustement'), 
+                            'title'=>__('translate.StockAdjustement'),
                             'icon'=>'components.icons.store'
                         ])
                     </div>
@@ -223,7 +231,7 @@
                             @if (auth()->user()->can('adjustment_view_all') || auth()->user()->can('adjustment_view_own'))
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/adjustment/adjustments', 
+                                        'href'=>'/adjustment/adjustments',
                                         'title'=> __('translate.ListAdjustments')
                                     ])
                                 </li>
@@ -231,26 +239,26 @@
                             @can('adjustment_add')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/adjustment/adjustments/create', 
+                                        'href'=>'/adjustment/adjustments/create',
                                         'title'=> __('translate.CreateAdjustment')
                                     ])
                                 </li>
                             @endcan
                         </ul>
                     </div>
-                </li>  
+                </li>
             @endif
 
             {{-- Stock Transfer --}}
             @if (auth()->user()->can('transfer_view_all') || auth()->user()->can('transfer_view_own') || auth()->user()->can('transfer_add'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('transfer')"
                         :class="selected == 'transfer' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.StockTransfers'), 
+                            'title'=>__('translate.StockTransfers'),
                             'icon'=>'components.icons.refund'
                         ])
                     </div>
@@ -263,7 +271,7 @@
                             @if (auth()->user()->can('transfer_view_all') || auth()->user()->can('transfer_view_own'))
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/transfer/transfers', 
+                                        'href'=>'/transfer/transfers',
                                         'title'=> __('translate.ListTransfers')
                                     ])
                                 </li>
@@ -271,7 +279,7 @@
                             @can('transfer_add')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/transfer/transfers/create', 
+                                        'href'=>'/transfer/transfers/create',
                                         'title'=> __('translate.CreateTransfer')
                                     ])
                                 </li>
@@ -284,13 +292,13 @@
             {{-- Quotations --}}
             @if (auth()->user()->can('quotations_view_all')  || auth()->user()->can('quotations_view_own') || auth()->user()->can('quotations_add'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('quotation')"
                         :class="selected == 'quotation' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.Quotations'), 
+                            'title'=>__('translate.Quotations'),
                             'icon'=>'components.icons.order'
                         ])
                     </div>
@@ -303,7 +311,7 @@
                             @if (auth()->user()->can('quotations_view_all')  || auth()->user()->can('quotations_view_own'))
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/quotation/quotations', 
+                                        'href'=>'/quotation/quotations',
                                         'title'=> __('translate.All_Quotations')
                                     ])
                                 </li>
@@ -311,26 +319,26 @@
                             @can('quotations_add')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/quotation/quotations/create', 
+                                        'href'=>'/quotation/quotations/create',
                                         'title'=> __('translate.Add_Quotation')
                                     ])
                                 </li>
                             @endcan
                         </ul>
                     </div>
-                </li> 
+                </li>
             @endif
 
              {{-- Purchases --}}
             @if (auth()->user()->can('purchases_view_all') || auth()->user()->can('purchases_view_own') || auth()->user()->can('purchases_add'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('purchase')"
                         :class="selected == 'purchase' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.Purchases'), 
+                            'title'=>__('translate.Purchases'),
                             'icon'=>'components.icons.cart'
                         ])
                     </div>
@@ -343,7 +351,7 @@
                             @if (auth()->user()->can('purchases_view_all') || auth()->user()->can('purchases_view_own'))
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/purchase/purchases', 
+                                        'href'=>'/purchase/purchases',
                                         'title'=> __('translate.ListPurchases')
                                     ])
                                 </li>
@@ -351,26 +359,26 @@
                             @can('purchases_add')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/purchase/purchases/create', 
+                                        'href'=>'/purchase/purchases/create',
                                         'title'=> __('translate.AddPurchase')
                                     ])
                                 </li>
                             @endcan
                         </ul>
                     </div>
-                </li> 
+                </li>
             @endif
 
             {{-- Sales --}}
             @if (auth()->user()->can('sales_view_all') || auth()->user()->can('sales_view_own') || auth()->user()->can('sales_add'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('sale')"
                         :class="selected == 'sale' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.Sales'), 
+                            'title'=>__('translate.Sales'),
                             'icon'=>'components.icons.add-to-cart'
                         ])
                     </div>
@@ -383,7 +391,7 @@
                             @if (auth()->user()->can('sales_view_all') || auth()->user()->can('sales_view_own'))
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/sale/sales', 
+                                        'href'=>'/sale/sales',
                                         'title'=> __('translate.ListSales')
                                     ])
                                 </li>
@@ -391,14 +399,14 @@
                             @can('sales_add')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/sale/sales/create', 
+                                        'href'=>'/sale/sales/create',
                                         'title'=> __('translate.AddSale')
                                     ])
                                 </li>
                             @endcan
                         </ul>
                     </div>
-                </li> 
+                </li>
             @endif
 
             {{-- Sales Return --}}
@@ -409,7 +417,7 @@
                     @include('components.icons.sales-return', ['class'=>'width_16'])
                     <span class="item-name">{{ __('translate.SalesReturn') }}</span>
                 </a>
-            </li>  
+            </li>
 
             @endif
 
@@ -421,9 +429,9 @@
                     @include('components.icons.purchases-return', ['class'=>'width_16'])
                     <span class="item-name">{{ __('translate.PurchasesReturn') }}</span>
                 </a>
-            </li>  
+            </li>
             @endif
-       
+
             {{-- Accounting --}}
             @if (auth()->user()->can('account_view') ||
             auth()->user()->can('deposit_view') ||
@@ -432,13 +440,13 @@
             auth()->user()->can('deposit_category') ||
             auth()->user()->can('payment_method'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('accounting')"
                         :class="selected == 'accounting' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.Accounting'), 
+                            'title'=>__('translate.Accounting'),
                             'icon'=>'components.icons.account'
                         ])
                     </div>
@@ -451,7 +459,7 @@
                             @can('account_view')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/accounting/account', 
+                                        'href'=>'/accounting/account',
                                         'title'=> __('translate.Account')
                                     ])
                                 </li>
@@ -459,7 +467,7 @@
                             @can('deposit_view')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/accounting/deposit', 
+                                        'href'=>'/accounting/deposit',
                                         'title'=> __('translate.Deposit')
                                     ])
                                 </li>
@@ -467,7 +475,7 @@
                             @can('expense_view')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/accounting/expense', 
+                                        'href'=>'/accounting/expense',
                                         'title'=> __('translate.Expense')
                                     ])
                                 </li>
@@ -475,7 +483,7 @@
                             @can('expense_category')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/accounting/expense_category', 
+                                        'href'=>'/accounting/expense_category',
                                         'title'=> __('translate.Expense_Category')
                                     ])
                                 </li>
@@ -483,7 +491,7 @@
                             @can('deposit_category')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/accounting/deposit_category', 
+                                        'href'=>'/accounting/deposit_category',
                                         'title'=> __('translate.Deposit_Category')
                                     ])
                                 </li>
@@ -491,27 +499,27 @@
                             @can('payment_method')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/accounting/payment_methods', 
+                                        'href'=>'/accounting/payment_methods',
                                         'title'=> __('translate.Payment_Methods')
                                     ])
                                 </li>
                             @endcan
                         </ul>
                     </div>
-                </li> 
+                </li>
             @endif
 
             {{-- Settings --}}
             @if (auth()->user()->can('settings') || auth()->user()->can('backup') || auth()->user()->can('currency')
             || auth()->user()->can('sms_settings') || auth()->user()->can('notification_template') || auth()->user()->can('pos_settings'))
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('settings')"
                         :class="selected == 'settings' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.Settings'), 
+                            'title'=>__('translate.Settings'),
                             'icon'=>'components.icons.settings'
                         ])
                     </div>
@@ -524,7 +532,7 @@
                             @can('settings')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/settings/system_settings', 
+                                        'href'=>'/settings/system_settings',
                                         'title'=> __('translate.System_Settings')
                                     ])
                                 </li>
@@ -533,7 +541,7 @@
                             @can('pos_settings')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/settings/pos_settings', 
+                                        'href'=>'/settings/pos_settings',
                                         'title'=> __('translate.Pos_Receipt_Settings')
                                     ])
                                 </li>
@@ -542,7 +550,7 @@
                             @can('sms_settings')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/settings/sms_settings', 
+                                        'href'=>'/settings/sms_settings',
                                         'title'=> __('translate.sms_settings')
                                     ])
                                 </li>
@@ -550,14 +558,14 @@
                             @can('notification_template')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/settings/sms_template', 
+                                        'href'=>'/settings/sms_template',
                                         'title'=> __('translate.sms_template')
                                     ])
                                 </li>
 
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/settings/emails_template', 
+                                        'href'=>'/settings/emails_template',
                                         'title'=> __('translate.emails_template')
                                     ])
                                 </li>
@@ -565,7 +573,7 @@
                             @can('currency')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/settings/currency', 
+                                        'href'=>'/settings/currency',
                                         'title'=> __('translate.Currency')
                                     ])
                                 </li>
@@ -573,7 +581,7 @@
                             @can('backup')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/settings/backup', 
+                                        'href'=>'/settings/backup',
                                         'title'=> __('translate.Backup')
                                     ])
                                 </li>
@@ -584,21 +592,21 @@
             @endif
 
             {{-- Reports --}}
-            @if (auth()->user()->can('report_products') || 
-            auth()->user()->can('report_inventaire') || auth()->user()->can('report_clients') || 
-            auth()->user()->can('report_fournisseurs') || auth()->user()->can('reports_alert_qty') || 
-            auth()->user()->can('report_profit') || auth()->user()->can('sale_reports') || 
-            auth()->user()->can('purchase_reports') || auth()->user()->can('payment_sale_reports') || 
-            auth()->user()->can('payment_purchase_reports') || auth()->user()->can('payment_return_purchase_reports') || 
+            @if (auth()->user()->can('report_products') ||
+            auth()->user()->can('report_inventaire') || auth()->user()->can('report_clients') ||
+            auth()->user()->can('report_fournisseurs') || auth()->user()->can('reports_alert_qty') ||
+            auth()->user()->can('report_profit') || auth()->user()->can('sale_reports') ||
+            auth()->user()->can('purchase_reports') || auth()->user()->can('payment_sale_reports') ||
+            auth()->user()->can('payment_purchase_reports') || auth()->user()->can('payment_return_purchase_reports') ||
             auth()->user()->can('payment_return_sale_reports') )
                 <li>
-                    <div 
+                    <div
                         @click="selectCollapse('reports')"
                         :class="selected == 'reports' ? 'collapse-active' : 'collapse-deactive'"
                         class="collapse-button"
                     >
                         @include('components.sidebar.collapse-navitem', [
-                            'title'=>__('translate.Reports'), 
+                            'title'=>__('translate.Reports'),
                             'icon'=>'components.icons.reports'
                         ])
                     </div>
@@ -612,7 +620,7 @@
                            @can('report_profit')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/report_profit', 
+                                        'href'=>'/reports/report_profit',
                                         'title'=> __('translate.ProfitandLoss')
                                     ])
                                 </li>
@@ -621,26 +629,26 @@
                             @can('sale_reports')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/sale_report', 
+                                        'href'=>'/reports/sale_report',
                                         'title'=> __('translate.SalesReport')
                                     ])
                                 </li>
-                              
+
                             @endcan
                             @can('purchase_reports')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/purchase_report', 
+                                        'href'=>'/reports/purchase_report',
                                         'title'=> __('translate.PurchasesReport')
                                     ])
                                 </li>
-                               
+
                             @endcan
 
                             @can('report_inventaire')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/report_stock', 
+                                        'href'=>'/reports/report_stock',
                                         'title'=> __('translate.Inventory_report')
                                     ])
                                 </li>
@@ -648,16 +656,16 @@
                             @can('report_products')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/report_product', 
+                                        'href'=>'/reports/report_product',
                                         'title'=> __('translate.product_report')
                                     ])
                                 </li>
                             @endcan
-                           
+
                             @can('report_clients')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/report_clients', 
+                                        'href'=>'/reports/report_clients',
                                         'title'=> __('translate.CustomersReport')
                                     ])
                                 </li>
@@ -665,16 +673,16 @@
                             @can('report_fournisseurs')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/report_providers', 
+                                        'href'=>'/reports/report_providers',
                                         'title'=> __('translate.SuppliersReport')
                                     ])
                                 </li>
                             @endcan
-                            
+
                             @can('payment_sale_reports')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/payment_sale', 
+                                        'href'=>'/reports/payment_sale',
                                         'title'=> __('translate.payment_sale')
                                     ])
                                 </li>
@@ -682,7 +690,7 @@
                             @can('payment_purchase_reports')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/payment_purchase', 
+                                        'href'=>'/reports/payment_purchase',
                                         'title'=> __('translate.payment_purchase')
                                     ])
                                 </li>
@@ -690,7 +698,7 @@
                             @can('payment_return_sale_reports')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/payment_sale_return', 
+                                        'href'=>'/reports/payment_sale_return',
                                         'title'=> __('translate.payment_sale_return')
                                     ])
                                 </li>
@@ -698,7 +706,7 @@
                             @can('payment_return_purchase_reports')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/payment_purchase_return', 
+                                        'href'=>'/reports/payment_purchase_return',
                                         'title'=> __('translate.payment_purchase_return')
                                     ])
                                 </li>
@@ -706,7 +714,7 @@
                             @can('reports_alert_qty')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
-                                        'href'=>'/reports/reports_quantity_alerts', 
+                                        'href'=>'/reports/reports_quantity_alerts',
                                         'title'=> __('translate.ProductQuantityAlerts')
                                     ])
                                 </li>

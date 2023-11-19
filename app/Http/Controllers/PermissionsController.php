@@ -82,7 +82,7 @@ class PermissionsController extends Controller
                 app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
                 $get_role->syncPermissions($all_permissions);
-            
+
             }, 10);
 
             return redirect('user-management/permissions');
@@ -111,7 +111,7 @@ class PermissionsController extends Controller
     public function edit($id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('group_permission')  && $id != 1){
+//		if ($user_auth->can('group_permission') && $id == 1 && $id == 2){
 
             $Role = Role::where('deleted_at', '=', null)->with('permissions')->findOrFail($id);
             if ($Role) {
@@ -128,9 +128,9 @@ class PermissionsController extends Controller
 
             return view('permissions.edit_permission', compact('permissions','role'));
 
-        }
+//        }
         return abort('403', __('You are not authorized'));
-       
+
     }
 
     /**
@@ -155,7 +155,7 @@ class PermissionsController extends Controller
                     'name'           => $request['name'],
                     'description'    => $request['description'],
                 ]);
-              
+
 
                 $get_role = Role::findOrFail($id);
                 $all_permissions = $request['permissions'];
@@ -178,7 +178,7 @@ class PermissionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {        
+    {
         $user_auth = auth()->user();
 		if ($user_auth->can('group_permission') && $id != 1){
 
@@ -189,7 +189,7 @@ class PermissionsController extends Controller
 
         }
         return abort('403', __('You are not authorized'));
-        
+
     }
 
 }
