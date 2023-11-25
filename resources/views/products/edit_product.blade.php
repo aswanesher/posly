@@ -13,7 +13,7 @@
 <div class="row" id="section_edit_product">
     <div class="col-lg-12 mb-3">
         <!--begin::form-->
-        <form @submit.prevent="Update_Product()">
+        <form id="updateProductForm">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -33,10 +33,8 @@
                             <div class="input-group">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="generate the barcode"
-                                        id="barcode" aria-label="generate the barcode" aria-describedby="basic-addon2"
-                                        value="{{ $product['code'] }}">
-                                    <span class="input-group-text cursor-pointer" id="basic-addon2"
-                                        @click="generateNumber()"><i class="i-Bar-Code"></i></span>
+                                        name="code" id="barcode" aria-label="generate the barcode"
+                                        aria-describedby="basic-addon2" value="{{ $product['code'] }}" readonly>
                                 </div>
                             </div>
                             <span class="barcode-error-notif text-danger" id="barcode-error"></span>
@@ -45,7 +43,7 @@
                         <div class="form-group col-md-4">
                             <label>{{ __('translate.Category') }} <span class="field_required">*</span></label>
                             <select class="form-control @error('category') is-invalid @enderror" name="category"
-                                required autocomplete="category" id="category">
+                                required autocomplete="category" id="category" style="width: 100%">
                                 @foreach ($categories as $catData)
                                     <option value="{{ $catData->id }}"
                                         {{ $catData->id === $product['category_id'] ? 'selected' : '' }}>
@@ -58,7 +56,7 @@
                         <div class="form-group col-md-4">
                             <label>{{ __('translate.Brand') }} </label>
                             <select class="form-control @error('brand') is-invalid @enderror" name="brand" required
-                                autocomplete="brand" id="brand">
+                                autocomplete="brand" id="brand" style="width: 100%">
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}"
                                         {{ $brand->id === $product['brand_id'] ? 'selected' : '' }}>
@@ -84,7 +82,7 @@
                         <div class="form-group col-md-4">
                             <label>{{ __('translate.Tax_Method') }} <span class="field_required">*</span></label>
                             <select class="form-control @error('category') is-invalid @enderror" name="tax_method"
-                                required autocomplete="tax_method" id="tax_method">
+                                required autocomplete="tax_method" id="tax_method" style="width: 100%">
                                 <option value="{{ $product['tax_method'] }}"
                                     {{ $product['tax_method'] === 1 ? 'selected' : '' }}>
                                     Exclusive</option>
@@ -115,31 +113,22 @@
             <div class="card mt-5">
                 <div class="card-body">
                     <div class="row">
-
-                        <div class="form-group col-md-4 mb-3" v-if="product.type == 'is_single'">
+                        <div class="form-group col-md-4 mb-3">
                             <label for="type">{{ __('translate.Product_Type') }} <span
                                     class="field_required">*</span></label>
-                            <input type="text" class="form-control" id="type" placeholder="Standard Product"
-                                value="Standard Product" disabled>
+                            <select class="form-control" name="type" required style="width: 100%">
+                                <option value="is_single" {{ $product['type'] == 'is_single' ? 'selected' : '' }}>
+                                    Single Product
+                                </option>
+                                <option value="is_variant" {{ $product['type'] == 'is_variant' ? 'selected' : '' }}>
+                                    Variable Product
+                                </option>
+                                <option value="is_service" {{ $product['type'] == 'is_sergice' ? 'selected' : '' }}>
+                                    Service Product
+                                </option>
+                            </select>
                             <span class="note-error-notif text-danger" id="note-error"></span>
                         </div>
-
-                        @if ($product['type'] == 'is_variant')
-                            <div class="form-group col-md-4 mb-3">
-                                <label for="type">{{ __('translate.Product_Type') }} <span
-                                        class="field_required">*</span></label>
-                                <input type="text" class="form-control" id="type"
-                                    placeholder="Variable Product" value="Variable Product" disabled>
-                                <span class="note-error-notif text-danger" id="note-error"></span>
-                            </div>
-                        @else
-                            <div class="form-group col-md-4 mb-3">
-                                <label for="type">{{ __('translate.Product_Type') }} <span
-                                        class="field_required">*</span></label>
-                                <input type="text" class="form-control" id="type"
-                                    placeholder="Service Product" value="Service Product" disabled>
-                            </div>
-                        @endif
 
                         @if ($product['type'] == 'is_single' || $product['type'] == 'is_variant')
                             <div class="form-group col-md-4">
@@ -168,7 +157,7 @@
                                 <label>{{ __('translate.Unit_Product') }} <span
                                         class="field_required">*</span></label>
                                 <select class="form-control @error('category') is-invalid @enderror" name="unit_id"
-                                    required autocomplete="unit_id" id="unit_id">
+                                    required autocomplete="unit_id" id="unit_id" style="width: 100%">
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->id }}"
                                             {{ $unit->id === $product['unit_id'] ? 'selected' : '' }}>
@@ -182,7 +171,8 @@
                             <div class="form-group col-md-4">
                                 <label>{{ __('translate.Unit_Sale') }} <span class="field_required">*</span></label>
                                 <select class="form-control @error('unit_sale_id') is-invalid @enderror"
-                                    name="unit_sale_id" required autocomplete="unit_sale_id" id="unit_sale_id">
+                                    name="unit_sale_id" required autocomplete="unit_sale_id" id="unit_sale_id"
+                                    style="width: 100%">
                                     @foreach ($units_sub as $unit_sub)
                                         <option value="{{ $unit_sub->id }}"
                                             {{ $unit_sub->id === $product['unit_sale_id'] ? 'selected' : '' }}>
@@ -197,7 +187,7 @@
                                         class="field_required">*</span></label>
                                 <select class="form-control @error('unit_purchase_id') is-invalid @enderror"
                                     name="unit_purchase_id" required autocomplete="unit_purchase_id"
-                                    id="unit_purchase_id">
+                                    id="unit_purchase_id" style="width: 100%">
                                     @foreach ($units_sub as $unit_sub)
                                         <option value="{{ $unit_sub->id }}"
                                             {{ $unit_sub->id === $product['unit_purchase_id'] ? 'selected' : '' }}>
@@ -252,11 +242,13 @@
                                             $i = 0;
                                         @endphp
                                         @foreach ($product['ProductVariant'] as $variant)
-                                            <tr>
+                                            <tr id="row_{{ $variant['id'] }}">
                                                 <td>
-                                                    <select class="form-select" name="variants" required
-                                                        id="attributes_{{ $i + 1 }}">
-                                                        <option></option>
+                                                    <input type="hidden" value="{{ $variant['id'] }}"
+                                                        name="variants[var_id][]">
+                                                    <select class="form-control attributes"
+                                                        name="variants[variantId][]" required
+                                                        id="attributes_{{ $i + 1 }}" style="width: 100%">
                                                         @foreach ($attributes as $attribute)
                                                             <option value="{{ $attribute->id }}"
                                                                 {{ $attribute->id === $variant['variantId'] ? 'selected' : '' }}>
@@ -265,9 +257,10 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-select" name="variant_values" required
-                                                        id="attribute_value_{{ $i + 1 }}">
-                                                        <option></option>
+                                                    <select class="form-control attribute_value"
+                                                        name="variants[variantAttributeId][]" required
+                                                        data-id="{{ $variant['variantAttributeId'] }}"
+                                                        id="attribute_value_{{ $i + 1 }}" style="width: 100%">
                                                         @foreach ($attributeValues as $attributeValue)
                                                             <option value="{{ $attributeValue->id }}"
                                                                 {{ $attributeValue->id === $variant['variantAttributeId'] ? 'selected' : '' }}>
@@ -278,15 +271,18 @@
                                                 </td>
                                                 <td>
                                                     <input required class="form-control"
-                                                        value="{{ $variant['cost'] }}" name="variant_cost">
+                                                        value="{{ $variant['cost'] }}"
+                                                        name="variants[variantCost][]">
                                                 </td>
                                                 <td>
-                                                    <input required class="form-control" name="variant_price"
+                                                    <input required class="form-control"
+                                                        name="variants[variantPrice][]"
                                                         value="{{ $variant['price'] }}">
                                                 </td>
                                                 <td>
-                                                    <a @click="delete_variant(variant.var_id)" class="btn btn-danger"
-                                                        title="Delete">
+                                                    <a href="#" onclick="delete_variant({{ $variant['id'] }})"
+                                                        class="btn btn-danger" title="Delete"
+                                                        id="{{ $i }}">
                                                         <i class="i-Close-Window"></i>
                                                     </a>
                                                 </td>
@@ -297,8 +293,10 @@
                                         @endforeach
                                         <tr>
                                             <td>
-                                                <select class="form-select" name="variants" required id="attributes">
-                                                    <option></option>
+                                                <input type="hidden" value="{{ $i + 1 }}"
+                                                    name="variants[var_id][]">
+                                                <select class="form-select attributes" name="variants[variantId][]"
+                                                    required id="attributes_{{ $i + 1 }}" style="width: 100%">
                                                     @foreach ($attributes as $attribute)
                                                         <option value="{{ $attribute->id }}">
                                                             {{ $attribute->variant_name }}
@@ -307,9 +305,10 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select class="form-select" name="variant_values" required
-                                                    id="attribute_value">
-                                                    <option></option>
+                                                <select class="form-select attribute_value"
+                                                    name="variants[variantAttributeId][]" required
+                                                    id="attribute_value_{{ $i + 1 }}" data-id=""
+                                                    style="width: 100%">
                                                     @foreach ($attributeValues as $attributeValue)
                                                         <option value="{{ $attributeValue->id }}">
                                                             {{ $attributeValue->variant_attribute_value_name }}
@@ -318,13 +317,13 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input required class="form-control" name="variant_cost">
+                                                <input required class="form-control" name="variants[variantCost][]">
                                             </td>
                                             <td>
-                                                <input required class="form-control" name="variant_price">
+                                                <input required class="form-control" name="variants[variantPrice][]">
                                             </td>
                                             <td>
-                                                <a @click="delete_variant(variant.var_id)" class="btn btn-danger"
+                                                <a href="#" onclick="delete_variant()" class="btn btn-danger"
                                                     title="Delete">
                                                     <i class="i-Close-Window"></i>
                                                 </a>
@@ -357,9 +356,9 @@
 
             <div class="row mt-3">
                 <div class="col-lg-6">
-                    <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
-                        <span v-if="SubmitProcessing" class="spinner-border spinner-border-sm" role="status"
-                            aria-hidden="true"></span> <i class="i-Yes me-2 font-weight-bold"></i>
+                    <button type="submit" class="btn btn-primary" id="saveBtn">
+                        {{-- <span v-if="SubmitProcessing" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span> <i class="i-Yes me-2 font-weight-bold"></i> --}}
                         {{ __('translate.Submit') }}
                     </button>
 
@@ -381,9 +380,49 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.1.1/dist/select2-bootstrap-5-theme.min.css" />
+<style>
+    .select2-container--bootstrap-5 .select2-selection {
+        width: 100%;
+        min-height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-family: inherit;
+        font-size: 0.813rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #F4F7FB !important;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    .select2-dropdown {
+        background-color: #F4F7FB;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        left: -100000px;
+        width: 100%;
+        z-index: 1051;
+        font-size: 0.813rem !important;
+        font-weight: 400 !important;
+        line-height: 1.5 !important;
+    }
+
+    .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option {
+        font-size: 0.813rem !important;
+        font-weight: 400 !important;
+        line-height: 1.5 !important;
+    }
+</style>
 <script>
     $("select").select2({
-        theme: "classic",
+        theme: "bootstrap-5",
         width: 'resolve',
         allowClear: false,
     });
@@ -392,25 +431,163 @@
     attributes.forEach((index, data) => {
         // console.log('attributes_' + index.id);
         $("#attributes_" + index.id).select2({
-            theme: "classic",
+            theme: "bootstrap-5",
             width: '100%',
             placeholder: "Select a variant",
         });
 
         $("#attribute_value_" + index.id).select2({
-            theme: "classic",
+            theme: "bootstrap-5",
             width: '100%',
             placeholder: "Select a variant value",
         });
     });
 
+
+    $(".attributes").each(function(index) {
+        var id = index + 1;
+        $("#attributes_" + id).change(function() {
+            var valueId = $("#attributes_" + id).val();
+            $("#attribute_value_" + id).html("");
+            axios.get("/products/variant/values/" + valueId + "/show").then(function(response) {
+                var data = response.data;
+                data.forEach(function(index) {
+                    $("#attribute_value_" + id).append("<option value='" + index
+                        .id +
+                        "'>" + index.variant_attribute_value_name + "</option>")
+                });
+            });
+        });
+    });
+
+    $(".attribute_value").each(function(index) {
+        var id = index + 1;
+        var attributeId = $("#attributes_" + id).val();
+        var productId = "{{ $product['id'] }}";
+        var attributeValueId = $("#attribute_value_" + id).attr("data-id");
+        $("#attribute_value_" + id).html("");
+        axios.get("/products/variant/values/" + attributeId + "/show").then(function(response) {
+            var datanya = response.data;
+            datanya.forEach(function(index) {
+                if (index.id == attributeValueId) {
+                    var selected = "selected";
+                }
+                $("#attribute_value_" + id).append("<option value='" + index
+                    .id +
+                    "' " + selected + ">" + index.variant_attribute_value_name + "</option>"
+                );
+            });
+        });
+    });
+
     // add new row
     $("#add_new_variant").on('click', function() {
+        $("select").select2("destroy");
         var table = $('#variantTable'),
             lastRow = table.find('tbody tr:last'),
+            lastVariant = table.find('tbody select:last'),
             rowClone = lastRow.clone();
+        rowClone.find('[id]').each(function() {
+            var num = this.id.replace(/\D/g, '');
+            if (!num) {
+                num = 0;
+            }
+            this.id = this.id.replace(/\d/g, '') +
+                (1 + parseInt(num, 10));
+        })
+        lastRow.after(rowClone);
+        $("select").select2({
+            theme: "bootstrap-5",
+            width: 'resolve',
+            allowClear: false,
+        });
 
-        table.find('tbody').append(rowClone);
+        $(".attributes").each(function(index) {
+            var id = index + 1;
+            $("#attributes_" + id).change(function() {
+                var valueId = $("#attributes_" + id).val();
+                $("#attribute_value_" + id).html("");
+                axios.get("/products/variant/values/" + valueId + "/show").then(function(
+                    response) {
+                    var data = response.data;
+                    data.forEach(function(index) {
+                        $("#attribute_value_" + id).append("<option value='" +
+                            index
+                            .id +
+                            "'>" + index.variant_attribute_value_name +
+                            "</option>")
+                    });
+                });
+            });
+        });
+    });
+
+    function delete_variant(id = "") {
+        var product = "{{ $product['id'] }}";
+        if (id === "") {
+            $("tr:last").remove();
+        } else {
+            swal({
+                title: '{{ __('translate.Delete') }}',
+                text: '{{ __('translate.Delete_Selected') }}',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#0CC27E',
+                cancelButtonColor: '#FF586B',
+                confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
+                cancelButtonText: '{{ __('translate.No_cancel') }}',
+                confirmButtonClass: 'btn btn-primary me-5',
+                cancelButtonClass: 'btn btn-danger',
+                buttonsStyling: false
+            }).then(function() {
+                axios
+                    .post("/products/" + product + "/variant/" + id + "/delete")
+                    .then(() => {
+                        toastr.success('{{ __('translate.Deleted_in_successfully') }}');
+                        $("#row_" + id).remove();
+                    })
+                    .catch(errors => {
+                        if (errors.response.status = 422) {
+                            toastr.error(errors.response.data.msg);
+                        }
+                    });
+            });
+        }
+    }
+
+    $("#updateProductForm").submit(function(e) {
+        e.preventDefault();
+        NProgress.start();
+        NProgress.set(0.1);
+        var data = new FormData(this);
+        var id = "{{ $product['id'] }}";
+
+        axios
+            .post("/products/products/" + id, data)
+            .then(response => {
+                // Complete the animation of theprogress bar.
+                NProgress.done();
+                self.SubmitProcessing = false;
+                // window.location.href = '/products/products';
+                toastr.success('{{ __('translate.Updated_in_successfully') }}');
+                self.errors = {};
+                // location.reload();
+            })
+            .catch(error => {
+                NProgress.done();
+                self.SubmitProcessing = false;
+
+
+                if (error.response.status == 422) {
+                    self.errors = error.response.data.errors;
+                    toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                }
+
+                if (self.errors.variants && self.errors.variants.length > 0) {
+                    toastr.error(self.errors.variants[0]);
+                }
+
+            });
     });
 </script>
 {{-- <script type="text/javascript">

@@ -112,9 +112,13 @@ Route::middleware(['XSS'])->group(function () {
         //------------------------------- products--------------------------\\
         Route::prefix('products')->group(function () {
             Route::resource('products', 'ProductsController');
+            Route::post('products/{id}', 'ProductsController@update');
             Route::post('products/{id}/duplicate', 'ProductsController@duplicate')->name('products.duplicate');
             Route::post('products/import', 'ProductsController@import_products')->name('products.import.process');
-            Route::post('get_product_datatable', 'ProductsController@get_product_datatable')->name('products_datatable');
+            Route::post('{productId}/variant/{variantId}/delete', 'ProductsController@deleteVariant')
+                ->name('products.delete.variant.process');
+            Route::post('get_product_datatable', 'ProductsController@get_product_datatable')
+                ->name('products_datatable');
             Route::get('show_product_data/{id}/{variant_id}', 'ProductsController@show_product_data');
 
             Route::get('products_by_Warehouse/{id}', 'ProductsController@Products_by_Warehouse');
@@ -150,6 +154,8 @@ Route::middleware(['XSS'])->group(function () {
                 ->name('attributes.value.destroy');
             Route::get('variant/values/{attributeId}/show', 'VariantAttributeValueController@show')
                 ->name('attributes.value.show');
+            Route::get('variant/values/{productId}/{attributeId}', 'VariantAttributeValueController@getProductVariant')
+                ->name('attributes.value.getProductVariant');
 
             //------------------------------- warehouses--------------------------\\
             Route::resource('warehouses', 'WarehousesController');

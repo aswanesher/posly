@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\VariantAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -167,5 +169,24 @@ class VariantAttributeValueController extends Controller
         } else {
             return response()->json(['success' => false]);
         }
+    }
+
+    public function getProductVariant($productId, $variantId)
+    {
+        $Product = Product::where('deleted_at', '=', null)->findOrFail($productId);
+
+        $item['is_variant'] = true;
+        $productsVariants = ProductVariant::where('product_id', $productId)
+            ->where('deleted_at', null)
+            ->get();
+
+        $var_id = 1;
+        foreach ($productsVariants as $variant) {
+            echo '<select class="form-control attribute_value"
+            name="variant_values[]" required id="attribute_value_'.$var_id.'" style="width: 100%">';
+            echo '<option value="'.$variant->attribute_value_id.'">'.$variant->name.'</option>';
+            echo '</select>';
+        }
+        $var_id++;
     }
 }
