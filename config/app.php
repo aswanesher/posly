@@ -177,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
         Nexmo\Laravel\NexmoServiceProvider::class,
+        Laravolt\Indonesia\ServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Nexmo' => Nexmo\Laravel\Facade\Nexmo::class,
+        'Indonesia' => Laravolt\Indonesia\Facade::class,
     ],
 
 ];

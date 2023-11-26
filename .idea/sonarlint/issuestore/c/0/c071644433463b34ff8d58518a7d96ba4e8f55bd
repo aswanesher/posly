@@ -1,62 +1,62 @@
 
-`php:S103¼"KSplit this 125 characters long line (which is greater than 120 authorized).(¨ÕËş
-`php:S103“"KSplit this 125 characters long line (which is greater than 120 authorized).(¨ÕËş
-ephp:S103Ò	"KSplit this 156 characters long line (which is greater than 120 authorized).(œí¯èÿÿÿÿÿ
-ephp:S103Ó	"KSplit this 140 characters long line (which is greater than 120 authorized).(é—Ù€øÿÿÿÿ
-ephp:S103Ö"KSplit this 147 characters long line (which is greater than 120 authorized).(·±ÍÉùÿÿÿÿ
-`php:S103×"KSplit this 148 characters long line (which is greater than 120 authorized).(¼ƒí
-ephp:S103ê"KSplit this 195 characters long line (which is greater than 120 authorized).(Ìà¤ßøÿÿÿÿ
-ephp:S103ì"KSplit this 155 characters long line (which is greater than 120 authorized).(İäÑüıÿÿÿÿ
-`php:S103ï"KSplit this 127 characters long line (which is greater than 120 authorized).(­¡·¦
-`php:S103ó"KSplit this 171 characters long line (which is greater than 120 authorized).(çÆ‡
-ephp:S103ô"KSplit this 125 characters long line (which is greater than 120 authorized).(„¾Îşÿÿÿÿ
-`php:S103õ"KSplit this 203 characters long line (which is greater than 120 authorized).(ãÿ–Ô
-q	php:S1192¢"[Define a constant instead of duplicating this literal "Please provide any details" 3 times.(ìÿ®ì
-g	php:S1192§"QDefine a constant instead of duplicating this literal "Expense category" 3 times.(£¯·
-b	php:S11927"MDefine a constant instead of duplicating this literal "Sales Return" 3 times.(ëò½×
-h	php:S1192Ó"MDefine a constant instead of duplicating this literal "Total Amount" 4 times.(ê›ÃÜÿÿÿÿÿ
-c	php:S11924"ODefine a constant instead of duplicating this literal "Add Adjustment" 3 times.(¹Š´R
-h	php:S1192›"MDefine a constant instead of duplicating this literal "Product Name" 3 times.(¦ù¡Šûÿÿÿÿ
-j	php:S1192="PDefine a constant instead of duplicating this literal "Purchase Report" 3 times.(ù—°®ùÿÿÿÿ
-l	php:S1192é
+`php:S103¿"KSplit this 125 characters long line (which is greater than 120 authorized).(¨ÕËş
+`php:S103–"KSplit this 125 characters long line (which is greater than 120 authorized).(¨ÕËş
+ephp:S103Ö	"KSplit this 156 characters long line (which is greater than 120 authorized).(œí¯èÿÿÿÿÿ
+ephp:S103×	"KSplit this 140 characters long line (which is greater than 120 authorized).(é—Ù€øÿÿÿÿ
+ephp:S103Ş"KSplit this 147 characters long line (which is greater than 120 authorized).(·±ÍÉùÿÿÿÿ
+`php:S103ß"KSplit this 148 characters long line (which is greater than 120 authorized).(¼ƒí
+ephp:S103ö"KSplit this 195 characters long line (which is greater than 120 authorized).(Ìà¤ßøÿÿÿÿ
+ephp:S103ø"KSplit this 155 characters long line (which is greater than 120 authorized).(İäÑüıÿÿÿÿ
+`php:S103û"KSplit this 127 characters long line (which is greater than 120 authorized).(­¡·¦
+`php:S103ÿ"KSplit this 171 characters long line (which is greater than 120 authorized).(çÆ‡
+ephp:S103€"KSplit this 125 characters long line (which is greater than 120 authorized).(„¾Îşÿÿÿÿ
+`php:S103"KSplit this 203 characters long line (which is greater than 120 authorized).(ãÿ–Ô
+q	php:S1192¥"[Define a constant instead of duplicating this literal "Please provide any details" 3 times.(ìÿ®ì
+g	php:S1192¬"QDefine a constant instead of duplicating this literal "Expense category" 3 times.(£¯·
+b	php:S11929"MDefine a constant instead of duplicating this literal "Sales Return" 3 times.(ëò½×
+h	php:S1192Ö"MDefine a constant instead of duplicating this literal "Total Amount" 4 times.(ê›ÃÜÿÿÿÿÿ
+c	php:S11926"ODefine a constant instead of duplicating this literal "Add Adjustment" 3 times.(¹Š´R
+h	php:S1192"MDefine a constant instead of duplicating this literal "Product Name" 3 times.(¦ù¡Šûÿÿÿÿ
+j	php:S1192?"PDefine a constant instead of duplicating this literal "Purchase Report" 3 times.(ù—°®ùÿÿÿÿ
+l	php:S1192î
 "QDefine a constant instead of duplicating this literal "Deposit category" 3 times.(Ì¤¹Çÿÿÿÿÿ
-d	php:S1192æ"IDefine a constant instead of duplicating this literal "Sale Ref" 3 times.(ÀİÆÃÿÿÿÿÿ
-h	php:S1192Â"MDefine a constant instead of duplicating this literal "Product Cost" 4 times.(ÄÎı´ÿÿÿÿÿ
-g	php:S1192Ò"LDefine a constant instead of duplicating this literal "Total Sales" 4 times.(üúçûÿÿÿÿ
-c	php:S1192¦	"MDefine a constant instead of duplicating this literal "SMS Settings" 3 times.(²ï§Ö
-f	php:S1192!"LDefine a constant instead of duplicating this literal "Add Product" 3 times.(ËÃøÿÿÿÿ
-e	php:S1192Ñ"PDefine a constant instead of duplicating this literal "Total Purchases" 4 times.(‚
-m	php:S1192´"RDefine a constant instead of duplicating this literal "Enter finish date" 3 times.(À·³‚üÿÿÿÿ
-h	php:S1192õ"MDefine a constant instead of duplicating this literal "Edit Product" 4 times.(“¸óãşÿÿÿÿ
-h	php:S1192¨"MDefine a constant instead of duplicating this literal "Edit Expense" 3 times.(ÉÄÔ¶üÿÿÿÿ
+d	php:S1192é"IDefine a constant instead of duplicating this literal "Sale Ref" 3 times.(ÀİÆÃÿÿÿÿÿ
+h	php:S1192Å"MDefine a constant instead of duplicating this literal "Product Cost" 4 times.(ÄÎı´ÿÿÿÿÿ
+g	php:S1192Õ"LDefine a constant instead of duplicating this literal "Total Sales" 4 times.(üúçûÿÿÿÿ
+c	php:S1192ª	"MDefine a constant instead of duplicating this literal "SMS Settings" 3 times.(²ï§Ö
+f	php:S1192""LDefine a constant instead of duplicating this literal "Add Product" 3 times.(ËÃøÿÿÿÿ
+e	php:S1192Ô"PDefine a constant instead of duplicating this literal "Total Purchases" 4 times.(‚
+m	php:S1192¸"RDefine a constant instead of duplicating this literal "Enter finish date" 3 times.(À·³‚üÿÿÿÿ
+h	php:S1192ø"MDefine a constant instead of duplicating this literal "Edit Product" 4 times.(“¸óãşÿÿÿÿ
+h	php:S1192«"MDefine a constant instead of duplicating this literal "Edit Expense" 3 times.(ÉÄÔ¶üÿÿÿÿ
 ]	php:S1192"JDefine a constant instead of duplicating this literal "Time Zone" 3 times.(ä`
-f	php:S1192"PDefine a constant instead of duplicating this literal "Delete Purchase" 4 times.( ·Ò÷
-a	php:S1192ã"KDefine a constant instead of duplicating this literal "First name" 3 times.(üºçú
-f	php:S1192Ğ	"KDefine a constant instead of duplicating this literal "Update Now" 3 times.(Ë½Éôøÿÿÿÿ
-c	php:S1192ƒ"MDefine a constant instead of duplicating this literal "Print Labels" 4 times.(ÔÕ»°
-d	php:S1192Š"NDefine a constant instead of duplicating this literal "Edit Purchase" 4 times.(ÓÓ»¾
-n	php:S1192“"SDefine a constant instead of duplicating this literal "Enter company name" 3 times.(¯ô§õøÿÿÿÿ
-f	php:S1192¨"PDefine a constant instead of duplicating this literal "Edit Adjustment" 3 times.(–ÛÄ„
-g	php:S1192»"QDefine a constant instead of duplicating this literal "Delete Quotation" 4 times.(ÍÄü²
-d	php:S1192œ"NDefine a constant instead of duplicating this literal "Current Stock" 3 times.(»îï­
-e	php:S1192„"ODefine a constant instead of duplicating this literal "Reset Password" 3 times.(Ò êÌ
-j	php:S1192¸"ODefine a constant instead of duplicating this literal "Edit Quotation" 4 times.(°à¬¡üÿÿÿÿ
-g	php:S1192£"QDefine a constant instead of duplicating this literal "Supplier Details" 3 times.(åˆ€©
-o	php:S1192?"UDefine a constant instead of duplicating this literal "Top Selling Products" 3 times.(‹ö–ûùÿÿÿÿ
-g	php:S11922"MDefine a constant instead of duplicating this literal "Add Transfer" 3 times.(¢•“ıÿÿÿÿ
-`	php:S1192ä"JDefine a constant instead of duplicating this literal "Last name" 3 times.(¾‹Ú¥
-f	php:S1192¾"PDefine a constant instead of duplicating this literal "Choose Category" 3 times.(ÄÁç²
-c	php:S1192("NDefine a constant instead of duplicating this literal "Add Quotation" 3 times.(ığâ˜
-c	php:S1192¦"MDefine a constant instead of duplicating this literal "Developed by" 3 times.(¢¿¨¶
-l	php:S1192˜"QDefine a constant instead of duplicating this literal "Choose Warehouse" 3 times.(ÕÓ…»ûÿÿÿÿ
-a	php:S1192‹"KDefine a constant instead of duplicating this literal "Send Email" 4 times.(·é¨è
-h	php:S1192³"MDefine a constant instead of duplicating this literal "Purchase Ref" 3 times.(Ú³Íæıÿÿÿÿ
-k	php:S1192ß"PDefine a constant instead of duplicating this literal "Employment type" 3 times.(¦†®¸ÿÿÿÿÿ
-a	php:S11929"LDefine a constant instead of duplicating this literal "All Returns" 3 times.(È¡½×
-g	php:S1192"QDefine a constant instead of duplicating this literal "Customer Details" 3 times.(¨•Ú
-g	php:S1192,"MDefine a constant instead of duplicating this literal "Add Purchase" 3 times.(è´‹Ïÿÿÿÿÿ
-p	php:S1192Á"UDefine a constant instead of duplicating this literal "Edit Purchase Return" 3 times.(˜ÕÍ¦ùÿÿÿÿ
-d	php:S1192ñ"NDefine a constant instead of duplicating this literal "Edit Transfer" 4 times.(Åãùâ
-r	php:S1192’"WDefine a constant instead of duplicating this literal "and save it to your pc" 3 times.(èİà©ıÿÿÿÿ
-j	php:S1192Â"ODefine a constant instead of duplicating this literal "Payment Method" 3 times.(Ë¢ü¼øÿÿÿÿ
-k	php:S1192ä"PDefine a constant instead of duplicating this literal "Supplier Report" 4 times.(å¦†Ëıÿÿÿÿ
+f	php:S1192‘"PDefine a constant instead of duplicating this literal "Delete Purchase" 4 times.( ·Ò÷
+a	php:S1192æ"KDefine a constant instead of duplicating this literal "First name" 3 times.(üºçú
+f	php:S1192Ô	"KDefine a constant instead of duplicating this literal "Update Now" 3 times.(Ë½Éôøÿÿÿÿ
+c	php:S1192†"MDefine a constant instead of duplicating this literal "Print Labels" 4 times.(ÔÕ»°
+d	php:S1192"NDefine a constant instead of duplicating this literal "Edit Purchase" 4 times.(ÓÓ»¾
+n	php:S1192–"SDefine a constant instead of duplicating this literal "Enter company name" 3 times.(¯ô§õøÿÿÿÿ
+f	php:S1192«"PDefine a constant instead of duplicating this literal "Edit Adjustment" 3 times.(–ÛÄ„
+g	php:S1192¾"QDefine a constant instead of duplicating this literal "Delete Quotation" 4 times.(ÍÄü²
+d	php:S1192Ÿ"NDefine a constant instead of duplicating this literal "Current Stock" 3 times.(»îï­
+e	php:S1192‡"ODefine a constant instead of duplicating this literal "Reset Password" 3 times.(Ò êÌ
+j	php:S1192»"ODefine a constant instead of duplicating this literal "Edit Quotation" 4 times.(°à¬¡üÿÿÿÿ
+g	php:S1192¦"QDefine a constant instead of duplicating this literal "Supplier Details" 3 times.(åˆ€©
+o	php:S1192A"UDefine a constant instead of duplicating this literal "Top Selling Products" 3 times.(‹ö–ûùÿÿÿÿ
+g	php:S11924"MDefine a constant instead of duplicating this literal "Add Transfer" 3 times.(¢•“ıÿÿÿÿ
+`	php:S1192ç"JDefine a constant instead of duplicating this literal "Last name" 3 times.(¾‹Ú¥
+f	php:S1192Á"PDefine a constant instead of duplicating this literal "Choose Category" 3 times.(ÄÁç²
+c	php:S1192)"NDefine a constant instead of duplicating this literal "Add Quotation" 3 times.(ığâ˜
+c	php:S1192©"MDefine a constant instead of duplicating this literal "Developed by" 3 times.(¢¿¨¶
+l	php:S1192›"QDefine a constant instead of duplicating this literal "Choose Warehouse" 3 times.(ÕÓ…»ûÿÿÿÿ
+a	php:S1192"KDefine a constant instead of duplicating this literal "Send Email" 4 times.(·é¨è
+h	php:S1192¶"MDefine a constant instead of duplicating this literal "Purchase Ref" 3 times.(Ú³Íæıÿÿÿÿ
+k	php:S1192ã"PDefine a constant instead of duplicating this literal "Employment type" 3 times.(¦†®¸ÿÿÿÿÿ
+a	php:S1192;"LDefine a constant instead of duplicating this literal "All Returns" 3 times.(È¡½×
+g	php:S1192¡"QDefine a constant instead of duplicating this literal "Customer Details" 3 times.(¨•Ú
+g	php:S1192-"MDefine a constant instead of duplicating this literal "Add Purchase" 3 times.(è´‹Ïÿÿÿÿÿ
+p	php:S1192Ä"UDefine a constant instead of duplicating this literal "Edit Purchase Return" 3 times.(˜ÕÍ¦ùÿÿÿÿ
+d	php:S1192ô"NDefine a constant instead of duplicating this literal "Edit Transfer" 4 times.(Åãùâ
+r	php:S1192•"WDefine a constant instead of duplicating this literal "and save it to your pc" 3 times.(èİà©ıÿÿÿÿ
+j	php:S1192Å"ODefine a constant instead of duplicating this literal "Payment Method" 3 times.(Ë¢ü¼øÿÿÿÿ
+k	php:S1192ç"PDefine a constant instead of duplicating this literal "Supplier Report" 4 times.(å¦†Ëıÿÿÿÿ
