@@ -55,8 +55,8 @@
 
                         <div class="form-group col-md-4">
                             <label>{{ __('translate.Brand') }} </label>
-                            <select class="form-control @error('brand') is-invalid @enderror" name="brand" required
-                                autocomplete="brand" id="brand" style="width: 100%">
+                            <select class="form-control @error('brand') is-invalid @enderror" name="brand_id" required
+                                autocomplete="brand" id="brand_id" style="width: 100%">
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}"
                                         {{ $brand->id === $product['brand_id'] ? 'selected' : '' }}>
@@ -72,7 +72,7 @@
                             <label for="stock_alert">{{ __('translate.Order_Tax') }} </label>
 
                             <div class="input-group mb-3">
-                                <input name="tax_order" type="text" class="form-control"
+                                <input name="TaxNet" type="text" class="form-control"
                                     aria-describedby="basic-addon3" id="tax_order" value="{{ $product['TaxNet'] }}">
                                 <span class="input-group-text cursor-pointer" id="basic-addon3">%</span>
                                 <span class="tax_order-error-notif text-danger" id="tax_order-error"></span>

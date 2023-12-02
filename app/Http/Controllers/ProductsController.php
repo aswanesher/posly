@@ -567,7 +567,6 @@ class ProductsController extends Controller
 
     public function show_product_data($id, $variant_id)
     {
-
         $Product_data = Product::with('unit')
             ->where('id', $id)
             ->where('deleted_at', '=', null)
@@ -607,9 +606,11 @@ class ProductsController extends Controller
             $product_variant_data = ProductVariant::where('product_id', $id)
                 ->where('id', $variant_id)->first();
 
-            $product_price = $product_variant_data['price'];
-            $product_cost  = $product_variant_data['cost'];
-            $item['code'] = $product_variant_data['code'];
+            // $product_price = $product_variant_data['price'];
+            $product_price = $Product_data['price'] + $product_variant_data['price'];
+            // $product_cost  = $product_variant_data['cost'];
+            $product_cost = $Product_data['cost'] + $product_variant_data['cost'];
+            $item['code'] = $product_variant_data['variant_code'];
             $item['name'] = '[' . $product_variant_data['name'] . ']' . $Product_data['name'];
 
             //product is_service
@@ -1342,7 +1343,7 @@ class ProductsController extends Controller
                 $productCopy->save();
 
                 if ($productCopy->type == 'is_variant') {
-                    $productVariant = ProductVariant::where('product_id', $Product->id)->get();
+                    $productVariant = ProductVariant::where('product_id', 1)->get();
                     $varCode = 1;
                     foreach ($productVariant as $variant) {
                         $Product_variants_data[] = [
@@ -1362,8 +1363,10 @@ class ProductsController extends Controller
                 $warehouses = Warehouse::where('deleted_at', null)->pluck('id')->toArray();
                 if ($warehouses) {
                     $Product_variants = ProductVariant::where('product_id', $productCopy->id)
+                        // $Product_variants = ProductVariant::where('product_id', 1)
                         ->where('deleted_at', null)
                         ->get();
+                    info("Input data produk dan variant ke warehouse");
                     foreach ($warehouses as $warehouse) {
                         if ($productCopy->is_variant == true) {
                             foreach ($Product_variants as $product_variant) {
@@ -1527,10 +1530,10 @@ class ProductsController extends Controller
             if ($product_warehouse->product_variant_id) {
 
                 $item['product_variant_id'] = $product_warehouse->product_variant_id;
-                $item['code'] = $product_warehouse['productVariant']->code;
+                $item['code'] = $product_warehouse['productVariant']->variant_code;
                 $item['Variant'] = '[' . $product_warehouse['productVariant']->name . ']' . $product_warehouse['product']->name;
                 $item['name'] = '[' . $product_warehouse['productVariant']->name . ']' . $product_warehouse['product']->name;
-                $item['barcode'] = $product_warehouse['productVariant']->code;
+                $item['barcode'] = $product_warehouse['productVariant']->variant_code;
 
 
                 $product_price = $product_warehouse['productVariant']->price;

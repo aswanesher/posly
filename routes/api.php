@@ -44,4 +44,4 @@ Route::get('brands', function(Request $request) {
       'last_page' => $brands->lastPage()
     ]);
   });
-  
+

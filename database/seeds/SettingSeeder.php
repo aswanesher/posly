@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
         DB::table('settings')->insert(
             array(
                 'id' => 1,
-                'email' => 'admin@example.com',
+                'email' => 'sysadmin@simseka.test',
                 'currency_id' => 1,
                 'client_id' => Null,
                 'invoice_footer' => Null,

@@ -15,12 +15,19 @@ class CurrencySeeder extends Seeder
        	// Insert some stuff
         DB::table('currencies')->insert(
             array(
-                'id'     => 1,
-                'code'   => 'USD',
-                'name'   => 'US Dollar',
-                'symbol' => '$',
-            )
-            
+                [
+                    'id'     => 1,
+                    'code'   => 'USD',
+                    'name'   => 'US Dollar',
+                    'symbol' => '$'
+                ],
+                [
+                    'id' => 2,
+                    'code' => 'IDR',
+                    'name' => 'Indonesia Rupiah',
+                    'symbol' => 'Rp'
+                ]
+            ),
         );
     }
 }

@@ -163,6 +163,7 @@ Route::middleware(['XSS'])->group(function () {
 
         //------------------------------- adjustments--------------------------\\
         Route::resource('adjustment/adjustments', 'AdjustmentsController');
+        // Route::get('adjustments/adjustments/{id}/edit', 'AdjustmentsController@edit');
 
 
         //------------------------------- quotations --------------------------\\
