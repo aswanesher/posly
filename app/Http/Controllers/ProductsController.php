@@ -185,16 +185,16 @@ class ProductsController extends Controller
                     $item['quantity'] = '';
 
                     foreach ($product_variant_data as $product_variant) {
-                        $item['cost']  .= $this->render_price_with_symbol_placement(number_format($product_variant->cost, 2, '.', ','), $symbol_placement);
+                        $item['cost']  .= $this->render_price_with_symbol_placement(number_format($product_variant->cost + $product->cost, 0, '.', ','), $symbol_placement);
                         $item['cost']  .= '<br>';
 
-                        $item['price'] .= $this->render_price_with_symbol_placement(number_format($product_variant->price, 2, '.', ','), $symbol_placement);
+                        $item['price'] .= $this->render_price_with_symbol_placement(number_format($product_variant->price + $product->price, 0, '.', ','), $symbol_placement);
                         $item['price'] .= '<br>';
 
-                        $item['name'] .= '[' . $product_variant->name . ']' . $product->name;
+                        $item['name'] .= '[' . $product_variant->name . '] ' . $product->name;
                         $item['name'] .= '<br>';
 
-                        $item['code'] .= $product_variant->code;
+                        $item['code'] .= $product_variant->variant_code;
                         $item['code'] .= '<br>';
 
                         $product_warehouse_total_qty = product_warehouse::where('product_id', $product->id)

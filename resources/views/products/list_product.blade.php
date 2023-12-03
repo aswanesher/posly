@@ -31,7 +31,7 @@
                         {{ __('translate.Filter') }}</a>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive text-nowrap">
                     <table id="product_table" class="display table table-hover">
                         <thead>
                             <tr>

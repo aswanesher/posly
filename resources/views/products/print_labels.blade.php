@@ -20,16 +20,16 @@
     <div class="card">
       <div class="card-body">
         <div class="row">
-          
+
           <!-- warehouse -->
           <div class="form-group col-md-6">
               <validation-observer ref="show_Barcode">
                     <validation-provider name="warehouse" rules="required"  v-slot="{ valid, errors }">
                       <label class="ul-form__label">{{ __('translate.warehouse') }} <span class="field_required">*</span></label>
-                      <v-select 
-                        @input="Selected_Warehouse" 
+                      <v-select
+                        @input="Selected_Warehouse"
                         placeholder="{{ __('translate.Choose_Warehouse') }}"
-                        v-model="barcode.warehouse_id" 
+                        v-model="barcode.warehouse_id"
                         :reduce="(option) => option.value"
                         :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))">
                       </v-select>
@@ -92,11 +92,11 @@
                 <div class="form-group col-md-6">
                     <validation-provider name="Paper_size" rules="required"  v-slot="{ valid, errors }">
                       <label class="ul-form__label">{{ __('translate.Paper_size') }} <span class="field_required">*</span></label>
-                      <v-select 
-                          placeholder="{{ __('translate.Choose_Paper_size') }}" 
+                      <v-select
+                          placeholder="{{ __('translate.Choose_Paper_size') }}"
                           @input="Selected_Paper_size"
-                          v-model="paper_size" 
-                          :reduce="(option) => option.value" 
+                          v-model="paper_size"
+                          :reduce="(option) => option.value"
                           :options="
                             [
                               {label: '40 per sheet (a4) (1.799 * 1.003)', value: 'style40'},
@@ -175,7 +175,7 @@
 
     var app = new Vue({
         el: '#section_barcode',
-       
+
         data: {
           focused: false,
           timer:null,
@@ -194,7 +194,7 @@
           total_a4:'',
           class_sheet:'',
           class_type_page:'',
-          rest:'',     
+          rest:'',
           warehouses: @json($warehouses),
           submitStatus: null,
           products: [],
@@ -207,8 +207,8 @@
           }
         },
 
-       
-       
+
+
     methods: {
 
        //------------------------------Formetted Numbers -------------------------\\
@@ -267,6 +267,7 @@
       }
 
       setTimeout(() => {
+        console.log(this.product);
         JsBarcode("#barcode", this.product.barcode, {
           format: this.product.Type_barcode,
           width:1,
@@ -275,8 +276,8 @@
           fontSize:15,
         });
       }, 1000);
-    
-     
+
+
       this.Per_Page();
     },
     //------ Validate Form
@@ -285,7 +286,7 @@
         if (!success) {
           toastr.error('{{ __('translate.Please_fill_the_form_correctly') }}');
         } else {
-         
+          console.log('Call show barcode');
           this.showBarcode();
         }
       });
@@ -300,7 +301,7 @@
     handleBlur() {
       this.focused = false
     },
-    
+
    // Search Products
     search(){
       if (this.timer) {
@@ -348,9 +349,9 @@
       this.search_input= '';
       this.$refs.product_autocomplete.value = "";
       this.product_filter = [];
-     
+
     },
-   
+
     //------------------------------------ Get Products By Warehouse -------------------------\\
     Get_Products_By_Warehouse(id) {
       // Start the progress bar.
@@ -367,7 +368,9 @@
     },
     //-------------------------------------- Print Barcode -------------------------\\
     print_all_Barcode() {
+      console.log("Init print barcode");
       var divContents = document.getElementById("print_barcode_label").innerHTML;
+      // var divContents = $("#print_barcode_label").innerHTML;
       var a = window.open("", "", "height=500, width=500");
       a.document.write(
         '<link rel="stylesheet" href="/assets/styles/vendor/print_label.css"><html>'
@@ -379,12 +382,12 @@
       setTimeout(() => {
          a.print();
       }, 1000);
-      
+
     },
-   
+
     //-------------------------------------- Show Barcode -------------------------\\
     showBarcode() {
-      
+      console.log("Init show barcode");
       this.Per_Page();
       this.count = this.barcode.qte;
       setTimeout(() => {
@@ -405,7 +408,7 @@
       this.product_filter = [];
       this.Get_Products_By_Warehouse(value);
     },
-  
+
     //----------------------------------- Reset Data -------------------------\\
     reset() {
       this.ShowCard = false;
@@ -419,9 +422,9 @@
       this.$refs.product_autocomplete.value = "";
       this.product_filter = [];
     }
-          
+
       },
-      
+
       //-----------------------------Autoload function-------------------
       created() {
       }

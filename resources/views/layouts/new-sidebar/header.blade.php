@@ -7,7 +7,7 @@
 
         <div class="dropdown layouts_add_new">
             <button
-                class="btn btn-light d-none d-lg-flex align-items-center px-3 py-2 fw-semibold" 
+                class="btn btn-light d-none d-lg-flex align-items-center px-3 py-2 fw-semibold"
                 type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"
             >
                 @include('components.icons.plus', ['class'=>'me-2 width_14'])
@@ -41,7 +41,7 @@
                     @can('quotations_add')
                         <li><a class="dropdown-item" href="/quotation/quotations/create"> <i class="i-Checkout-Basket text-20 me-2 "></i> {{ __('translate.Add_Quotation') }}</a></li>
                     @endcan
-                  
+
                 </ul>
         </div>
     </div>
@@ -57,25 +57,23 @@
         </button>
 
         <div class="button_language dropdown p-2 ms-2">
-            
+
             <i class="i-Globe"
                 type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
             ></i>
 
             <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{route('language.switch','id')}}"> <img class="flag-icon" src="{{asset('assets/flags/id.svg')}}">  {{ __('translate.Bahasa') }}</a></li>
                 <li><a class="dropdown-item" href="{{route('language.switch','en')}}"> <img class="flag-icon" src="{{asset('assets/flags/gb.svg')}}">  {{ __('translate.English') }}</a></li>
-                <li><a class="dropdown-item" href="{{route('language.switch','fr')}}"><img class="flag-icon" src="{{asset('assets/flags/fr.svg')}}">  {{ __('translate.Frensh') }}</a></li>
-                <li><a class="dropdown-item" href="{{route('language.switch','ar')}}"><img class="flag-icon" src="{{asset('assets/flags/sa.svg')}}">  {{ __('translate.Arabic') }}</a></li>
-                
             </ul>
         </div>
-        
+
         <div class="dropdown button_settings">
-            <img 
-                alt="" 
-                width="42" 
-                height="42" 
+            <img
+                alt=""
+                width="42"
+                height="42"
                 type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"
                 class="rounded-circle dropdown-toggle"

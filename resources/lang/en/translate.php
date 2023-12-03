@@ -2115,6 +2115,7 @@ return [
     'Live Server (Hosting)' => 'Live Server (Hosting)',
 
     'English' => 'English',
+    'Bahasa' => 'Bahasa',
     'Frensh' => 'French',
     'Arabic' => 'Arabic',
     'All rights reserved' => 'All rights reserved',

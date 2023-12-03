@@ -67,7 +67,7 @@ return [
     'payment_sale_return' => 'Paiement de retour de vente',
     'payment_purchase_return' => 'Paiement de retour d\'achat',
 
-   
+
     'Date' => 'Date',
     'Ref' => 'Réf',
     'Total_Products' => 'Total des produits',
@@ -146,7 +146,7 @@ return [
     'Operation_Value' => 'Valeur de l\'opération',
     'Enter_Name_Unit' => 'Entrez le nom de l\'unité',
     'Title' => 'Titre',
-    
+
     'Enter_ShortName_Unit' => 'Entrez le nom court de l\'unité',
     'Choose_Base_Unit' => 'Choisir l\'unité de base',
     'Choose_Operator' => 'Choisir l\'opérateur',
@@ -243,7 +243,7 @@ return [
     'Payments_Sale_Return' => 'Paiements de retour de vente',
     'Client' => 'Client',
     'Payments_Sale' => 'Paiements de vente',
-    'Sale' => 'Vente',    
+    'Sale' => 'Vente',
 
     'Purchases_Report' => 'Rapport d\'achats',
     'Created_by' => 'Créé par',
@@ -300,7 +300,7 @@ return [
     'From_warehouse' => 'De l\'entrepôt',
     'To_warehouse' => 'Vers l\'entrepôt',
     'Return_List' => 'Liste des retours',
-    
+
     'Receipt' =>'Reçu',
     'Pos_Settings' =>'Paramètres du point de vente (Reçu)',
     'Note_to_customer' =>'Remarque au client',
@@ -1190,7 +1190,7 @@ return [
     'Sell_return_due' =>'Retour de vente dû',
     'product_report' =>'Rapport des Produits',
 
-    
+
     'Twilio API' => 'Twilio API',
     'Twilio SID' => 'Twilio SID',
     'Twilio TOKEN' => 'Twilio TOKEN',
@@ -2035,12 +2035,13 @@ return [
     'Quantity Alerts Report' => 'Rapport d\'alertes de quantité',
 
     'English' => 'Anglais',
+    'Bahasa' => 'Bahasa',
     'Frensh' => 'Français',
     'Arabic' => 'arabe',
     'All rights reserved' => 'Tous droits réservés',
     'Cart' => 'Panier',
 
-  
+
     'Server_Requirements' => 'Configuration requise du serveur',
     'Database' => 'Base de données',
     'Summary' => 'Résumé',
@@ -2116,6 +2117,6 @@ return [
 
 
 
-    
+
 
 ];
