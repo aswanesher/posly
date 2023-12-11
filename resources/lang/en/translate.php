@@ -208,6 +208,7 @@ return [
     'Enter_Stock_alert' => 'Enter Stock alert',
     'Order_Tax' => 'Order Tax',
     'Tax_Method' => 'Tax Method',
+    'Allow_PO' => 'Allow Purchase Order',
     'Choose_Method' => 'Choose Method',
     'Product_Has_Multi_Variants' => 'Product Has Multi Variants',
     'Enter_Variant_Separated_by_Comma' => 'Enter Variant Separated by Comma',

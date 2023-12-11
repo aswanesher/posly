@@ -12,7 +12,7 @@ class Product extends Model
     protected $fillable = [
         'code', 'Type_barcode', 'name', 'cost', 'price', 'unit_id', 'unit_sale_id', 'unit_purchase_id',
         'stock_alert', 'category_id', 'sub_category_id', 'is_variant','is_imei','is_promo','promo_price','promo_start_date','promo_end_date',
-        'tax_method', 'image', 'brand_id', 'is_active', 'note','qty_min'
+        'tax_method', 'image', 'brand_id', 'is_active', 'note','qty_min','allowPO'
     ];
 
     protected $casts = [

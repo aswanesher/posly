@@ -448,6 +448,7 @@ class ProductsController extends Controller
                 $Product->TaxNet       = $request['TaxNet'] ? $request['TaxNet'] : 0;
                 $Product->tax_method   = $request['tax_method'];
                 $Product->note         = $request['note'];
+                $Product->allowPO         = $request['allow_po'];
 
                 //-- check if type is_single
                 if ($request['type'] == 'is_single' || $request['type'] == 'is_variant') {
@@ -577,7 +578,11 @@ class ProductsController extends Controller
         $item['image']        = $Product_data['image'];
         $item['product_type'] = $Product_data['type'];
         $item['Type_barcode'] = $Product_data['Type_barcode'];
-        $item['qty_min']      = $Product_data['qty_min'];
+        if($Product_data['allowPO'] == 0) {
+            $item['qty_min'] = $Product_data['qty_min'];
+        } else {
+            $item['qty_min'] = 1;
+        }
 
         $item['unit_id'] = $Product_data['unit'] ? $Product_data['unit']->id : '';
         $item['unit']    = $Product_data['unit'] ? $Product_data['unit']->ShortName : '';
@@ -591,6 +596,7 @@ class ProductsController extends Controller
         $item['tax_method']  = $Product_data['tax_method'];
         $item['tax_percent'] = $Product_data['TaxNet'];
         $item['is_imei']     = $Product_data['is_imei'];
+        $item['allowPO']     = $Product_data['allowPO'];
 
         //product single
         if ($Product_data['type'] == 'is_single') {
@@ -735,7 +741,7 @@ class ProductsController extends Controller
             $item['stock_alert'] = $Product->stock_alert;
             $item['TaxNet'] = $Product->TaxNet;
             $item['note'] = $Product->note ? $Product->note : '';
-            $item['image'] = "";
+            $item['image'] = $Product->image;
 
             if ($Product->is_promo) {
                 $item['is_promo']  = true;
@@ -771,6 +777,7 @@ class ProductsController extends Controller
             }
 
             $item['is_imei'] = $Product->is_imei ? true : false;
+            $item['allowPO'] = $Product->allowPO;
 
             $data = $item;
             $categories = Category::where('deleted_at', null)->get(['id', 'name']);
@@ -1002,6 +1009,7 @@ class ProductsController extends Controller
                     $Product->TaxNet      = $request['TaxNet'];
                     $Product->tax_method  = $request['tax_method'];
                     $Product->note        = $request['note'];
+                    $Product->allowPO        = $request['allow_po'];
 
                     //-- check if type is_single
                     if ($request['type'] == 'is_single') {

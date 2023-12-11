@@ -23,12 +23,12 @@
         <div class="table-responsive">
           <table id="attributes_table" class="display table">
             <thead>
-              <tr>
+            <tr>
                 <th>ID</th>
-                <th>{{ __('translate.Code') }}</th>
                 <th>{{ __('translate.Name') }}</th>
+                <th>{{ __('translate.Code') }}</th>
                 <th class="not_show">{{ __('translate.Action') }}</th>
-              </tr>
+            </tr>
             </thead>
             <tbody>
             </tbody>
@@ -56,7 +56,7 @@
 
                 <div class="form-group col-md-12">
                     <label for="name">{{ __('translate.Name') }} <span class="field_required">*</span></label>
-                    <input type="text" v-model="attribute.variant_code" class="form-control" name="variant_name" id="variant_name"
+                    <input type="text" v-model="attribute.variant_name" class="form-control" name="variant_name" id="variant_name"
                     placeholder="{{ __('translate.Enter_Attribute_Name') }}">
                     <span class="error" v-if="errors && errors.variant_name">
                     @{{ errors.name[0] }}
@@ -68,7 +68,7 @@
 
                 <div class="form-group col-md-12">
                     <label for="name">{{ __('translate.Code') }} <span class="field_required">*</span></label>
-                    <input type="text" v-model="attribute.variant_name" class="form-control" name="variant_code" id="variant_code"
+                    <input type="text" v-model="attribute.variant_code" class="form-control" name="variant_code" id="variant_code"
                     placeholder="{{ __('translate.Enter_Attribute_Code') }}">
                     <span class="error" v-if="errors && errors.variant_code">
                     @{{ errors.code[0] }}
@@ -129,8 +129,8 @@
                 ajax: "{{ route('attributes.index') }}",
                 columns: [
                     {data: 'id', name: 'id',className: "d-none"},
-                    {data: 'variant_code', name: 'variant_code'},
-                    {data: 'variant_name', name: 'variant_name'},
+                    {data: 'attribute_code', name: 'attribute_code'},
+                    {data: 'attribute_name', name: 'attribute_name'},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
 
                 ],

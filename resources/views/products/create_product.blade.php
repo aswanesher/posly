@@ -98,6 +98,9 @@
                         </div>
 
                         <div class="form-group col-md-4">
+                            <template v-if="preview" class="mb-4">
+                                <img :src="preview" class="img-fluid w-100" />
+                            </template>
                             <label for="image">{{ __('translate.Image') }} </label>
                             <input name="image" @change="onFileSelected" type="file" class="form-control"
                                 id="image">
@@ -210,6 +213,21 @@
                                 placeholder="{{ __('translate.Enter_Stock_alert') }}" v-model="product.stock_alert">
                         </div>
 
+                        <div class="form-group col-md-4">
+                            <label>{{ __('translate.Allow_PO') }} <span class="field_required">*</span></label>
+                            <v-select placeholder="{{ __('translate.Choose_Method') }}" v-model="product.allow_po"
+                                      :reduce="(option) => option.value"
+                                      :options="[
+                                    { label: 'Ya', value: '1' },
+                                    { label: 'Tidak', value: '0' }
+                                ]">
+                            </v-select>
+
+                            <span class="error" v-if="errors && errors.allow_po">
+                                @{{ errors.allow_po[0] }}
+                            </span>
+                        </div>
+
                         {{-- New variable products --}}
                         <div class="col-md-12 mb-2 " v-if="product.type == 'is_variant'">
                             <a @click="add_new_variant()" class=" ms-3 btn btn-md btn-primary float-end mb-2">
@@ -237,7 +255,7 @@
                                                     v-model="variant.variantId"
                                                     :options="attributes.map(
                                                         attributes => ({
-                                                            label: attributes.variant_code,
+                                                            label: attributes.variant_name,
                                                             value: attributes.id
                                                         })
                                                     )">
@@ -359,6 +377,9 @@
             attributes_sub: [],
             brands: @json($brands),
             attributes: @json($attributes),
+            preview: "",
+            preview_list: [],
+            image_list: [],
             attributeValues: @json($attributeValues),
             variants: [],
             variant: {
@@ -391,13 +412,13 @@
                 promo_price: '',
                 promo_start_date: new Date().toISOString().slice(0, 10),
                 promo_end_date: '',
+                allow_po: '',
             },
         },
 
 
 
         methods: {
-
             //------ Generate code
             generateNumber() {
                 this.code_exist = "";
@@ -470,6 +491,16 @@
             onFileSelected(e) {
                 let file = e.target.files[0];
                 this.product.image = file;
+                var input = e.target;
+                if (input.files) {
+                    var reader = new FileReader();
+                    // console.log(reader)
+                    reader.onload = (e) => {
+                        this.preview = e.target.result;
+                    }
+                    this.image=input.files[0];
+                    reader.readAsDataURL(input.files[0]);
+                }
             },
 
             //---------------------- Get Sub Units with Unit id ------------------------------\\
@@ -538,6 +569,8 @@
                     if (self.variants.length) {
                         self.data.append("variants", JSON.stringify(self.variants));
                     }
+
+                    console.log(self.data);
 
                     // Send Data with axios
                     axios

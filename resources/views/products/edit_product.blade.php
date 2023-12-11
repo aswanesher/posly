@@ -94,6 +94,7 @@
                         </div>
 
                         <div class="form-group col-md-4">
+                            <img src="{{ url("images/products/" . $product['image']) }}" class="img-fluid w-100" />
                             <label for="image">{{ __('translate.Image') }} </label>
                             <input name="image" type="file" class="form-control" id="image">
                             <span class="image-error-notif text-danger" id="image-error"></span>
@@ -209,6 +210,20 @@
                                 <input type="text" class="form-control" id="stock_alert" name="stock_alert"
                                     placeholder="{{ __('translate.Enter_Stock_alert') }}"
                                     value="{{ $product['stock_alert'] }}">
+                            </div>
+
+                            <div class="form-group col-md-4 mb-3">
+                                <label for="type">{{ __('translate.Allow_PO') }}<span
+                                        class="field_required">*</span></label>
+                                <select class="form-control" name="allow_po" required style="width: 100%">
+                                    <option value="1" {{ $product['allowPO'] == 1 ? 'selected' : '' }}>
+                                        Ya
+                                    </option>
+                                    <option value="0" {{ $product['allowPO'] == 0 ? 'selected' : '' }}>
+                                        Tidak
+                                    </option>
+                                </select>
+                                <span class="note-error-notif text-danger" id="note-error"></span>
                             </div>
                         @endif
 

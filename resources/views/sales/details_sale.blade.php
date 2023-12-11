@@ -104,7 +104,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="detail in details">
-                    <td><span>@{{detail.code}} (@{{detail.name}})</span>
+                    <td><span>@{{detail.variant_code}} (@{{detail.name}})</span>
                       <p v-show="detail.is_imei && detail.imei_number !==null ">IMEI_SN : @{{detail.imei_number}}
                       </p>
                     </td>
@@ -224,14 +224,14 @@
                 Sale_Ref: ""
             }
         },
-       
+
         methods: {
 
           //----------------------------------- Invoice Sale PDF  -------------------------\\
           Sale_PDF(id) {
             // Start the progress bar.
             NProgress.start();
-            NProgress.set(0.1);          
+            NProgress.set(0.1);
             axios
                 .get('/Sale_PDF/'+ id, {
                 responseType: "blob", // important
@@ -254,7 +254,7 @@
                 setTimeout(() => NProgress.done(), 500);
               });
           },
-   
+
           //------------------------------Formetted Numbers -------------------------\\
           formatNumber(number, dec) {
             const value = (typeof number === "string"
@@ -291,7 +291,7 @@
               toastr.error('{{ __('translate.There_was_something_wronge') }}');
             });
         },
-        
+
 
     //--------------------------------- Send Sale in Email ------------------------------\\
     Sale_Email(id) {
@@ -323,8 +323,8 @@
           toastr.error('{{ __('translate.There_was_something_wronge') }}');
         });
     },
- 
- 
+
+
      //--------------------------------- Delete_Sale ---------------------------\\
      Delete_Sale(id) {
       swal({

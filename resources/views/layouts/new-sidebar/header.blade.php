@@ -48,6 +48,9 @@
 
     <div class="d-flex align-items-center button_pos">
         @can('pos')
+            <a href="/po" class="btn btn-outline-primary fw-bolder me-2">
+                {{ __('translate.PO') }}
+            </a>
             <a href="/pos" class="btn btn-outline-primary fw-bolder">
             {{ __('translate.POS') }}
             </a>

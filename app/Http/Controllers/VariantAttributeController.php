@@ -22,11 +22,11 @@ class VariantAttributeController extends Controller
             $data = VariantAttribute::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
 
             return Datatables::of($data)->addIndexColumn()
-                ->addColumn('attribute_name', function ($row) {
-                    return $row->variant_name;
-                })
                 ->addColumn('attribute_code', function ($row) {
                     return $row->variant_code;
+                })
+                ->addColumn('attribute_name', function ($row) {
+                    return $row->variant_name;
                 })
                 ->addColumn('action', function ($row) {
 

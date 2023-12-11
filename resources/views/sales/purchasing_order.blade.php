@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="row pos-card-left">
-                        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 
                             <validation-observer ref="create_pos">
                                 <form>
@@ -433,7 +433,7 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">{{ __('translate.AddPayment') }}</h5>
+                                                <h5 class="modal-title">{{ __('translate.AddPurchasingOrder') }}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -498,41 +498,21 @@
                                                             </validation-provider>
                                                         </div>
 
-                                                        <div class="form-group col-md-6">
-                                                            <validation-provider name="Payment choice"
-                                                                rules="required" v-slot="{ valid, errors }">
-                                                                <label> {{ __('translate.Payment_choice') }}<span
-                                                                        class="field_required">*</span></label>
-                                                                <v-select @input="Selected_Payment_Method"
-                                                                    placeholder="{{ __('translate.Choose_Payment_Choice') }}"
-                                                                    :class="{ 'is-invalid': !!errors.length }"
-                                                                    :state="errors[0] ? false : (valid ? true : null)"
-                                                                    v-model="payment.payment_method_id"
-                                                                    :reduce="(option) => option.value"
-                                                                    :options="payment_methods.map(payment_methods =>
-                                                                        ({
-                                                                            label: payment_methods.title,
-                                                                            value: payment_methods.id
-                                                                        }))">
+                                                        <div class="col-md-6">
+                                                            <validation-provider name="duedate" rules="required"
+                                                                                 v-slot="validationContext">
+                                                                <div class="form-group">
+                                                                    <label for="picker3">{{ __('translate.Due') }}</label>
+                                                                    <input type="text"
+                                                                           :state="getValidationState(validationContext)"
+                                                                           aria-describedby="date-feedback"
+                                                                           class="form-control"
+                                                                           placeholder="{{ __('translate.Select_Date') }}"
+                                                                           id="datetimepicker" v-model="payment.due">
 
-                                                                </v-select>
-                                                                <span class="error">@{{ errors[0] }}</span>
+                                                                    <span class="error">@{{ validationContext.errors[0] }}</span>
+                                                                </div>
                                                             </validation-provider>
-                                                        </div>
-
-                                                        <div class="form-group col-md-6">
-                                                            <label> {{ __('translate.Account') }} </label>
-                                                            <v-select
-                                                                placeholder="{{ __('translate.Choose_Account') }}"
-                                                                v-model="payment.account_id"
-                                                                :reduce="(option) => option.value"
-                                                                :options="accounts.map(accounts => ({
-                                                                    label: accounts
-                                                                        .account_name,
-                                                                    value: accounts.id
-                                                                }))">
-
-                                                            </v-select>
                                                         </div>
 
                                                         <div class="form-group col-md-6">
@@ -575,22 +555,22 @@
 
                         </div>
 
-                        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 mt-3">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 mt-3">
                             <div class="row">
-                                <div class="col-12 col-lg-8">
+                                <div class="col-12 col-lg-9">
                                     <div class="row">
 
-                                        <div class="col-lg-4 col-md-6 col-sm-6" v-for="product in products"
+                                        <div class="col-lg-3 col-md-6 col-sm-6" v-for="product in products"
                                             @click="Check_Product_Exist(product , product.id)">
                                             <div class="card product-card cursor-pointer">
-                                                <img :src="'/images/products/' + product.image" alt="">
+                                                <img :src="'/images/products/' + product.image" alt="" class="h-100">
                                                 <div class="card-body pos-card-product">
                                                     <p class="text-gray-600">@{{ product.name }}</p>
                                                     <h6 class="title m-0"> @{{ product.Net_price }}</h6>
                                                 </div>
-                                                <div class="quantity">
+                                                {{--<div class="quantity">
                                                     <span>@{{ formatNumber(product.qte_sale, 0) }} @{{ product.unitSale }}</span>
-                                                </div>
+                                                </div>--}}
                                             </div>
                                         </div>
 
@@ -604,7 +584,7 @@
                                     </div>
                                 </div>
 
-                                <div class="d-md-block col-12 col-lg-4">
+                                <div class="d-md-block col-12 col-lg-3">
                                     <div class="card category-card">
                                         <div class="category-head">
                                             <h5 class="fw-semibold m-0">{{ __('translate.All_Category') }}</h5>
@@ -816,7 +796,7 @@
                     montant: '',
                     notes: "",
                     payment_method_id: "",
-                    account_id: "",
+                    due:"",
                 },
                 currentPage: 1,
                 perPage: 6,
@@ -856,6 +836,7 @@
                     qty_min: "",
                     is_promotion: "",
                     promo_percent: "",
+                    allowPO: "",
                 },
                 sound: "/assets/audio/Beep.wav",
                 audio: new Audio("/assets/audio/Beep.wav")
@@ -975,16 +956,14 @@
                         if (!success) {
                             NProgress.done();
                             if (this.sale.client_id == "" || this.sale.client_id === null) {
-                                toastr.error('Veuillez choisir le client');
-
+                                toastr.error('{{ __('translate.Choose_Client') }}');
                             } else if (
                                 this.sale.warehouse_id == "" ||
                                 this.sale.warehouse_id === null
                             ) {
-                                toastr.error('Veuillez choisir le Magasin');
-
+                                toastr.error('{{ __('translate.Choose_Warehouse') }}');
                             } else {
-                                toastr.error('Veuillez remplir correctement le formulaire');
+                                toastr.error('{{ __('translate.Please_fill_the_form_correctly') }}');
                             }
                         } else {
                             if (this.verifiedForm()) {
@@ -1006,9 +985,9 @@
                 Submit_Payment() {
                     this.$refs.add_payment_sale.validate().then(success => {
                         if (!success) {
-                            toastr.error('Veuillez remplir correctement le formulaire');
+                            toastr.error('{{ __('translate.Please_fill_the_form_correctly') }}');
                         } else if (this.payment.montant > this.GrandTotal) {
-                            toastr.error('Le montant à payer est supérieur au total à payer');
+                            toastr.error('{{ __('translate.Paying_amount_is_greater_than_Grand_Total') }}');
                             this.payment.montant = 0;
                         } else {
                             this.CreatePOS();
@@ -1023,7 +1002,7 @@
                         this.payment.montant = 0;
 
                     } else if (this.payment.montant > this.GrandTotal) {
-                        toastr.warning('Le montant à payer est supérieur au total à payer');
+                        toastr.error('{{ __('translate.Paying_amount_is_greater_than_Grand_Total') }}');
                         this.payment.montant = 0;
                     }
                 },
@@ -1047,7 +1026,7 @@
                     this.$refs.Create_Customer.validate().then(success => {
                         if (!success) {
                             NProgress.done();
-                            toastr.error('Veuillez remplir correctement le formulaire');
+                            toastr.error('{{ __('translate.Please_fill_the_form_correctly') }}');
                         } else {
                             this.Create_Client();
                         }
@@ -1120,25 +1099,38 @@
                 add_product(code) {
                     this.audio.play();
                     if (this.details.some(detail => detail.code === code)) {
-                        console.log("disini");
+                        // console.log("disini");
                         this.increment_qty_scanner(code);
-
                     } else {
                         if (this.details.length > 0) {
                             this.order_detail_id();
                         } else if (this.details.length === 0) {
                             this.product.detail_id = 1;
                         }
-                        if (this.product.qty_min > this.product.fix_stock) {
-                            toastr.error('Minimum sales qty is' + '  ' + '(' + this.product.qty_min + ' ' + this
-                                .product.unitSale + ')' + ' ' + 'But not enough in stock');
+                        if(this.product.allowPO === 0) {
+                            if (this.product.qty_min > this.product.fix_stock) {
+                                toastr.error('Minimum sales qty is' + '  ' + '(' + this.product.qty_min + ' ' + this
+                                    .product.unitSale + ')' + ' ' + 'But not enough in stock');
+                            } else {
+                                this.details.push(this.product);
+                                setTimeout(() => {
+                                    this.load_product = true;
+                                }, 300);
+                            }
                         } else {
+                            console.log("masukin data disini");
+                            this.product.fix_stock = 1;
+                            this.product.quantity = 1;
+                            this.product.allowPO = this.product.allowPO;
+                            console.log(this.product);
                             this.details.push(this.product);
                             setTimeout(() => {
                                 this.load_product = true;
                             }, 300);
-
+                            // console.log(this.details);
+                            // console.log(this.product);
                         }
+                        // console.log("PO Allowed ? " + this.product.allowPO);
                     }
                 },
 
@@ -1214,6 +1206,8 @@
                                 this.details[i].quantity = 1;
                             }
 
+                            console.log("Quantity : " + this.details[i].quantity);
+
                             this.detail.Unit_price = Number((this.detail.Unit_price).toFixed(2));
 
                             this.details[i].Unit_price = this.detail.Unit_price,
@@ -1288,28 +1282,32 @@
                         var code_array = [];
                         for (var i = 0; i < this.details.length; i++) {
                             code_array.push(this.details[i].code);
-
-                            if (
-                                this.details[i].quantity == "" ||
-                                this.details[i].quantity === null ||
-                                this.details[i].quantity === 0
-                            ) {
-                                // count += 1;
-                                toastr.error('please add quantity to product');
-                                return false;
-                            } else if (this.details[i].quantity < this.details[i].qty_min) {
-                                toastr.error('The minimum sale quantity for the product' + ' ' + this.details[i]
-                                    .name + '  and' + ' ' + this.details[i].qty_min + ' ' + this.details[i]
-                                    .unitSale);
-                                return false;
-                            } else if (this.details[i].quantity > this.details[i].current) {
-                                toastr.error('insufficient stock for the product' + ' ' + this.details[i].name);
-                                return false;
+                            console.log("Checkout process");
+                            if(this.details[i].allowPO === 0) {
+                                if (
+                                    this.details[i].quantity == "" ||
+                                    this.details[i].quantity === null ||
+                                    this.details[i].quantity === 0
+                                ) {
+                                    // count += 1;
+                                    // toastr.error('please add quantity to product');
+                                    toastr.error('{{ __('translate.AddQuantity') }}');
+                                    return false;
+                                } else if (this.details[i].quantity < this.details[i].qty_min) {
+                                    toastr.error('The minimum sale quantity for the product' + ' ' + this.details[i]
+                                        .name + '  and' + ' ' + this.details[i].qty_min + ' ' + this.details[i]
+                                        .unitSale);
+                                    return false;
+                                } else if (this.details[i].quantity > this.details[i].current) {
+                                    toastr.error('insufficient stock for the product' + ' ' + this.details[i].name);
+                                    return false;
+                                }
                             }
                         }
                         const uniqueArray = this.unique_arr(code_array);
                         if (this.details.length != uniqueArray.length) {
-                            toastr.error('the product is duplicated');
+                            // toastr.error('the product is duplicated');
+                            toastr.error('{{ __('translate.VariantDuplicate') }}');
                             return false;
                         } else {
                             return true;
@@ -1327,8 +1325,9 @@
 
                         this.paymentProcessing = true;
                         axios
-                            .post("/pos/create_pos", {
+                            .post("/po/create_po", {
                                 date: this.payment.date,
+                                due: this.payment.due,
                                 client_id: this.sale.client_id,
                                 warehouse_id: this.sale.warehouse_id,
                                 tax_rate: this.sale.tax_rate ? this.sale.tax_rate : 0,
@@ -1346,14 +1345,13 @@
                                 payment_notes: this.payment.notes,
                                 montant: parseFloat(this.payment.montant).toFixed(2),
 
-
                             })
                             .then(response => {
                                 if (response.data.success === true) {
                                     NProgress.done();
                                     this.paymentProcessing = false;
                                     toastr.success('{{ __('translate.Created_in_successfully') }}');
-                                    window.open("/invoice_pos/" + response.data.id, "_blank");
+                                    window.open("/invoice_po/" + response.data.id, "_blank");
                                     window.location.reload();
                                 }
                             })
@@ -1407,6 +1405,7 @@
                         this.product.imei_number = '';
                         this.product.is_promotion = response.data.is_promotion;
                         this.product.promo_percent = response.data.promo_percent;
+                        this.product.allowPO = response.data.allowPO;
 
                         // console.log("Respon data : " + JSON.stringify(response.data));
                         this.add_product(response.data.code);
@@ -1452,6 +1451,7 @@
 
                 //-------Verified QTY
                 Verified_Qty(detail, id) {
+                    console.log("verifikasi qty process");
                     for (var i = 0; i < this.details.length; i++) {
                         if (this.details[i].detail_id === id) {
                             if (isNaN(detail.quantity)) {
@@ -1477,10 +1477,18 @@
                     for (var i = 0; i < this.details.length; i++) {
                         console.log("Code increment : " + this.details[i].code);
                         console.log("Code dari passingan : " + code);
+                        console.log("detail product : " + JSON.stringify(this.details[i]));
+                        console.log("allow PO ? " + this.product.allowPO);
                         if (this.details[i].code === code) {
-                            if (this.details[i].quantity + 1 > this.details[i].current) {
-                                toastr.error('{{ __('translate.Low_Stock') }}');
+                            if(this.product.allowPO===0) {
+                                if (this.details[i].quantity + 1 > this.details[i].current) {
+                                    console.log("Stok tidak cukup");
+                                    toastr.error('{{ __('translate.Low_Stock') }}');
+                                } else {
+                                    this.details[i].quantity++;
+                                }
                             } else {
+                                console.log("Tambah cart qty");
                                 this.details[i].quantity++;
                             }
                         }
@@ -1604,7 +1612,7 @@
                         this.$refs.product_autocomplete.value = "";
                         this.product_filter = [];
                     } else {
-                        toastr.error('Please wait until the product is loaded');
+                        toastr.error('{{ __('translate.Wait_Until_Product_Loaded') }}');
                     }
 
                 },
@@ -1644,7 +1652,7 @@
 
                 //---------------------------------- Check if Product Exist in Order List ---------------------\\
                 Check_Product_Exist(product, id) {
-
+                    console.log("Klik disini");
                     if (this.load_product) {
                         this.load_product = false;
                         NProgress.start();
@@ -1659,6 +1667,7 @@
                             this.product.image = product.image;
                             this.product.current = product.qte_sale;
                             this.product.fix_stock = product.qte;
+                            console.log(this.product);
                             if (product.qte_sale < 1) {
                                 this.product.quantity = product.qte_sale;
                             } else if (product.qty_min !== 0) {
@@ -1673,7 +1682,7 @@
                         this.$refs.product_autocomplete.value = "";
                         this.product_filter = [];
                     } else {
-                        toastr.error('Please wait until the product is loaded');
+                        toastr.error('{{ __('translate.Wait_Until_Product_Loaded') }}');
                     }
 
                 },
@@ -1684,7 +1693,7 @@
                     NProgress.start();
                     NProgress.set(0.1);
                     axios
-                        .get("/pos/autocomplete_product_pos/" + id +
+                        .get("/po/autocomplete_product_po/" + id +
                             "?stock=" + 1 +
                             "&product_service=" + 1 +
                             "&category_id=" +
@@ -1706,7 +1715,7 @@
                     NProgress.set(0.1);
                     axios
                         .get(
-                            "/pos/get_products_pos?page=" +
+                            "/po/get_products_po?page=" +
                             page +
                             "&category_id=" +
                             this.category_id +

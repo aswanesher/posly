@@ -60,3 +60,5 @@ d
 4resources/views/layouts/new-sidebar/master.blade.php,f/8/f87c66d700035cd402ff30fbb08ca3c4b1556ead
 F
 app/Models/Product.php,3/e/3e258d3e0dc9079cfb444a4703452543a22fa6de
+V
+&app/Http/Controllers/PosController.php,b/d/bd2dde4707db80d6e1bc658aa7d00e03f7a0e69b

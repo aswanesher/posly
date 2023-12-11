@@ -34,7 +34,7 @@ use DB;
 use PDF;
 use App\utils\helpers;
 
-class PosController extends Controller
+class PurchasingOrderController extends Controller
 {
 
     protected $currency;
@@ -99,7 +99,7 @@ class PosController extends Controller
             $data = [];
             $product_autocomplete = [];
 
-            return view('sales.pos', [
+            return view('sales.purchasing_order', [
                 'clients'            => $clients,
                 'payment_methods'    => $payment_methods,
                 'accounts'           => $accounts,
@@ -129,7 +129,8 @@ class PosController extends Controller
 
             $order->is_pos = 1;
             $order->date = $request->date;
-            $order->Ref = 'SO-' . date("Ymd") . '-' . date("his");
+            $order->due_date = $request->due;
+            $order->Ref = 'PO-' . date("Ymd") . '-' . date("his");
             $order->client_id = $request->client_id;
             $order->warehouse_id = $request->warehouse_id;
             $order->tax_rate = $request->tax_rate;
@@ -140,8 +141,9 @@ class PosController extends Controller
             $order->shipping = $request->shipping;
             $order->GrandTotal = $request->GrandTotal;
             $order->notes = $request->notes;
-            $order->statut = 'completed';
+            $order->statut = 'pending';
             $order->payment_statut = 'unpaid';
+            $order->is_purchase_order = 1;
             $order->user_id = Auth::user()->id;
 
             $order->save();
@@ -198,49 +200,6 @@ class PosController extends Controller
 
             SaleDetail::insert($orderDetails);
 
-            if ($request['montant'] > 0) {
-
-                $sale = Sale::findOrFail($order->id);
-
-                $total_paid = $sale->paid_amount + $request['montant'];
-                $due = $sale->GrandTotal - $total_paid;
-
-                if ($due === 0.0 || $due < 0.0) {
-                    $payment_statut = 'paid';
-                } else if ($due != $sale->GrandTotal) {
-                    $payment_statut = 'partial';
-                } else if ($due == $sale->GrandTotal) {
-                    $payment_statut = 'unpaid';
-                }
-
-                PaymentSale::create([
-                    'sale_id'    => $order->id,
-                    'account_id' => $request['account_id'] ? $request['account_id'] : NULL,
-                    'Ref'        => $this->generate_random_code_payment(),
-                    'date'       => $request['date'],
-                    'payment_method_id'  => $request['payment_method_id'],
-                    'montant'    => $request['montant'],
-                    'change'     => 0,
-                    'notes'      => $request['payment_notes'],
-                    'user_id'    => Auth::user()->id,
-                ]);
-
-                $account = Account::where('id', $request['account_id'])->exists();
-
-                if ($account) {
-                    // Account exists, perform the update
-                    $account = Account::find($request['account_id']);
-                    $account->update([
-                        'initial_balance' => $account->initial_balance + $request['montant'],
-                    ]);
-                }
-
-                $sale->update([
-                    'paid_amount' => $total_paid,
-                    'payment_statut' => $payment_statut,
-                ]);
-            }
-
             return $order->id;
         }, 10);
 
@@ -274,14 +233,8 @@ class PosController extends Controller
             ->with('product', 'product.unitSale')
             ->where('deleted_at', '=', null)
             // Get product with PO allowed
-            ->where(function ($query) use ($request) {
-                if ($request->stock == '1' && $request->product_service == '1') {
-                    return $query->where('qte', '>', 0)->orWhere('manage_stock', false);
-                } elseif ($request->stock == '1' && $request->product_service == '0') {
-                    return $query->where('qte', '>', 0)->orWhere('manage_stock', true);
-                } else {
-                    return $query->where('manage_stock', true);
-                }
+            ->whereHas('product', function ($query) {
+                $query->where('allowPO', true);
             })
 
             // Filter
@@ -587,6 +540,7 @@ class PosController extends Controller
             $item['id']                     = $sale->id;
             $item['Ref']                    = $sale->Ref;
             $item['date']                   = Carbon::parse($sale->date)->format('d-m-Y H:i');
+            $item['due_date']               = Carbon::parse($sale->due_date)->format('d-m-Y H:i');
 
             if ($sale->discount_type == 'fixed') {
                 $item['discount']           = $this->render_price_with_symbol_placement(number_format($sale->discount, 2, '.', ','));
@@ -646,7 +600,7 @@ class PosController extends Controller
             $pos_settings = PosSetting::where('deleted_at', '=', null)->first();
 
             return view(
-                'sales.invoice_pos',
+                'sales.invoice_purchasing_order',
                 [
                     'payments' => $payments_details,
                     'setting' => $settings,

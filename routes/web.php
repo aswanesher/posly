@@ -204,6 +204,15 @@ Route::middleware(['XSS'])->group(function () {
         Route::get('pos/autocomplete_product_pos/{id}', 'PosController@autocomplete_product_pos');
         Route::get('invoice_pos/{id}', 'PosController@Print_Invoice_POS');
 
+        //---------------------- PO POS (point of sales Purchase Order) ----------------------\\
+        //------------------------------------------------------------------\\
+        Route::get('po', 'PurchasingOrderController@index');
+        Route::post('po/create_po', 'PurchasingOrderController@CreatePOS');
+        Route::get('po/get_products_po', 'PurchasingOrderController@GetProductsByParametre');
+        Route::get('po/data_create_po', 'PurchasingOrderController@GetELementPos');
+        Route::get('po/autocomplete_product_po/{id}', 'PurchasingOrderController@autocomplete_product_pos');
+        Route::get('invoice_po/{id}', 'PurchasingOrderController@Print_Invoice_POS');
+
         //------------------------------- transfers --------------------------\\
         Route::resource('transfer/transfers', 'TransfersController');
 

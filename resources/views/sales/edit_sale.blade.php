@@ -28,12 +28,12 @@
                   <div class="form-group">
                     <label for="picker3">{{ __('translate.Date') }}</label>
 
-                    <input type="text" 
-                      :state="getValidationState(validationContext)" 
-                      aria-describedby="date-feedback" 
-                      class="form-control" 
-                      placeholder="{{ __('translate.Select_Date') }}"  
-                      id="datetimepicker" 
+                    <input type="text"
+                      :state="getValidationState(validationContext)"
+                      aria-describedby="date-feedback"
+                      class="form-control"
+                      placeholder="{{ __('translate.Select_Date') }}"
+                      id="datetimepicker"
                       v-model="sale.date">
                     <span class="error">@{{  validationContext.errors[0] }}</span>
                   </div>
@@ -95,7 +95,7 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('translate.Product_Name') }}</th>
                         <th scope="col">{{ __('translate.Net_Unit_Price') }}</th>
-                        <th scope="col">{{ __('translate.Current_Stock') }}</th>
+                        <th scope="col" v-if="sale.is_po == 0">{{ __('translate.Current_Stock') }}</th>
                         <th scope="col">{{ __('translate.Qty') }}</th>
                         <th scope="col">{{ __('translate.Discount') }}</th>
                         <th scope="col">{{ __('translate.Tax') }}</th>
@@ -110,16 +110,16 @@
                       <tr v-for="detail in details" :class="{ tr_back_error: detail.quantity < detail.qty_min }">
                         <td>@{{detail.detail_id}}</td>
                         <td>
-                          <span>@{{detail.code}}</span>
+                          <span>@{{detail.name}}</span>
                           <br>
-                          <span class="badge badge-success">@{{detail.name}}</span>
+                          <span class="badge badge-success">Kode : @{{detail.variant_code}}</span>
                         </td>
                         <td>{{$currency}} @{{formatNumber(detail.Net_price, 2)}}</td>
-                        <td>
+                        <td v-if="sale.is_po == 0">
                           <span class="badge badge-warning" v-if="detail.product_type == 'is_service'">----</span>
                           <span class="badge badge-warning" v-else>@{{detail.stock}} @{{detail.unitSale}}</span>
                         </td>
-                       
+
                         <td>
                           <div class="d-flex align-items-center">
                             <span class="increment-decrement btn btn-light rounded-circle"
@@ -127,12 +127,12 @@
                             <input class="fw-semibold cart-qty m-0 px-2"
                               @keyup="Verified_Qty(detail,detail.detail_id)" :min="0.00" :max="detail.stock"
                               v-model.number="detail.quantity" :disabled="detail.del === 1">
-  
+
                             <span class="increment-decrement btn btn-light rounded-circle"
                               @click="increment(detail ,detail.detail_id)">+</span>
                           </div>
                         </td>
-                      
+
                         <td>{{$currency}} @{{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
                         <td>{{$currency}} @{{formatNumber(detail.taxe * detail.quantity, 2)}}</td>
                         <td>{{$currency}} @{{detail.subtotal.toFixed(2)}}</td>
@@ -211,7 +211,7 @@
                       v-model.number="sale.discount" @keyup="keyup_Discount()" type="text" class="form-control">
                     <span class="error">@{{ validationContext.errors[0] }}</span>
                   </validation-provider>
-                
+
                   <select class="form-select" id="inputGroupSelect02"
                     @change="Calcul_Total()" v-model="sale.discount_type">
                     <option value="fixed">Fixed</option>
@@ -439,8 +439,8 @@
           }
         },
 
-       
-       
+
+
     methods: {
 
       handleFocus() {
@@ -513,7 +513,7 @@
       this.Submit_Processing_detail = true;
       for (var i = 0; i < this.details.length; i++) {
 
-        
+
         if (this.details[i].detail_id === this.detail.detail_id) {
 
          this.detail.Unit_price = Number((this.detail.Unit_price).toFixed(2));
@@ -635,17 +635,17 @@
         this.$refs.product_autocomplete.value = "";
         this.product_filter = [];
     },
-    
+
     Selected_Customer(value){
       if (value === null) {
         this.sale.client_id = "";
-       
+
       }
-   
+
 
     },
 
-  
+
     //---------------------- Event Select Warehouse ------------------------------\\
     Selected_Warehouse(value) {
       this.search_input= '';
@@ -849,8 +849,8 @@
           var grand_total =  this.GrandTotal.toFixed(2);
           this.GrandTotal = parseFloat(grand_total);
       }
-      
-     
+
+
   },
 
     //-----------------------------------Delete Detail Product ------------------------------\\
@@ -967,8 +967,8 @@
         this.Calcul_Total();
       });
     },
-   
-          
+
+
     },
     //-----------------------------Autoload function-------------------
     created() {

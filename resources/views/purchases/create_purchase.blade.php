@@ -27,12 +27,12 @@
                   <div class="form-group">
                     <label for="picker3">{{ __('translate.Date') }}</label>
 
-                    <input type="text" 
-                      :state="getValidationState(validationContext)" 
-                      aria-describedby="date-feedback" 
-                      class="form-control" 
-                      placeholder="{{ __('translate.Select_Date') }}"  
-                      id="datetimepicker" 
+                    <input type="text"
+                      :state="getValidationState(validationContext)"
+                      aria-describedby="date-feedback"
+                      class="form-control"
+                      placeholder="{{ __('translate.Select_Date') }}"
+                      id="datetimepicker"
                       v-model="purchase.date">
 
                     <span class="error">@{{  validationContext.errors[0] }}</span>
@@ -127,12 +127,12 @@
                             <input class="fw-semibold cart-qty m-0 px-2"
                               @keyup="Verified_Qty(detail,detail.detail_id)" :min="0.00"
                               v-model.number="detail.quantity" >
-  
+
                             <span class="increment-decrement btn btn-light rounded-circle"
                               @click="increment(detail ,detail.detail_id)">+</span>
                           </div>
                         </td>
-                      
+
                         <td>{{$currency}} @{{formatNumber(detail.DiscountNet * detail.quantity, 2)}}</td>
                         <td>{{$currency}} @{{formatNumber(detail.taxe * detail.quantity, 2)}}</td>
                         <td>{{$currency}} @{{detail.subtotal.toFixed(2)}}</td>
@@ -197,7 +197,7 @@
                   <div class="input-group">
                     <input :state="getValidationState(validationContext)" aria-describedby="OrderTax-feedback"
                       v-model.number="purchase.tax_rate" @keyup="keyup_OrderTax()" type="text" class="form-control">
-                      
+
                       <span class="input-group-text">%</span>
                   </div>
                   <span class="error">@{{ validationContext.errors[0] }}</span>
@@ -212,7 +212,7 @@
                       v-model.number="purchase.discount" @keyup="keyup_Discount()" type="text" class="form-control">
                     <span class="error">@{{ validationContext.errors[0] }}</span>
                   </validation-provider>
-                
+
                   <select class="form-select" id="inputGroupSelect02"
                     @change="Calcul_Total()" v-model="purchase.discount_type">
                     <option value="fixed">Fixed</option>
@@ -226,8 +226,8 @@
                   <div class="input-group">
                     <input :state="getValidationState(validationContext)" aria-describedby="Shipping-feedback"
                       v-model.number="purchase.shipping" @keyup="keyup_Shipping()" type="text" class="form-control">
-                     
-                      <span class="input-group-text">$</span>
+
+                      <span class="input-group-text">{{ $currency }}</span>
                   </div>
                   <span class="error">@{{ validationContext.errors[0] }}</span>
                 </validation-provider>
@@ -465,8 +465,8 @@
           }
         },
 
-       
-       
+
+
     methods: {
 
        //--- Submit Validate Create Purchase
@@ -506,8 +506,8 @@
     getValidationState({ dirty, validated, valid = null }) {
       return dirty || validated ? valid : null;
     },
-   
-   
+
+
     //---------------------- Get_sales_units ------------------------------\\
     Get_Purchases_units(value) {
       axios
@@ -536,7 +536,7 @@
       this.detail.tax_percent = detail.tax_percent;
       this.detail.is_imei = detail.is_imei;
       this.detail.imei_number = detail.imei_number;
-      
+
       setTimeout(() => {
         NProgress.done();
         $('#form_Update_Detail').modal('show');
@@ -563,9 +563,9 @@
                 }
               }
             }
-          
+
           this.detail.Unit_cost = Number((this.detail.Unit_cost).toFixed(2));
-          
+
           this.details[i].Unit_cost = this.detail.Unit_cost;
           this.details[i].tax_percent = this.detail.tax_percent;
           this.details[i].tax_method = this.detail.tax_method;
@@ -654,7 +654,7 @@
         toastr.error('{{ __('translate.Please_Select_Warehouse') }}');
       }
     },
-   
+
     // get Result Value Search Products
     getResultValue(result) {
       return result.code + " " + "(" + result.name + ")";
@@ -669,7 +669,7 @@
         this.details.some(detail => detail.code === result.code)
       ) {
         toastr.error('{{ __('translate.Product_Already_added') }}');
-        
+
       } else {
         this.product.code = result.code;
         this.product.quantity = 1;
@@ -677,7 +677,7 @@
         this.product.fix_stock = result.qte;
         this.product.product_variant_id = result.product_variant_id;
         this.Get_Product_Details(result.id, result.product_variant_id);
-        
+
       }
       this.search_input= '';
       this.$refs.product_autocomplete.value = "";
@@ -808,7 +808,7 @@
             var grand_total =  this.GrandTotal.toFixed(2);
             this.GrandTotal = parseFloat(grand_total);
         }
-     
+
     },
 
 
@@ -955,8 +955,8 @@
         this.Calcul_Total();
       });
     },
-   
-          
+
+
       },
       //-----------------------------Autoload function-------------------
       created() {

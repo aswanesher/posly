@@ -12,27 +12,27 @@ fphp:S103f"KSplit this 170 characters long line (which is greater than 120 au
 kphp:S103i"KSplit this 129 characters long line (which is greater than 120 authorized).(×«†¦üÿÿÿÿ8½Š·¿¾1
 kphp:S103k"KSplit this 141 characters long line (which is greater than 120 authorized).(‹âã©ùÿÿÿÿ8½Š·¿¾1
 ephp:S103m"KSplit this 127 characters long line (which is greater than 120 authorized).(Æœœu8½Š·¿¾1
-kphp:S103u"KSplit this 121 characters long line (which is greater than 120 authorized).(˜ýÞ‘úÿÿÿÿ8½Š·¿¾1
-lphp:S103¥"KSplit this 135 characters long line (which is greater than 120 authorized).(ŽÔÞ…ÿÿÿÿÿ8½Š·¿¾1
-lphp:S103®"KSplit this 131 characters long line (which is greater than 120 authorized).(ŽÖéõýÿÿÿÿ8½Š·¿¾1
-lphp:S103Ñ"KSplit this 127 characters long line (which is greater than 120 authorized).(€Äç×øÿÿÿÿ8½Š·¿¾1
-gphp:S103Ú"KSplit this 136 characters long line (which is greater than 120 authorized).(—ÂÁ—8½Š·¿¾1
-gphp:S103Û"KSplit this 147 characters long line (which is greater than 120 authorized).(æÉà£8½Š·¿¾1
-gphp:S103ù"KSplit this 127 characters long line (which is greater than 120 authorized).(ÖÀ•8½Š·¿¾1
-@php:S125÷"Remove this commented out code.(ÎÌùÎüÿÿÿÿ8½Š·¿¾1
-;php:S125ÿ"Remove this commented out code.(ƒ×žË8½Š·¿¾1
-@php:S125ƒ"Remove this commented out code.(œ¸Ü·üÿÿÿÿ8½Š·¿¾1
-@php:S125‡"Remove this commented out code.(¡ª€Ûøÿÿÿÿ8½Š·¿¾1
-;php:S125‹"Remove this commented out code.(ˆ¯É8½Š·¿¾1
-@php:S125"Remove this commented out code.(îÐ¬€ÿÿÿÿÿ8½Š·¿¾1
-;php:S125“"Remove this commented out code.(”£úè8½Š·¿¾1
-@php:S125œ"Remove this commented out code.( Êñ§úÿÿÿÿ8½Š·¿¾1
-;php:S125 "Remove this commented out code.(­³…©8¾Š·¿¾1
-;php:S125¤"Remove this commented out code.(¾™ªù8¾Š·¿¾1
-@php:S125¨"Remove this commented out code.(Âô«æüÿÿÿÿ8¾Š·¿¾1
-:php:S125¬"Remove this commented out code.(íÕ›[8¾Š·¿¾1
-;php:S125°"Remove this commented out code.(–½Ù×8¾Š·¿¾1
-@php:S125´"Remove this commented out code.(Ì·Àýÿÿÿÿ8¾Š·¿¾1
-@php:S125¸"Remove this commented out code.(»‹¦³ýÿÿÿÿ8¾Š·¿¾1
-˜php:S138&"xThis function expression has 203 lines, which is greater than the 150 lines authorized. Split it into smaller functions.(öäÿ¸þÿÿÿÿ8¾Š·¿¾1
-˜php:S138>"xThis function expression has 186 lines, which is greater than the 150 lines authorized. Split it into smaller functions.(‡œ‚‰ÿÿÿÿÿ8¾Š·¿¾1
+lphp:S103¬"KSplit this 135 characters long line (which is greater than 120 authorized).(ŽÔÞ…ÿÿÿÿÿ8½Š·¿¾1
+lphp:S103µ"KSplit this 131 characters long line (which is greater than 120 authorized).(ŽÖéõýÿÿÿÿ8½Š·¿¾1
+lphp:S103Ø"KSplit this 127 characters long line (which is greater than 120 authorized).(€Äç×øÿÿÿÿ8½Š·¿¾1
+gphp:S103á"KSplit this 136 characters long line (which is greater than 120 authorized).(—ÂÁ—8½Š·¿¾1
+gphp:S103â"KSplit this 147 characters long line (which is greater than 120 authorized).(æÉà£8½Š·¿¾1
+gphp:S103€"KSplit this 127 characters long line (which is greater than 120 authorized).(ÖÀ•8½Š·¿¾1
+;php:S125¦"Remove this commented out code.(é­¾â8àÃ–†Á1
+@php:S125þ"Remove this commented out code.(ÎÌùÎüÿÿÿÿ8½Š·¿¾1
+;php:S125†"Remove this commented out code.(ƒ×žË8½Š·¿¾1
+@php:S125Š"Remove this commented out code.(œ¸Ü·üÿÿÿÿ8½Š·¿¾1
+@php:S125Ž"Remove this commented out code.(¡ª€Ûøÿÿÿÿ8½Š·¿¾1
+;php:S125’"Remove this commented out code.(ˆ¯É8½Š·¿¾1
+@php:S125–"Remove this commented out code.(îÐ¬€ÿÿÿÿÿ8½Š·¿¾1
+;php:S125š"Remove this commented out code.(”£úè8½Š·¿¾1
+@php:S125£"Remove this commented out code.( Êñ§úÿÿÿÿ8½Š·¿¾1
+;php:S125§"Remove this commented out code.(­³…©8¾Š·¿¾1
+;php:S125«"Remove this commented out code.(¾™ªù8¾Š·¿¾1
+@php:S125¯"Remove this commented out code.(Âô«æüÿÿÿÿ8¾Š·¿¾1
+:php:S125³"Remove this commented out code.(íÕ›[8¾Š·¿¾1
+;php:S125·"Remove this commented out code.(–½Ù×8¾Š·¿¾1
+@php:S125»"Remove this commented out code.(Ì·Àýÿÿÿÿ8¾Š·¿¾1
+@php:S125¿"Remove this commented out code.(»‹¦³ýÿÿÿÿ8¾Š·¿¾1
+˜php:S138&"xThis function expression has 209 lines, which is greater than the 150 lines authorized. Split it into smaller functions.(öäÿ¸þÿÿÿÿ8¾Š·¿¾1
+˜php:S138>"xThis function expression has 192 lines, which is greater than the 150 lines authorized. Split it into smaller functions.(‡œ‚‰ÿÿÿÿÿ8¾Š·¿¾1
