@@ -171,7 +171,7 @@
                                         <div class="cart-summery">
 
                                             <div>
-                                                <div class="summery-item mb-2 row">
+                                                {{--<div class="summery-item mb-2 row">
                                                     <span
                                                         class="title mr-2 col-lg-12 col-sm-12">{{ __('translate.Shipping') }}</span>
 
@@ -192,7 +192,7 @@
                                                             <span class="error">@{{ validationContext.errors[0] }}</span>
                                                         </validation-provider>
                                                     </div>
-                                                </div>
+                                                </div>--}}
 
                                                 <div class="summery-item mb-2 row">
                                                     <span
@@ -1505,8 +1505,12 @@
                 increment(detail, id) {
                     for (var i = 0; i < this.details.length; i++) {
                         if (this.details[i].detail_id == id) {
-                            if (detail.quantity + 1 > detail.current) {
-                                toastr.error('{{ __('translate.Low_Stock') }}');
+                            if(this.details[i].allowPO === 0) {
+                                if (detail.quantity + 1 > detail.current) {
+                                    toastr.error('{{ __('translate.Low_Stock') }}');
+                                } else {
+                                    this.details[i].quantity++;
+                                }
                             } else {
                                 this.details[i].quantity++;
                             }
@@ -1519,13 +1523,22 @@
                 decrement(detail, id) {
                     for (var i = 0; i < this.details.length; i++) {
                         if (this.details[i].detail_id == id) {
-                            if (detail.quantity - 1 > detail.current || detail.quantity - 1 < 1) {
-                                toastr.error('{{ __('translate.Low_Stock') }}');
-                            } else if (detail.quantity - 1 < detail.qty_min) {
-                                toastr.warning('Minimum Sales Quantity Is' + ' ' + detail.qty_min + ' ' + detail
-                                    .unitSale);
+                            if(this.details[i].allowPO === 0) {
+                                if (detail.quantity - 1 > detail.current || detail.quantity - 1 < 1) {
+                                    toastr.error('{{ __('translate.Low_Stock') }}');
+                                } else if (detail.quantity - 1 < detail.qty_min) {
+                                    toastr.warning('Minimum Sales Quantity Is' + ' ' + detail.qty_min + ' ' + detail
+                                        .unitSale);
+                                } else {
+                                    this.details[i].quantity--;
+                                }
                             } else {
-                                this.details[i].quantity--;
+                                if (detail.quantity - 1 < detail.qty_min) {
+                                    toastr.warning('Minimum Sales Quantity Is' + ' ' + detail.qty_min + ' ' + detail
+                                        .unitSale);
+                                } else {
+                                    this.details[i].quantity--;
+                                }
                             }
                         }
                     }

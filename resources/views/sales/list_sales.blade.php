@@ -44,7 +44,7 @@
                   <th>{{ __('translate.warehouse') }}</th>
                   <th>{{ __('translate.Total') }}</th>
                   <th>{{ __('translate.Paid') }}</th>
-                  <th>{{ __('translate.Due') }}</th>
+                  <th>{{ __('translate.Payment_Due') }}</th>
                   <th>{{ __('translate.Payment_Status') }}</th>
                 </tr>
               </thead>
@@ -240,15 +240,15 @@
                   <validation-provider name="date" rules="required" v-slot="validationContext">
                     <div class="form-group">
                       <label for="picker3">{{ __('translate.Date') }}</label>
-  
-                      <input type="text" 
-                        :state="getValidationState(validationContext)" 
-                        aria-describedby="date-feedback" 
-                        class="form-control" 
-                        placeholder="{{ __('translate.Select_Date') }}"  
-                        id="datetimepicker" 
+
+                      <input type="text"
+                        :state="getValidationState(validationContext)"
+                        aria-describedby="date-feedback"
+                        class="form-control"
+                        placeholder="{{ __('translate.Select_Date') }}"
+                        id="datetimepicker"
                         v-model="payment.date">
-  
+
                       <span class="error">@{{  validationContext.errors[0] }}</span>
                     </div>
                   </validation-provider>
@@ -272,11 +272,11 @@
                           v-slot="{ valid, errors }">
                           <label> {{ __('translate.Payment_choice') }}<span
                                   class="field_required">*</span></label>
-                          <v-select @input="Selected_Payment_Method" 
+                          <v-select @input="Selected_Payment_Method"
                                 placeholder="{{ __('translate.Choose_Payment_Choice') }}"
                               :class="{'is-invalid': !!errors.length}"
                               :state="errors[0] ? false : (valid ? true : null)"
-                              v-model="payment.payment_method_id" :reduce="(option) => option.value" 
+                              v-model="payment.payment_method_id" :reduce="(option) => option.value"
                               :options="payment_methods.map(payment_methods => ({label: payment_methods.title, value: payment_methods.id}))">
 
                           </v-select>
@@ -286,15 +286,15 @@
 
                   <div class="form-group col-md-6">
                       <label> {{ __('translate.Account') }} </label>
-                      <v-select 
+                      <v-select
                             placeholder="{{ __('translate.Choose_Account') }}"
-                          v-model="payment.account_id" :reduce="(option) => option.value" 
+                          v-model="payment.account_id" :reduce="(option) => option.value"
                           :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))">
 
                       </v-select>
                   </div>
 
-            
+
                 <div class="form-group col-md-12">
                   <label for="note">{{ __('translate.Please_provide_any_details') }}
                   </label>
@@ -349,7 +349,7 @@
               autoclose: true,
               todayHighlight: true,
           });
-          
+
           var end_date = new Date();
           var start_date = new Date();
 
@@ -408,9 +408,9 @@
                     {data: 'paid_amount'},
                     {data: 'due'},
                     {data: 'payment_status'},
-                
+
                 ],
-            
+
                 lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 dom: "<'row'<'col-sm-12 col-md-7'lB><'col-sm-12 col-md-5 p-0'f>>rtip",
                 oLanguage: {
@@ -419,7 +419,7 @@
                     sInfoEmpty: "{{ __('datatable.sInfoEmpty') }}",
                     sInfoFiltered: "{{ __('datatable.sInfoFiltered') }}",
                     sInfoThousands: "{{ __('datatable.sInfoThousands') }}",
-                    sLengthMenu: "_MENU_", 
+                    sLengthMenu: "_MENU_",
                     sLoadingRecords: "{{ __('datatable.sLoadingRecords') }}",
                     sProcessing: "{{ __('datatable.sProcessing') }}",
                     sSearch: "",
@@ -523,12 +523,12 @@
             var payment_statut = $('#payment_status').val();
             let client_id = $('#client_id').val();
             let warehouse_id = $('#warehouse_id').val();
-      
+
             $('#sale_table').DataTable().destroy();
             sale_datatable(start_date, end_date, Ref ,client_id, payment_statut,warehouse_id);
 
             $('#filter_sale_modal').modal('hide');
-           
+
         });
 
         // event reload Datatatble
@@ -539,7 +539,7 @@
             var payment_statut = $('#payment_status').val();
             let client_id = $('#client_id').val();
             let warehouse_id = $('#warehouse_id').val();
-      
+
             $('#sale_table').DataTable().destroy();
             sale_datatable(start_date, end_date, Ref ,client_id, payment_statut,warehouse_id);
         });
@@ -569,7 +569,7 @@
             var id = $(this).attr('id');
             app.Remove_sale(id);
         });
-        
+
          //Show_Payments
          $(document).on('click', '.Show_Payments', function () {
             var id = $(this).attr('id');
@@ -633,8 +633,8 @@
             payment_methods:[],
             accounts:[],
             errors:[],
-            sales: [], 
-            drivers: [], 
+            sales: [],
+            drivers: [],
             shipment: {},
             sale: {},
             sale_due:'',
@@ -649,9 +649,9 @@
             payments: [],
             payment: {},
             Sale_id: "",
-          
+
         },
-       
+
         methods: {
 
 
@@ -661,7 +661,7 @@
                 }
             },
 
-          
+
       //---------- keyup paid Amount
     Verified_paidAmount() {
       if (isNaN(this.payment.montant)) {
@@ -737,7 +737,7 @@
       // Start the progress bar.
       NProgress.start();
       NProgress.set(0.1);
-     
+
       axios
         .get("/payment_Sale_PDF/" + id, {
           responseType: "blob", // important
@@ -791,10 +791,10 @@
         this.reset_form_payment();
         this.EditPaiementMode = false;
         this.get_data_create(id);
-       
+
       }
     },
-    
+
      //----------------------------------------- get_data_create  -------------------------------\\
      get_data_create(id) {
       axios
@@ -806,7 +806,7 @@
           this.payment.date      = moment().format('YYYY-MM-DD HH:mm');
           this.payment_methods   = response.data.payment_methods;
           this.accounts          = response.data.accounts;
-          
+
           setTimeout(() => {
             // Complete the animation of the  progress bar.
             NProgress.done();
@@ -878,7 +878,7 @@
       this.paymentProcessing = true;
       NProgress.start();
       NProgress.set(0.1);
-      
+
         axios
           .post("/payment/sale", {
             sale_id: this.Sale_id,
@@ -904,7 +904,7 @@
       this.paymentProcessing = true;
       NProgress.start();
       NProgress.set(0.1);
-      
+
         axios
           .put("/payment/sale/" + this.payment.id, {
             sale_id: this.Sale_id,
@@ -917,7 +917,7 @@
           .then(response => {
             this.paymentProcessing = false;
             $.event.trigger('Update_Facture_sale');
-            toastr.success('{{ __('translate.Updated_in_successfully') }}');  
+            toastr.success('{{ __('translate.Updated_in_successfully') }}');
             this.errors = {};
           })
           .catch(error => {
@@ -994,7 +994,7 @@
         return `${value[0]}.${formated}`;
         },
 
-   
+
 
     SendEmail(id) {
         // Start the progress bar.
@@ -1021,7 +1021,7 @@
         // Start the progress bar.
         NProgress.start();
         NProgress.set(0.1);
-        
+
         axios
             .get('/Sale_PDF/'+ id, {
             responseType: "blob", // important
@@ -1048,7 +1048,7 @@
 
              //--------------------------------- Remove_sale ---------------------------\\
              Remove_sale(id) {
-              
+
                 swal({
                     title: '{{ __('translate.Are_you_sure') }}',
                     text: '{{ __('translate.You_wont_be_able_to_revert_this') }}',
@@ -1077,7 +1077,7 @@
                     });
                 },
 
-         
+
 
         },
         //-----------------------------Autoload function-------------------

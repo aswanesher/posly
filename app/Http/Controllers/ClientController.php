@@ -241,8 +241,21 @@ class ClientController extends Controller
                 $filename = 'no_avatar.png';
             }
 
+            // add user data
+            $user = User::create([
+                'username'  => $request['username'],
+                'email'     => $request['email'],
+                'avatar'    => $filename,
+                'password'  => Hash::make("password"),
+                'role_users_id'   => 3,
+                'status'    => 1,
+                'is_all_warehouses'    => 1,
+                'created_at' => Carbon::now()
+            ]);
+
+            // add client data
             Client::create([
-                'user_id'           => $user_auth->id,
+                'user_id'           => $user->id,
                 'username'          => $request['username'],
                 'code'              => $this->getNumberOrder(),
                 'email'             => $request['email'],
@@ -256,7 +269,6 @@ class ClientController extends Controller
                 'office_phone'      => $request['officePhone'],
                 'office_address'    => $request['officeAddress'],
                 'office_postal_code' => $request['officePostalCode'],
-
             ]);
 
             return response()->json(['success' => true]);

@@ -169,7 +169,7 @@ class PurchasingOrderController extends Controller
                     'imei_number'        => $value['imei_number'],
                 ];
 
-                if ($value['product_variant_id']) {
+                /*if ($value['product_variant_id']) {
                     $product_warehouse = product_warehouse::where('warehouse_id', $order->warehouse_id)
                         ->where('product_id', $value['product_id'])
                         ->where('product_variant_id', $value['product_variant_id'])
@@ -195,7 +195,7 @@ class PurchasingOrderController extends Controller
                         }
                         $product_warehouse->save();
                     }
-                }
+                }*/
             }
 
             SaleDetail::insert($orderDetails);
@@ -359,7 +359,10 @@ class PurchasingOrderController extends Controller
         $product_warehouse_data = product_warehouse::with('warehouse', 'product', 'productVariant')
             ->where('warehouse_id', $id)
             ->where('deleted_at', '=', null)
-            ->where(function ($query) use ($request) {
+            ->whereHas('product', function ($query) {
+                $query->where('allowPO', true);
+            })
+            /*->where(function ($query) use ($request) {
                 if ($request->stock == '1' && $request->product_service == '1') {
                     return $query->where('qte', '>', 0)->orWhere('manage_stock', false);
                 } elseif ($request->stock == '1' && $request->product_service == '0') {
@@ -367,7 +370,7 @@ class PurchasingOrderController extends Controller
                 } else {
                     return $query->where('manage_stock', true);
                 }
-            })
+            })*/
 
             // Filter
             ->where(function ($query) use ($request) {
@@ -432,7 +435,10 @@ class PurchasingOrderController extends Controller
         $product_warehouse_data = product_warehouse::with('warehouse', 'product', 'productVariant')
             ->where('warehouse_id', $id)
             ->where('deleted_at', '=', null)
-            ->where(function ($query) use ($request) {
+            ->whereHas('product', function ($query) {
+                $query->where('allowPO', true);
+            })
+            /*->where(function ($query) use ($request) {
                 if ($request->stock == '1' && $request->product_service == '1') {
                     return $query->where('qte', '>', 0)->orWhere('manage_stock', false);
                 } elseif ($request->stock == '1' && $request->product_service == '0') {
@@ -440,7 +446,7 @@ class PurchasingOrderController extends Controller
                 } else {
                     return $query->where('manage_stock', true);
                 }
-            })
+            })*/
 
             // Filter
             ->where(function ($query) use ($request) {
