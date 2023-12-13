@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         $this->call([
             EmailMessagesSeeder::class,
             smsMessagesSeeder::class,
@@ -28,11 +27,13 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PermissionRoleSeeder::class,
             ProductUnitSeeder::class,
+            WarehouseSeeder::class,
+            VariantAttributeSeeder::class,
+            VariantAttributeValueSeeder::class,
             ProvincesSeeder::class,
             CitiesSeeder::class,
             DistrictsSeeder::class,
             VillagesSeeder::class,
-            WarehouseSeeder::class
         ]);
 
     }

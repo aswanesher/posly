@@ -3,9 +3,12 @@
 namespace App\Imports;
 
 use App\Models\Client;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
@@ -48,8 +51,19 @@ class ClientImportNew implements
     public function model(array $row)
     {
         $user_auth = auth()->user();
+        $user = User::create([
+            'username'  => strtolower(str_replace(" ", "", $row['nama'])),
+            'email'     => $row['email'],
+            'avatar'    => 'no_avatar.png',
+            'password'  => Hash::make("password"),
+            'role_users_id'   => 3,
+            'status'    => 1,
+            'is_all_warehouses'    => 1,
+            'created_at' => Carbon::now()
+        ]);
+
         return new Client([
-            'user_id' => $user_auth->id,
+            'user_id' => $user->id ?? $user_auth,
             'code' => $this->getNumberOrder(),
             'username' => $row['nama'],
             'email' => $row['email'],

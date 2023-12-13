@@ -243,7 +243,7 @@ class ClientController extends Controller
 
             // add user data
             $user = User::create([
-                'username'  => $request['username'],
+                'username'  => strtolower(str_replace(" ", "", $request['username'])),
                 'email'     => $request['email'],
                 'avatar'    => $filename,
                 'password'  => Hash::make("password"),
