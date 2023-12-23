@@ -580,13 +580,11 @@
         axios
             .post("/products/products/" + id, data)
             .then(response => {
-                // Complete the animation of theprogress bar.
                 NProgress.done();
                 self.SubmitProcessing = false;
-                // window.location.href = '/products/products';
+                window.location.href = '/products/products';
                 toastr.success('{{ __('translate.Updated_in_successfully') }}');
                 self.errors = {};
-                // location.reload();
             })
             .catch(error => {
                 NProgress.done();

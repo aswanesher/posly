@@ -215,8 +215,9 @@ class ClientController extends Controller
     {
         $user_auth = auth()->user();
         if ($user_auth->can('client_add')) {
-
-            return view('clients.create_client');
+            $provinces = \Indonesia::allProvinces();
+            $cities = \Indonesia::allCities();
+            return view('clients.create_client', compact('provinces','cities'));
         }
         return abort('403', __('You are not authorized'));
     }
@@ -241,6 +242,12 @@ class ClientController extends Controller
                 $filename = 'no_avatar.png';
             }
 
+            // get province
+            $province = \Indonesia::findProvince($request['province']);
+            $city = \Indonesia::findCity($request['city']);
+            $district = \Indonesia::findDistrict($request['district']);
+            $subdistrict = \Indonesia::findVillage($request['subdistrict']);
+
             // add user data
             $user = User::create([
                 'username'  => strtolower(str_replace(" ", "", $request['username'])),
@@ -259,16 +266,16 @@ class ClientController extends Controller
                 'username'          => $request['username'],
                 'code'              => $this->getNumberOrder(),
                 'email'             => $request['email'],
-                'city'              => $request['city'],
+                'country'           => 'Indonesia',
+                'province'          => $province->name ?? null,
+                'city'              => $city->name ?? null,
+                'district'          => $district->name ?? null,
+                'subdistrict'       => $subdistrict->name ?? null,
                 'phone'             => $request['phone'],
                 'address'           => $request['address'],
                 'status'            => 1,
                 'photo'             => $filename,
                 'postal_code'       => $request['postalCode'],
-                'office_name'       => $request['officeName'],
-                'office_phone'      => $request['officePhone'],
-                'office_address'    => $request['officeAddress'],
-                'office_postal_code' => $request['officePostalCode'],
             ]);
 
             return response()->json(['success' => true]);

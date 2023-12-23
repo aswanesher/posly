@@ -32,7 +32,7 @@
         <ul x-data="collapse('{{$parentPath}}')" class="list-group" id="menu">
             {{-- Dashboard --}}
             <li class="">
-                <a href="/" class="nav-item @if($path == 'dashboard/admin') active @endif">
+                <a href="/dashboard/admin" class="nav-item @if($path == 'dashboard/admin') active @endif">
                     @include('components.icons.dashboard', ['class'=>'width_16'])
                     <span class="item-name">{{ __('translate.dashboard') }}</span>
                 </a>

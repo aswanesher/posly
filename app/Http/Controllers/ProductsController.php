@@ -1004,7 +1004,7 @@ class ProductsController extends Controller
                     $Product->type        = $request['type'];
                     $Product->name        = $request['name'];
                     $Product->code        = $request['code'];
-                    // $Product->category_id = $request['category_id'];
+                    $Product->category_id = $request['category'];
                     $Product->brand_id    = $request['brand_id'] ? $request['brand_id'] : NULL;
                     $Product->TaxNet      = $request['TaxNet'];
                     $Product->tax_method  = $request['tax_method'];
@@ -1281,11 +1281,11 @@ class ProductsController extends Controller
                             $path = public_path() . '/images/products';
 
                             $userPhoto = $path . '/' . $currentPhoto;
-                            if (file_exists($userPhoto)) {
+                            /*if (file_exists($userPhoto)) {
                                 if ($Product->image != 'no_image.png') {
                                     @unlink($userPhoto);
                                 }
-                            }
+                            }*/
                         } else {
                             $filename = $currentPhoto;
                         }
@@ -1376,7 +1376,7 @@ class ProductsController extends Controller
                         ->get();
                     info("Input data produk dan variant ke warehouse");
                     foreach ($warehouses as $warehouse) {
-                        if ($productCopy->is_variant == true) {
+                        if ($productCopy->type == 'is_variant') {
                             foreach ($Product_variants as $product_variant) {
                                 $product_warehouse[] = [
                                     'product_id' => $productCopy->id,

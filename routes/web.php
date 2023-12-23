@@ -34,10 +34,17 @@ $installed = Storage::disk('public')->exists('installed');
 
 Auth::routes(['register' => false]);
 
-
 Route::middleware(['XSS'])->group(function () {
+    Route::get('/', [\App\Http\Controllers\Frontend\HomeController::class, 'index']);
+    Route::get('/product', [\App\Http\Controllers\Frontend\HomeController::class, 'product']);
+    Route::get('/grid', [\App\Http\Controllers\Frontend\HomeController::class, 'grid']);
+    Route::get('/list', [\App\Http\Controllers\Frontend\HomeController::class, 'list']);
+    Route::get('/cart', [\App\Http\Controllers\Frontend\HomeController::class, 'cart']);
+    Route::get('/shipping', [\App\Http\Controllers\Frontend\HomeController::class, 'shipping']);
+    Route::get('/payment', [\App\Http\Controllers\Frontend\HomeController::class, 'payment']);
+    Route::get('/success', [\App\Http\Controllers\Frontend\HomeController::class, 'paymentSuccess']);
 
-    Route::get('/', "HomeController@RedirectToLogin");
+    Route::get('/dashboard/admin', "HomeController@RedirectToLogin");
     Route::get('switch/language/{lang}', 'LocalController@languageSwitch')->name('language.switch');
 
     //------------------------------- dashboard Admin--------------------------\\
@@ -107,6 +114,12 @@ Route::middleware(['XSS'])->group(function () {
             Route::get('payment_purchase_return', 'ReportController@payment_purchase_return_report')->name('payment_purchase_return_report');
 
             Route::get('reports_quantity_alerts', 'ReportController@reports_quantity_alerts')->name('reports_quantity_alerts');
+        });
+
+        Route::prefix('region')->group(function () {
+            Route::get('cities/{provinceId}', 'IndonesianRegionController@getCity')->name('cities');
+            Route::get('districts/{cityId}', 'IndonesianRegionController@getDistrict')->name('district');
+            Route::get('subdistricts/{districtId}', 'IndonesianRegionController@getSubDistrict')->name('subdistrict');
         });
 
         //------------------------------- products--------------------------\\
@@ -287,6 +300,15 @@ Route::middleware(['XSS'])->group(function () {
 
         Route::get('import_clients', 'ClientController@import_clients_page')->name('import_clients');
         Route::post('import_clients', 'ClientController@import_clients');
+
+        //------------------------------- postss --------------------------\\
+        Route::prefix('post')->group(function() {
+            Route::controller('PostController')->group(function() {
+                Route::get('/posts', 'index')->name('post.index');
+                Route::post('/', 'store')->name('post.store');
+                Route::get('/create', 'create')->name('post.create');
+            });
+        });
 
         //------------------------------- users & permissions --------------------------\\
         Route::prefix('user-management')->group(function () {

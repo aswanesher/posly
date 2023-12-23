@@ -29,8 +29,6 @@ class ClientRequest extends FormRequest
             'photo'    => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
             'postal_code' => $ruleData,
             'phone' => $ruleData,
-            'officePhone' => $ruleData,
-            'officePostalCode' => $ruleData,
             'email' => 'email|required',
         ];
     }

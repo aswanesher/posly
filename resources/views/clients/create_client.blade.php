@@ -37,20 +37,59 @@
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label for="city">{{ __('translate.City') }}</label>
-                            <input type="text" v-model="client.city" class="form-control" id="city"
-                                placeholder="{{ __('translate.Enter_City') }}">
+                            <label for="email">{{ __('translate.Email') }}</label>
+                            <input type="text" v-model="client.email" class="form-control" id="email"
+                                   id="email" placeholder="{{ __('translate.Enter_email_address') }}">
+                            <span class="error" v-if="errors && errors.email">
+                                @{{ errors.email[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label>{{ __('translate.Province') }} <span class="field_required">*</span></label>
+                            <v-select @input="getCity" placeholder="{{ __('translate.Enter_Province') }}" v-model="client.province"
+                                      :reduce="(option) => option.value"
+                                      :options="provinces.map(provinces => ({ label: provinces.name, value: provinces.id }))">
+                            </v-select>
+
+                            <span class="error" v-if="errors && errors.province">
+                                @{{ errors.province[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label>{{ __('translate.City') }} <span class="field_required">*</span></label>
+                            <v-select @input="getDistrict" placeholder="{{ __('translate.Enter_City') }}" v-model="client.city"
+                                      :reduce="(option) => option.value"
+                                      :options="cities.map(cities => ({ label: cities.name, value: cities.id }))">
+                            </v-select>
+
                             <span class="error" v-if="errors && errors.city">
                                 @{{ errors.city[0] }}
                             </span>
                         </div>
 
-                        <div class="form-group col-md-4">
-                            <label for="email">{{ __('translate.Email') }}</label>
-                            <input type="text" v-model="client.email" class="form-control" id="email"
-                                id="email" placeholder="{{ __('translate.Enter_email_address') }}">
-                            <span class="error" v-if="errors && errors.email">
-                                @{{ errors.email[0] }}
+                        <div class="form-group col-md-3">
+                            <label>{{ __('translate.District') }} <span class="field_required">*</span></label>
+                            <v-select @input="getSubDistrict" placeholder="{{ __('translate.Enter_District') }}" v-model="client.district"
+                                      :reduce="(option) => option.value"
+                                      :options="districts.map(districts => ({ label: districts.name, value: districts.id }))">
+                            </v-select>
+
+                            <span class="error" v-if="errors && errors.district">
+                                @{{ errors.district[0] }}
+                            </span>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label>{{ __('translate.SubDistrict') }} <span class="field_required">*</span></label>
+                            <v-select placeholder="{{ __('translate.Enter_SubDistrict') }}" v-model="client.subdistrict"
+                                      :reduce="(option) => option.value"
+                                      :options="subdistricts.map(subdistricts => ({ label: subdistricts.name, value: subdistricts.id }))">
+                            </v-select>
+
+                            <span class="error" v-if="errors && errors.subdistrict">
+                                @{{ errors.subdistrict[0] }}
                             </span>
                         </div>
 
@@ -81,7 +120,7 @@
                         </div>
                     </div>
                     <div class="separator-breadcrumb border-top mt-4"></div>
-                    <div class="row">
+                    {{--<div class="row">
                         <div class="form-group col-md-4">
                             <label for="officeName">{{ __('translate.officeName') }}</label>
                             <input type="text" v-model="client.office_name" class="form-control"
@@ -115,7 +154,7 @@
                                 id="officeAddress"
                                 placeholder="{{ __('translate.officeAddress') }}"></textarea>
                         </div>
-                    </div>
+                    </div>--}}
 
                     <div class="row mt-3">
 
@@ -149,32 +188,58 @@
             SubmitProcessing:false,
             errors:[],
             data: new FormData(),
+            provinces: @json($provinces),
+            cities: [],
+            districts: [],
+            subdistricts: [],
             client: {
                 username: "",
                 code: "",
                 photo:"",
                 status:1,
                 email: "",
+                provinces: "",
                 city: "",
+                district: "",
+                subdistrict: "",
                 phone: "",
                 address: "",
                 postalCode: "",
-                officeName: "",
+                /*officeName: "",
                 officeAddress: "",
                 officePhone: "",
-                officePostalCode: "",
+                officePostalCode: "",*/
             },
         },
 
         methods: {
 
+            getCity(value) {
+                this.cities = [];
+                console.log("Get city data");
+                axios
+                    .get("/region/cities/" + value)
+                    .then(({ data }) => (this.cities = data.cities));
+                console.log(this.cities);
+            },
 
-            // Selected_Status(value) {
-            //     if (value === null) {
-            //         this.client.status = 1;
-            //     }
-            // },
+            getDistrict(value) {
+                this.districts = [];
+                console.log("Get district data");
+                axios
+                    .get("/region/districts/" + value)
+                    .then(({ data }) => (this.districts = data.districts));
+                console.log(this.districts);
+            },
 
+            getSubDistrict(value) {
+                this.subdistricts = [];
+                console.log("Get sub district data");
+                axios
+                    .get("/region/subdistricts/" + value)
+                    .then(({ data }) => (this.subdistricts = data.villages));
+                console.log(this.villages);
+            },
 
             changePhoto(e){
                 let file = e.target.files[0];
@@ -189,15 +254,18 @@
                 self.data.append("username", self.client.username);
                 self.data.append("status", self.client.status);
                 self.data.append("email", self.client.email);
+                self.data.append("province", self.client.province);
                 self.data.append("city", self.client.city);
+                self.data.append("district", self.client.district);
+                self.data.append("subdistrict", self.client.subdistrict);
                 self.data.append("phone", self.client.phone);
                 self.data.append("address", self.client.address);
                 self.data.append("photo", self.client.photo);
                 self.data.append("postalCode", self.client.postal_code);
-                self.data.append("officeName", self.client.office_name);
+                /*self.data.append("officeName", self.client.office_name);
                 self.data.append("officeAddress", self.client.office_address);
                 self.data.append("officePostalCode", self.client.office_postal_code);
-                self.data.append("officePhone", self.client.office_phone);
+                self.data.append("officePhone", self.client.office_phone);*/
 
                 axios
                     .post("/people/clients", self.data)
