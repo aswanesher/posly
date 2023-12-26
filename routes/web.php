@@ -313,6 +313,11 @@ Route::middleware(['XSS'])->group(function () {
             });
         });
 
+        //------------------------------- Media --------------------------\\
+        Route::resource('medias/media', 'MediaController');
+        Route::post('medias/media/{id}', 'MediaController@update');
+        Route::post('get_media_datatable', 'MediaController@get_media_datatables')->name('media_datatable');
+
         //------------------------------- users & permissions --------------------------\\
         Route::prefix('user-management')->group(function () {
             Route::resource('users', 'UserController');

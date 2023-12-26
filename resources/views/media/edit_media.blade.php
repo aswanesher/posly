@@ -12,11 +12,11 @@
     <div class="separator-breadcrumb border-top"></div>
 
     <!-- begin::main-row -->
-    <div class="row" id="section_create_post">
+    <div class="row" id="section_create_media">
         <div class="col-lg-12 mb-3">
 
             <!--begin::form-->
-            <form @submit.prevent="Update_Post()">
+            <form @submit.prevent="Update_Media()">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -25,7 +25,7 @@
                                 <label for="title">{{ __('translate.Title') }} <span
                                         class="field_required">*</span></label>
                                 <input type="text" class="form-control" id="title"
-                                       placeholder="{{ __('translate.Enter_Title') }}" v-model="post.title">
+                                       placeholder="{{ __('translate.Enter_Title') }}" v-model="media.title">
                                 <span class="error" v-if="errors && errors.title">
                                 @{{ errors.title[0] }}
                             </span>
@@ -33,11 +33,11 @@
 
                             <div class="form-group col-md-4">
                                 <label>{{ __('translate.Category') }} <span class="field_required">*</span></label>
-                                <v-select placeholder="{{ __('translate.Choose_Category') }}" v-model="post.category"
+                                <v-select placeholder="{{ __('translate.Choose_Category') }}" v-model="media.type"
                                           :reduce="(option) => option.value"
                                           :options="[
-                                    { label: 'Articles', value: 'articles' },
-                                    { label: 'Static Page', value: 'static-page' }
+                                    { label: 'Banner', value: 'banner' },
+                                    { label: 'Slider', value: 'slider' }
                                 ]">
                                 </v-select>
 
@@ -49,7 +49,7 @@
                             <div class="form-group col-md-4">
                                 <label>{{ __('translate.Status') }} </label>
                                 <span class="field_required">*</span></label>
-                                <v-select placeholder="{{ __('translate.Status') }}" v-model="post.is_active"
+                                <v-select placeholder="{{ __('translate.Status') }}" v-model="media.is_active"
                                           :options="[{label: 'Active', value: 1}, {label: 'Disabled', value: 0}]"
                                           :reduce="(option) => option.value">
                                 </v-select>
@@ -71,12 +71,6 @@
                                 <span class="error" v-if="errors && errors.image">
                                 @{{ errors.image[0] }}
                             </span>
-                            </div>
-
-                            <div class="form-group col-md-12 mb-4">
-                                <label for="note">{{ __('translate.Please_provide_any_details') }} </label>
-                                <textarea type="text" v-model="post.description" class="form-control" name="description" id="description"
-                                          placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
                             </div>
                         </div>
                     </div>
@@ -104,18 +98,6 @@
     <script src="{{ asset('assets/js/datepicker.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendor/vuejs-datepicker/vuejs-datepicker.min.js') }}"></script>
 
-    <!-- Place the first <script> tag in your HTML's <head> -->
-    <script src="https://cdn.tiny.cloud/1/de40kwmk0id148lbzq3xn8j01gfkanu1lwx3at8zn5l432md/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
-    <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
-    <script>
-        tinymce.init({
-            selector: 'textarea#description',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-        });
-    </script>
-
     <script type="text/javascript">
         $(function() {
             "use strict";
@@ -134,21 +116,20 @@
         Vue.component('v-select', VueSelect.VueSelect);
         Vue.config.devtools = true;
         var app = new Vue({
-            el: '#section_create_post',
+            el: '#section_create_media',
             data: {
                 SubmitProcessing: false,
                 data: new FormData(),
                 preview: "",
                 errors: [],
-                post: @json($post),
-                description: "",
+                media: @json($media),
             },
 
             methods: {
 
                 onFileSelected(e) {
                     let file = e.target.files[0];
-                    this.post.image = file;
+                    this.media.image = file;
                     var input = e.target;
                     if (input.files) {
                         var reader = new FileReader();
@@ -163,27 +144,27 @@
                 },
 
                 //------------------------------ Create new Post ------------------------------\\
-                Update_Post() {
+                Update_Media() {
                     NProgress.start();
                     NProgress.set(0.1);
                     var self = this;
                     self.SubmitProcessing = true;
 
                     // append objet product
-                    Object.entries(self.post).forEach(([key, value]) => {
+                    Object.entries(self.media).forEach(([key, value]) => {
                         self.data.append(key, value);
                     });
 
-                    self.data.append("description", tinymce.get("description").getContent());
+                    console.log(this.media.id);
 
                     // Send Data with axios
                     axios
-                        .post("/post/" + this.post.id, self.data)
+                        .post("/medias/media/" + this.media.id, self.data)
                         .then(response => {
                             // Complete the animation of theprogress bar.
                             NProgress.done();
                             self.SubmitProcessing = false;
-                            window.location.href = '/post/posts';
+                            window.location.href = '/medias/media';
                             toastr.success('{{ __('translate.Created_in_successfully') }}');
                             self.errors = {};
                         })
