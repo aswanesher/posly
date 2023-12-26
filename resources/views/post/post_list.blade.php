@@ -54,6 +54,38 @@
                 post_datatable();
             });
 
+            //Delete Category
+            $(document).on('click', '.delete', function() {
+                var id = $(this).attr('id');
+                // app.Remove_product(id);
+                Remove_post(id)
+            });
+
+            const Remove_post = (id) => {
+                swal({
+                    title: '{{ __('translate.Are_you_sure') }}',
+                    text: '{{ __('translate.You_wont_be_able_to_revert_this') }}',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0CC27E',
+                    cancelButtonColor: '#FF586B',
+                    confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
+                    cancelButtonText: '{{ __('translate.No_cancel') }}',
+                    confirmButtonClass: 'btn btn-primary me-5',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function() {
+                    axios
+                        .delete("/post/delete/" + id)
+                        .then(() => {
+                            toastr.success('{{ __('translate.Deleted_in_successfully') }}');
+                            $('#post_list_table').DataTable().ajax.reload();
+                        })
+                        .catch(() => {
+                            toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                        });
+                });
+            };
 
             //Get Data
             function post_datatable() {

@@ -29,7 +29,7 @@ class PostController extends Controller
 
                     ->addColumn('action', function($row){
 
-                        $btn = '<a id="' .$row->id. '"  class="edit cursor-pointer ul-link-action text-success"
+                        $btn = '<a href="/post/' .$row->id. '/edit"  class="edit cursor-pointer ul-link-action text-success"
                         data-toggle="tooltip" data-placement="top" title="Edit"><i class="i-Edit"></i></a>';
                         $btn .= '&nbsp;&nbsp;';
 
@@ -115,7 +115,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user_auth = auth()->user();
+        if($user_auth) {
+            $post = Post::findOrFail($id);
+            $old_photo = asset('images/post/').'/'.$post->images()->latest()->value('url');
+            return view('post.edit_post', compact('post','old_photo'));
+        }
+        return abort('403', __('You are not authorized'));
     }
 
     /**
@@ -127,7 +133,30 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user_auth = auth()->user();
+        if ($user_auth) {
+            $Post               = Post::findOrFail($id);
+            $Post->title        = $request->title;
+            $Post->slug         = Str::slug($request['slug'], '-');
+            $Post->description  = $request->description;
+            $Post->is_active    = $request->is_active;
+            $Post->category     = $request->category;
+            $Post->save();
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->extension();
+                $image->move(public_path('/images/post'), $filename);
+            } else {
+                $filename = 'no_image.png';
+            }
+
+            $image = new Media(['url' => $filename]);
+            $Post->images()->save($image);
+
+            return response()->json(['success' => true]);
+        }
+        return abort('403', __('You are not authorized'));
     }
 
     /**
@@ -138,6 +167,13 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user_auth = auth()->user();
+        if ($user_auth){
+            Post::whereId($id)->update([
+                'deleted_at' => Carbon::now(),
+            ]);
+            return response()->json(['success' => true]);
+        }
+        return abort('403', __('You are not authorized'));
     }
 }

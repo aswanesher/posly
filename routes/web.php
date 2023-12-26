@@ -307,6 +307,9 @@ Route::middleware(['XSS'])->group(function () {
                 Route::get('/posts', 'index')->name('post.index');
                 Route::post('/', 'store')->name('post.store');
                 Route::get('/create', 'create')->name('post.create');
+                Route::get('{id}/edit', 'edit')->name('post.edit');
+                Route::post('/{id}', 'update')->name('post.update');
+                Route::delete('/delete/{id}', 'destroy')->name('post.delete');
             });
         });
 
